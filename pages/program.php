@@ -202,6 +202,22 @@ $programData = [
     ]
 ];
 
+// Hitung Data Realtime untuk Quick Stats Bar
+$totalBidang = count($programData);
+$totalRencanaAksi = 0;
+foreach ($programData as $p) {
+    $totalRencanaAksi += count($p['rencana_aksi'] ?? []);
+}
+try {
+    $stmtAsp = $pdo->query("SELECT COUNT(*) FROM aspirasi");
+    $totalAspirasiRealtime = (int) $stmtAsp->fetchColumn();
+} catch (Exception $e) {
+    $totalAspirasiRealtime = 4;
+}
+if ($totalAspirasiRealtime < 4) {
+    $totalAspirasiRealtime = 4; // Baseline data terdata
+}
+
 // Ambil Berita Terkait untuk Section 7
 try {
     $stmtNews = $pdo->query("SELECT id, judul, ringkasan, foto, kategori, created_at FROM berita ORDER BY created_at DESC LIMIT 4");
@@ -236,60 +252,60 @@ try {
       </div>
       <div class="col-lg-4 col-xl-5 text-center text-lg-end mt-4 mt-lg-0">
         <div class="prog-hero-slogan-box">
-          <div class="prog-hero-watermark">
+          <span class="prog-hero-watermark">
             &ldquo;Desa Kuat, Warganya Hebat&rdquo;
-          </div>
-          <p class="text-white-50 small mb-0 mt-2">
+          </span>
+          <div class="prog-hero-slogan-meta">
             <i class="bi bi-check2-circle text-success me-1"></i> Komitmen Bersama Edy Susanto (No. Urut 2)
-          </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SECTION 2: STATISTIK SINGKAT (STATS BAR SESUAI MOCKUP) -->
+<!-- SECTION 2: STATISTIK SINGKAT (STATS BAR LEBIH KECIL & DATA REALTIME) -->
 <section class="prog-stats-section">
   <div class="container-custom">
     <div class="prog-stats-bar">
-      <div class="row g-3 g-md-4 text-center align-items-center">
-        <!-- Item 1: 7 Bidang Prioritas -->
+      <div class="row g-2 g-md-3 text-center align-items-center">
+        <!-- Item 1: 7 Bidang Prioritas Realtime -->
         <div class="col-6 col-md-3">
           <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
-            <div class="prog-stat-icon-circle bg-success-subtle text-success mb-2">
+            <div class="prog-stat-icon-circle mb-1">
               <i class="bi bi-briefcase"></i>
             </div>
-            <div class="prog-stat-number text-dark">7</div>
+            <div class="prog-stat-number text-dark"><?= $totalBidang ?></div>
             <div class="prog-stat-label">Bidang Prioritas</div>
           </div>
         </div>
-        <!-- Item 2: 20+ Rencana Program -->
+        <!-- Item 2: Rencana Program Realtime -->
         <div class="col-6 col-md-3">
           <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
-            <div class="prog-stat-icon-circle bg-success-subtle text-success mb-2">
+            <div class="prog-stat-icon-circle mb-1">
               <i class="bi bi-journal-text"></i>
             </div>
-            <div class="prog-stat-number text-dark">20+</div>
+            <div class="prog-stat-number text-dark"><?= $totalRencanaAksi ?>+</div>
             <div class="prog-stat-label">Rencana Program</div>
           </div>
         </div>
-        <!-- Item 3: Berdasarkan Data & Aspirasi -->
+        <!-- Item 3: Data & Aspirasi Realtime -->
         <div class="col-6 col-md-3">
           <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
-            <div class="prog-stat-icon-circle bg-success-subtle text-success mb-2">
+            <div class="prog-stat-icon-circle mb-1">
               <i class="bi bi-bar-chart"></i>
             </div>
-            <div class="prog-stat-title-top text-dark fw-bold">Berdasarkan</div>
-            <div class="prog-stat-label">Data &amp; Aspirasi</div>
+            <div class="prog-stat-number text-dark"><?= $totalAspirasiRealtime ?>+</div>
+            <div class="prog-stat-label">Aspirasi Masuk</div>
           </div>
         </div>
-        <!-- Item 4: Untuk Semua Warga Tampirkulon -->
+        <!-- Item 4: Untuk Semua 6 Dusun Warga Tampirkulon -->
         <div class="col-6 col-md-3">
           <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
-            <div class="prog-stat-icon-circle bg-success-subtle text-success mb-2">
+            <div class="prog-stat-icon-circle mb-1">
               <i class="bi bi-people"></i>
             </div>
-            <div class="prog-stat-title-top text-dark fw-bold">Untuk Semua</div>
+            <div class="prog-stat-title-top text-dark">6 Dusun</div>
             <div class="prog-stat-label">Warga Tampirkulon</div>
           </div>
         </div>
@@ -299,7 +315,7 @@ try {
 </section>
 
 <!-- SECTION 3: 7 BIDANG PROGRAM PRIORITAS + KARTU QUOTE (8 CARDS) -->
-<section id="programPrioritas" class="py-5 bg-light-subtle">
+<section id="programPrioritas" class="prog-section-spacing-top pb-5 bg-light-subtle">
   <div class="container-custom">
     <!-- Header Section Sesuai Mockup (Ada Lingkaran Nomor 3) -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2">
@@ -381,7 +397,7 @@ try {
         <div class="col-lg-5">
           <div class="pe-lg-3">
             <div class="prog-potensi-hero-banner mb-3 position-relative rounded-3 overflow-hidden shadow-sm">
-              <img src="assets/images/banner/hero_bg_landscape.jpg" alt="Bentang Alam Tampirkulon" class="w-100 h-100 object-fit-cover">
+              <img src="assets/images/banner/hero_bg_clean.jpg" alt="Bentang Alam Tampirkulon" class="w-100 h-100 object-fit-cover">
               <div class="prog-potensi-hero-overlay">
                 <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill fs-7">
                   Program Berbasis Potensi Tampirkulon

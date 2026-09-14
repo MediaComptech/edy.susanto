@@ -933,543 +933,7 @@ body {
   line-height: 1.45;
 }
 
-/* ==========================================================================
-   Program Kerja & Rencana Pengembangan Sub-Page (Matches UI/Program/program kerja.png)
-   ========================================================================== */
 
-/* 1. Hero Section */
-.prog-hero {
-  position: relative;
-  border-radius: 24px;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center center;
-  min-height: 420px;
-  display: flex;
-  align-items: center;
-  margin-bottom: 2rem;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
-}
-
-.prog-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.65) 50%, rgba(15, 23, 42, 0.35) 100%);
-  z-index: 1;
-}
-
-.prog-hero-content {
-  position: relative;
-  z-index: 2;
-  padding: 3.5rem 3rem;
-  max-width: 680px;
-  color: #ffffff;
-}
-
-.prog-hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
-  color: #ffffff;
-  padding: 0.35rem 1rem;
-  border-radius: 50px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  margin-bottom: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-.prog-hero-title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  line-height: 1.18;
-  color: #ffffff;
-  margin-bottom: 1rem;
-}
-
-.prog-hero-desc {
-  font-size: 1.05rem;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 1.75rem;
-}
-
-.prog-hero-watermark {
-  position: absolute;
-  right: 3rem;
-  bottom: 2rem;
-  z-index: 2;
-  color: rgba(255, 255, 255, 0.85);
-  font-family: 'Caveat', cursive, var(--font-handwriting);
-  font-size: 2.2rem;
-  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-  text-align: right;
-  line-height: 1.1;
-}
-
-/* 2. Quick Stats Bar */
-.prog-stats-bar {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 1.25rem 1.75rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f1f5f9;
-  margin-bottom: 3.5rem;
-}
-
-.prog-stat-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.prog-stat-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.35rem;
-  flex-shrink: 0;
-}
-
-.prog-stat-num {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: #0f172a;
-  line-height: 1.1;
-}
-
-.prog-stat-label {
-  font-size: 0.82rem;
-  color: #64748b;
-  font-weight: 500;
-  margin-top: 2px;
-}
-
-/* 3. Program Cards Grid */
-.prog-section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.prog-card {
-  border-radius: 20px;
-  padding: 1.75rem 1.5rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid transparent;
-  position: relative;
-  overflow: hidden;
-}
-
-.prog-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
-}
-
-.prog-card-icon-box {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.6rem;
-  margin-bottom: 1.25rem;
-}
-
-.prog-card-title {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #0f172a;
-  margin-bottom: 0.5rem;
-  line-height: 1.3;
-}
-
-.prog-card-desc {
-  font-size: 0.9rem;
-  color: #475569;
-  line-height: 1.55;
-  margin-bottom: 1.5rem;
-  flex-grow: 1;
-}
-
-.prog-card-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.88rem;
-  font-weight: 700;
-  text-decoration: none;
-  padding: 0.45rem 1.1rem;
-  border-radius: 50px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  color: #1e293b;
-  transition: all 0.2s ease;
-  width: fit-content;
-  cursor: pointer;
-}
-
-.prog-card-btn:hover {
-  background: #0f172a;
-  color: #ffffff;
-  border-color: #0f172a;
-}
-
-/* Quote Card (8th card) */
-.prog-quote-card {
-  background: #e8f8f0;
-  border: 1px solid #c8e6c9;
-  justify-content: center;
-  text-align: left;
-}
-
-.prog-quote-text {
-  font-family: 'Caveat', cursive, var(--font-handwriting);
-  font-size: 1.45rem;
-  color: #1b5e20;
-  font-weight: 700;
-  line-height: 1.3;
-  margin-bottom: 1rem;
-}
-
-.prog-quote-sign {
-  font-family: 'Caveat', cursive, var(--font-handwriting);
-  font-size: 1.2rem;
-  color: #334155;
-  line-height: 1.1;
-}
-
-/* 4. Potensi Highlight Section */
-.prog-potensi-box {
-  background: #ffffff;
-  border-radius: 22px;
-  padding: 2rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f1f5f9;
-  margin-bottom: 3.5rem;
-}
-
-.prog-potensi-featured {
-  border-radius: 18px;
-  overflow: hidden;
-  position: relative;
-  min-height: 320px;
-  background-size: cover;
-  background-position: center center;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 2rem;
-  color: #ffffff;
-}
-
-.prog-potensi-featured::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.15) 0%, rgba(15, 23, 42, 0.88) 100%);
-  z-index: 1;
-}
-
-.prog-potensi-featured > * {
-  position: relative;
-  z-index: 2;
-}
-
-.prog-potensi-thumb {
-  background: #ffffff;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid #f1f5f9;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  text-align: center;
-  transition: all 0.25s ease;
-  height: 100%;
-}
-
-.prog-potensi-thumb:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-}
-
-.prog-potensi-thumb img {
-  width: 100%;
-  height: 95px;
-  object-fit: cover;
-}
-
-.prog-potensi-thumb span {
-  display: block;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #334155;
-  padding: 0.55rem 0.25rem;
-}
-
-/* 5. Roadmap Stepper */
-.prog-roadmap-wrapper {
-  background: #ffffff;
-  border-radius: 22px;
-  padding: 2.5rem 2rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f1f5f9;
-  margin-bottom: 3.5rem;
-}
-
-.prog-roadmap-step {
-  position: relative;
-  text-align: left;
-}
-
-.prog-roadmap-step-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1.15rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  flex-shrink: 0;
-}
-
-.prog-roadmap-title {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #0f172a;
-  margin-bottom: 0.25rem;
-}
-
-.prog-roadmap-duration {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #64748b;
-  margin-bottom: 0.85rem;
-}
-
-.prog-roadmap-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.prog-roadmap-list li {
-  font-size: 0.82rem;
-  color: #475569;
-  margin-bottom: 0.35rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.35rem;
-}
-
-.prog-roadmap-list li::before {
-  content: '◆';
-  color: #0ea5e9;
-  font-size: 0.65rem;
-  margin-top: 3px;
-  flex-shrink: 0;
-}
-
-/* 6. Transparansi Cards */
-.prog-trans-card {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 1.5rem 1.25rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
-  border: 1px solid #f1f5f9;
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  transition: transform 0.2s ease;
-}
-
-.prog-trans-card:hover {
-  transform: translateY(-3px);
-}
-
-.prog-trans-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  flex-shrink: 0;
-}
-
-.prog-trans-num {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: #0f172a;
-  line-height: 1;
-}
-
-.prog-trans-label {
-  font-size: 0.85rem;
-  color: #64748b;
-  font-weight: 600;
-  margin-top: 4px;
-}
-
-/* 7. Berita Program Card */
-.prog-news-card {
-  background: #ffffff;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid #f1f5f9;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.25s ease;
-}
-
-.prog-news-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-}
-
-.prog-news-img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-}
-
-.prog-news-body {
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.prog-news-date {
-  font-size: 0.78rem;
-  color: #94a3b8;
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-}
-
-.prog-news-title {
-  font-size: 0.98rem;
-  font-weight: 700;
-  color: #0f172a;
-  line-height: 1.35;
-  margin-bottom: 0.5rem;
-}
-
-.prog-news-desc {
-  font-size: 0.84rem;
-  color: #64748b;
-  line-height: 1.5;
-  flex-grow: 1;
-}
-
-/* 8. CTA Sapa Warga Banner */
-.prog-cta-banner {
-  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
-  border-radius: 20px;
-  padding: 2.25rem 2.5rem;
-  color: #ffffff;
-  box-shadow: 0 10px 30px rgba(27, 94, 32, 0.25);
-  margin-bottom: 3.5rem;
-}
-
-/* 9. Responsif Device Breakpoints */
-@media (max-width: 991.98px) {
-  .prog-hero {
-    min-height: 360px;
-  }
-  .prog-hero-content {
-    padding: 2.5rem 2rem;
-  }
-  .prog-hero-title {
-    font-size: 2rem;
-  }
-  .prog-hero-watermark {
-    display: none;
-  }
-}
-
-@media (max-width: 767.98px) {
-  .prog-stats-bar {
-    padding: 1rem;
-  }
-  .prog-stat-item {
-    gap: 0.6rem;
-  }
-  .prog-stat-icon {
-    width: 38px;
-    height: 38px;
-    font-size: 1.15rem;
-  }
-  .prog-stat-num {
-    font-size: 1.15rem;
-  }
-  .prog-stat-label {
-    font-size: 0.72rem;
-  }
-  .prog-roadmap-step {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  .prog-roadmap-step-badge {
-    margin-bottom: 0;
-  }
-}
-
-@media (max-width: 575.98px) {
-  .prog-hero {
-    min-height: 320px;
-    border-radius: 16px;
-  }
-  .prog-hero-content {
-    padding: 2rem 1.25rem;
-  }
-  .prog-hero-title {
-    font-size: 1.65rem;
-  }
-  .prog-hero-desc {
-    font-size: 0.9rem;
-  }
-  .prog-card {
-    padding: 1.25rem 1rem;
-    border-radius: 16px;
-  }
-  .prog-card-title {
-    font-size: 1.05rem;
-  }
-  .prog-card-desc {
-    font-size: 0.82rem;
-  }
-  .prog-potensi-featured {
-    padding: 1.25rem;
-    min-height: 240px;
-  }
-  .prog-cta-banner {
-    padding: 1.5rem 1.25rem;
-  }
-}
 
 /* ==========================================================================
    Sapa Warga Sub-Page (Exact UI/1.png match)
@@ -1849,14 +1313,14 @@ body {
 /* ------ SECTION 1: HERO BANNER ------ */
 .prog-hero-section {
   background: linear-gradient(135deg, #0d320d 0%, #1b5e20 50%, #2e7d32 100%);
-  background-image: url('../images/banner/hero_bg_landscape.jpg');
+  background-image: url('../images/banner/hero_bg_clean.jpg');
   background-size: cover;
-  background-position: center;
-  min-height: 520px;
+  background-position: center center;
+  min-height: 480px;
   display: flex;
   align-items: center;
   position: relative;
-  padding: 85px 0 70px;
+  padding: 70px 0 60px;
   overflow: hidden;
 }
 
@@ -1864,7 +1328,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(13, 50, 13, 0.88) 0%, rgba(27, 94, 32, 0.78) 55%, rgba(15, 61, 18, 0.88) 100%);
+  background: linear-gradient(135deg, rgba(13, 50, 13, 0.82) 0%, rgba(27, 94, 32, 0.72) 55%, rgba(15, 61, 18, 0.82) 100%);
   z-index: 1;
 }
 
@@ -1876,32 +1340,32 @@ body {
 .prog-hero-badge {
   display: inline-flex;
   align-items: center;
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   color: #fff;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   padding: 0.35rem 0.95rem;
   border-radius: 30px;
-  backdrop-filter: blur(4px);
-  margin-bottom: 1.25rem;
+  backdrop-filter: blur(6px);
+  margin-bottom: 1.15rem;
 }
 
 .prog-hero-title {
-  font-size: clamp(1.85rem, 4.2vw, 3rem);
+  font-size: clamp(1.85rem, 4vw, 2.9rem);
   font-weight: 800;
   color: #ffffff;
-  line-height: 1.2;
+  line-height: 1.22;
   margin-bottom: 1rem;
   letter-spacing: -0.01em;
 }
 
 .prog-hero-subtitle {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.85);
-  line-height: 1.65;
-  margin-bottom: 2rem;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
   max-width: 580px;
 }
 
@@ -1911,73 +1375,100 @@ body {
   gap: 0.85rem;
 }
 
+/* Slogan Box & Watermark Tidak Bertumpuk (Fixed) */
 .prog-hero-slogan-box {
-  padding: 1.5rem 2rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  backdrop-filter: blur(8px);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
   text-align: center;
+  max-width: 380px;
 }
 
 .prog-hero-watermark {
-  font-family: 'Caveat', 'Dancing Script', cursive;
-  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+  position: static !important;
+  font-family: 'Caveat', cursive, var(--font-handwriting);
+  font-size: clamp(1.5rem, 2.8vw, 2.15rem);
   color: #ffffff;
   font-weight: 700;
-  line-height: 1.3;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.35);
-  letter-spacing: 0.02em;
+  line-height: 1.25;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.01em;
+  margin-bottom: 0.4rem;
+  display: block;
 }
 
-/* ------ SECTION 2: STATISTIK SINGKAT (STATS BAR FLOATING CARD) ------ */
+.prog-hero-slogan-meta {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 0;
+  line-height: 1.3;
+}
+
+/* ------ SECTION 2: STATISTIK SINGKAT (STATS BAR LEBIH KECIL & COMPACT) ------ */
 .prog-stats-section {
   background: transparent;
   position: relative;
   z-index: 10;
-  margin-top: -36px;
-  padding-bottom: 1rem;
+  margin-top: -28px;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .prog-stats-bar {
   background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
-  padding: 1.5rem 1rem;
-  border: 1px solid #f0f0f0;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  padding: 0.85rem 1.25rem;
+  border: 1px solid #edf2f7;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .prog-stat-card {
-  padding: 0.5rem;
+  padding: 0.35rem 0.5rem;
 }
 
 .prog-stat-icon-circle {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.35rem;
+  font-size: 1.15rem;
+  background-color: #e8f5e9;
+  color: #2e7d32;
 }
 
 .prog-stat-number {
-  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-size: clamp(1.3rem, 2.5vw, 1.65rem);
   font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 0.25rem;
+  line-height: 1.15;
+  margin-bottom: 0.15rem;
 }
 
 .prog-stat-title-top {
-  font-size: 1.05rem;
-  line-height: 1.2;
-  margin-bottom: 0.2rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 0.15rem;
 }
 
 .prog-stat-label {
-  font-size: 0.78rem;
-  color: #6c757d;
+  font-size: 0.74rem;
+  color: #64748b;
   font-weight: 600;
+}
+
+/* Rapatkan Jarak Section 2 dan Section 3 (Hilangkan Gap Kotak Kuning) */
+.prog-section-spacing-top {
+  padding-top: 2rem !important;
 }
 
 /* ------ SECTION 3: 7 PROGRAM PRIORITAS CARDS ------ */
