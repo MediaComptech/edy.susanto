@@ -136,6 +136,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             }
             header("Location: pengaturan.php");
             exit;
+        } elseif ($_POST['action'] === 'ganti_foto_hero_potensi') {
+            if (!empty($_FILES['foto_hero_potensi_baru']['name'])) {
+                $upload = handle_file_upload($_FILES['foto_hero_potensi_baru'], 'uploads', 10);
+                if ($upload['status']) {
+                    set_pengaturan($pdo, 'foto_hero_potensi', $upload['relative_path'], 'Foto background Hero Halaman Potensi Desa');
+                    set_flash('success', 'Foto Hero Potensi Desa berhasil diperbarui!');
+                } else {
+                    set_flash('danger', $upload['error']);
+                }
+            } else {
+                set_flash('warning', 'Pilih berkas foto terlebih dahulu.');
+            }
+            header("Location: pengaturan.php");
+            exit;
+        } elseif ($_POST['action'] === 'reset_foto_hero_potensi') {
+            set_pengaturan($pdo, 'foto_hero_potensi', 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg', 'Foto bawaan Kolam Ngudal Tuk Putri');
+            set_flash('success', 'Foto Hero Potensi dikembalikan ke foto bawaan.');
+            header("Location: pengaturan.php");
+            exit;
+        } elseif ($_POST['action'] === 'ganti_foto_spot_potensi') {
+            if (!empty($_FILES['foto_spot_potensi_baru']['name'])) {
+                $upload = handle_file_upload($_FILES['foto_spot_potensi_baru'], 'uploads', 10);
+                if ($upload['status']) {
+                    set_pengaturan($pdo, 'foto_spot_potensi', $upload['relative_path'], 'Foto Spot Unggulan di Halaman Potensi Desa');
+                    set_flash('success', 'Foto Spot Unggulan Potensi berhasil diperbarui!');
+                } else {
+                    set_flash('danger', $upload['error']);
+                }
+            } else {
+                set_flash('warning', 'Pilih berkas foto terlebih dahulu.');
+            }
+            header("Location: pengaturan.php");
+            exit;
+        } elseif ($_POST['action'] === 'reset_foto_spot_potensi') {
+            set_pengaturan($pdo, 'foto_spot_potensi', 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg', 'Foto bawaan Spot Tuk Putri');
+            set_flash('success', 'Foto Spot Potensi dikembalikan ke foto bawaan.');
+            header("Location: pengaturan.php");
+            exit;
+        } elseif ($_POST['action'] === 'simpan_konten_potensi') {
+            $judul    = sanitize($_POST['spot_potensi_judul'] ?? 'Kolam Ngudal Tuk Putri');
+            $desc     = sanitize($_POST['spot_potensi_desc'] ?? '');
+            $jarak    = sanitize($_POST['spot_potensi_jarak'] ?? '± 0,34 km dari Balai Desa Tampirkulon');
+            $lokasi   = sanitize($_POST['spot_potensi_lokasi'] ?? 'Tampirkulon, Candimulyo, Magelang');
+            $heroJudul = sanitize($_POST['hero_potensi_judul'] ?? 'Kekayaan Desa,<br>Kekuatan Bersama');
+            $heroSub  = sanitize($_POST['hero_potensi_sub'] ?? '');
+
+            set_pengaturan($pdo, 'spot_potensi_judul',  $judul,    'Judul Spot Unggulan Halaman Potensi');
+            set_pengaturan($pdo, 'spot_potensi_desc',   $desc,     'Deskripsi Spot Unggulan Halaman Potensi');
+            set_pengaturan($pdo, 'spot_potensi_jarak',  $jarak,    'Jarak Spot Unggulan dari Balai Desa');
+            set_pengaturan($pdo, 'spot_potensi_lokasi', $lokasi,   'Lokasi Spot Unggulan Halaman Potensi');
+            set_pengaturan($pdo, 'hero_potensi_judul',  $heroJudul,'Judul Hero Halaman Potensi Desa');
+            set_pengaturan($pdo, 'hero_potensi_sub',    $heroSub,  'Subtitle Hero Halaman Potensi Desa');
+
+            set_flash('success', 'Konten teks Halaman Potensi Desa berhasil disimpan!');
+            header("Location: pengaturan.php");
+            exit;
         }
     } else {
         set_flash('danger', 'Validasi sesi CSRF gagal.');
@@ -171,6 +227,16 @@ if (!empty($dusunJson)) {
 } else {
     $dusunList = $DUSUN_LIST;
 }
+
+// Ambil data pengaturan Halaman Potensi Desa
+$fotoHeroPotensiAdmin  = get_pengaturan($pdo, 'foto_hero_potensi', 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg');
+$fotoSpotPotensiAdmin  = get_pengaturan($pdo, 'foto_spot_potensi', 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg');
+$heroPotensiJudulAdmin = get_pengaturan($pdo, 'hero_potensi_judul', 'Kekayaan Desa,<br>Kekuatan Bersama');
+$heroPotensiSubAdmin   = get_pengaturan($pdo, 'hero_potensi_sub', 'Alam yang lestari, budaya yang hidup, masyarakat yang kreatif — inilah potensi Desa Tampirkulon yang terus tumbuh untuk masa depan yang lebih baik.');
+$spotPotensiJudulAdmin = get_pengaturan($pdo, 'spot_potensi_judul', 'Kolam Ngudal Tuk Putri');
+$spotPotensiDescAdmin  = get_pengaturan($pdo, 'spot_potensi_desc', 'Sumber mata air yang menjadi bagian dari potensi alam Desa Tampirkulon.');
+$spotPotensiJarakAdmin = get_pengaturan($pdo, 'spot_potensi_jarak', '± 0,34 km dari Balai Desa Tampirkulon');
+$spotPotensiLokasiAdmin= get_pengaturan($pdo, 'spot_potensi_lokasi', 'Tampirkulon, Candimulyo, Magelang');
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -555,6 +621,145 @@ if (!empty($dusunJson)) {
 </div>
 
 
+
+<!-- 2.8 KARTU KELOLA HALAMAN POTENSI DESA -->
+<div class="row g-4 mt-1">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+      <div class="d-flex align-items-center gap-2 mb-4">
+        <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; background-color: #e8f5e9;">
+          <i class="fa-solid fa-wheat-awn" style="color: #2e7d32; font-size: 1.1rem;"></i>
+        </div>
+        <div>
+          <h5 class="fw-bold mb-0">Pengaturan Halaman Potensi Desa</h5>
+          <small class="text-muted">Kelola foto hero, foto spot unggulan, dan teks konten halaman potensi desa</small>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Kolom Kiri: Upload Foto Hero Potensi -->
+        <div class="col-md-6">
+          <div class="border rounded-3 p-3 h-100">
+            <h6 class="fw-bold mb-3"><i class="bi bi-image-fill text-success me-1"></i>Foto Background Hero Potensi</h6>
+            <div class="mb-3 text-center">
+              <img id="currentHeroPotensiPreview" src="../<?= e($fotoHeroPotensiAdmin) ?>"
+                   alt="Hero Potensi" class="img-fluid rounded-3 shadow-sm"
+                   style="max-height: 160px; object-fit: cover; width: 100%;">
+              <small class="d-block text-muted mt-1" style="font-size:0.7rem;"><?= e($fotoHeroPotensiAdmin) ?></small>
+            </div>
+            <form action="pengaturan.php" method="POST" enctype="multipart/form-data">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="ganti_foto_hero_potensi">
+              <div id="heroPotensiLivePreviewContainer" class="mb-2 text-center" style="display:none;">
+                <img id="imgHeroPotensiLivePreview" src="" class="img-fluid rounded-3 shadow-sm mb-1" style="max-height:100px; object-fit:cover; width:100%;">
+                <small class="text-success small fw-semibold">Preview Foto Baru</small>
+              </div>
+              <div class="input-group input-group-sm mb-2">
+                <input type="file" class="form-control rounded-3" id="inputFotoHeroPotensi"
+                       name="foto_hero_potensi_baru" accept="image/*">
+              </div>
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success btn-sm rounded-3 flex-grow-1">
+                  <i class="bi bi-upload me-1"></i> Simpan Foto Hero
+                </button>
+              </div>
+            </form>
+            <form action="pengaturan.php" method="POST" class="mt-2" onsubmit="return confirm('Reset foto hero potensi ke bawaan?');">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="reset_foto_hero_potensi">
+              <button type="submit" class="btn btn-outline-secondary btn-sm rounded-3 w-100">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Reset ke Bawaan
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Kolom Kanan: Upload Foto Spot Unggulan Potensi -->
+        <div class="col-md-6">
+          <div class="border rounded-3 p-3 h-100">
+            <h6 class="fw-bold mb-3"><i class="bi bi-droplet-fill text-info me-1"></i>Foto Spot Unggulan (Tuk Putri)</h6>
+            <div class="mb-3 text-center">
+              <img id="currentSpotPotensiPreview" src="../<?= e($fotoSpotPotensiAdmin) ?>"
+                   alt="Spot Potensi" class="img-fluid rounded-3 shadow-sm"
+                   style="max-height: 160px; object-fit: cover; width: 100%;">
+              <small class="d-block text-muted mt-1" style="font-size:0.7rem;"><?= e($fotoSpotPotensiAdmin) ?></small>
+            </div>
+            <form action="pengaturan.php" method="POST" enctype="multipart/form-data">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="ganti_foto_spot_potensi">
+              <div id="spotPotensiLivePreviewContainer" class="mb-2 text-center" style="display:none;">
+                <img id="imgSpotPotensiLivePreview" src="" class="img-fluid rounded-3 shadow-sm mb-1" style="max-height:100px; object-fit:cover; width:100%;">
+                <small class="text-success small fw-semibold">Preview Foto Baru</small>
+              </div>
+              <div class="input-group input-group-sm mb-2">
+                <input type="file" class="form-control rounded-3" id="inputFotoSpotPotensi"
+                       name="foto_spot_potensi_baru" accept="image/*">
+              </div>
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-info btn-sm rounded-3 flex-grow-1 text-white">
+                  <i class="bi bi-upload me-1"></i> Simpan Foto Spot
+                </button>
+              </div>
+            </form>
+            <form action="pengaturan.php" method="POST" class="mt-2" onsubmit="return confirm('Reset foto spot potensi ke bawaan?');">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="reset_foto_spot_potensi">
+              <button type="submit" class="btn btn-outline-secondary btn-sm rounded-3 w-100">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Reset ke Bawaan
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Teks Konten Potensi -->
+      <div class="mt-4 border rounded-3 p-3">
+        <h6 class="fw-bold mb-3"><i class="bi bi-pencil-square text-warning me-1"></i>Edit Teks Konten Potensi Desa</h6>
+        <form action="pengaturan.php" method="POST">
+          <?= csrf_field() ?>
+          <input type="hidden" name="action" value="simpan_konten_potensi">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Judul Hero (HTML diizinkan, contoh: Kekayaan Desa,&lt;br&gt;Kekuatan Bersama)</label>
+              <input type="text" class="form-control form-control-sm rounded-3" name="hero_potensi_judul"
+                     value="<?= e($heroPotensiJudulAdmin) ?>">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Judul Spot Unggulan</label>
+              <input type="text" class="form-control form-control-sm rounded-3" name="spot_potensi_judul"
+                     value="<?= e($spotPotensiJudulAdmin) ?>">
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-semibold">Subtitle Hero Potensi</label>
+              <textarea class="form-control form-control-sm rounded-3" name="hero_potensi_sub" rows="2"><?= e($heroPotensiSubAdmin) ?></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-semibold">Deskripsi Spot Unggulan</label>
+              <textarea class="form-control form-control-sm rounded-3" name="spot_potensi_desc" rows="3"><?= e($spotPotensiDescAdmin) ?></textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Jarak Spot dari Balai Desa</label>
+              <input type="text" class="form-control form-control-sm rounded-3" name="spot_potensi_jarak"
+                     value="<?= e($spotPotensiJarakAdmin) ?>">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Lokasi Spot Unggulan</label>
+              <input type="text" class="form-control form-control-sm rounded-3" name="spot_potensi_lokasi"
+                     value="<?= e($spotPotensiLokasiAdmin) ?>">
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary rounded-3 fw-bold px-4 py-2 shadow-sm">
+                <i class="bi bi-save-fill me-1"></i> Simpan Konten Potensi Desa
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- 3. KARTU EDIT DAFTAR DUSUN -->
 <div class="row g-4 mt-1">
   <div class="col-12">
@@ -783,6 +988,64 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.readAsDataURL(file);
       } else {
         sapaContainer.style.display = 'none';
+      }
+    });
+  }
+
+  // ===== Live Preview Foto Hero Potensi =====
+  const heroPotensiInput = document.getElementById('inputFotoHeroPotensi');
+  const heroPotensiContainer = document.getElementById('heroPotensiLivePreviewContainer');
+  const heroPotensiImg = document.getElementById('imgHeroPotensiLivePreview');
+  const heroPotensiCurrentPreview = document.getElementById('currentHeroPotensiPreview');
+
+  if (heroPotensiInput && heroPotensiContainer && heroPotensiImg) {
+    heroPotensiInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        if (file.size > 10 * 1024 * 1024) {
+          alert('Ukuran foto maksimal 10 MB!');
+          this.value = '';
+          heroPotensiContainer.style.display = 'none';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          heroPotensiImg.src = e.target.result;
+          heroPotensiContainer.style.display = 'block';
+          if (heroPotensiCurrentPreview) heroPotensiCurrentPreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        heroPotensiContainer.style.display = 'none';
+      }
+    });
+  }
+
+  // ===== Live Preview Foto Spot Unggulan Potensi =====
+  const spotPotensiInput = document.getElementById('inputFotoSpotPotensi');
+  const spotPotensiContainer = document.getElementById('spotPotensiLivePreviewContainer');
+  const spotPotensiImg = document.getElementById('imgSpotPotensiLivePreview');
+  const spotPotensiCurrentPreview = document.getElementById('currentSpotPotensiPreview');
+
+  if (spotPotensiInput && spotPotensiContainer && spotPotensiImg) {
+    spotPotensiInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        if (file.size > 10 * 1024 * 1024) {
+          alert('Ukuran foto maksimal 10 MB!');
+          this.value = '';
+          spotPotensiContainer.style.display = 'none';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          spotPotensiImg.src = e.target.result;
+          spotPotensiContainer.style.display = 'block';
+          if (spotPotensiCurrentPreview) spotPotensiCurrentPreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        spotPotensiContainer.style.display = 'none';
       }
     });
   }

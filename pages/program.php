@@ -753,54 +753,26 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
   </div>
 </section>
 
-<!-- SECTION 8: BANNER CTA SAPA WARGA (COMPACT SEPERTI KOTAK BIRU) -->
-<section class="py-2 bg-white">
-  <div class="container-custom">
-    <div class="prog-cta-sapa-card rounded-4 shadow-sm position-relative overflow-hidden">
-      <div class="row align-items-center g-2 g-md-3">
-
-        <!-- Kiri: Icon & Teks -->
-        <div class="col-md-5">
-          <div class="d-flex align-items-center gap-2">
-            <!-- Icon bulat hijau kecil -->
-            <div class="flex-shrink-0 prog-cta-icon-circle">
-              <i class="bi bi-chat-heart-fill"></i>
-            </div>
-            <div>
-              <h4 class="prog-cta-title">
-                Punya Ide, Saran atau Aspirasi?
-              </h4>
-              <p class="prog-cta-subtitle">
-                Sampaikan langsung melalui Sapa Warga untuk kemajuan desa.
-              </p>
-            </div>
-          </div>
+<!-- SECTION 8: BANNER CTA SAPA WARGA (MODEL & UKURAN SAMA DENGAN POTENSI) -->
+<div class="container-custom py-4 mb-2">
+  <section class="potensi-cta-card" style="background-image: url('<?= e($bgHero) ?>');">
+    <div class="potensi-cta-overlay">
+      <div class="row align-items-center g-3">
+        <div class="col-lg-8">
+          <h3 class="potensi-cta-title">Punya Ide, Saran atau Aspirasi?</h3>
+          <p class="potensi-cta-subtitle">
+            Sampaikan langsung melalui Sapa Warga. Suara Anda sangat berarti untuk kemajuan Desa Tampirkulon.
+          </p>
         </div>
-
-        <!-- Tengah: Foto dialog dengan warga (Dapat diganti) -->
-        <div class="col-md-4 text-center d-none d-md-block">
-          <div class="prog-cta-photo-wrap">
-            <img src="<?= e($fotoCta) ?>"
-                 alt="Edy Susanto Berdialog dengan Warga"
-                 class="prog-cta-photo">
-          </div>
-        </div>
-
-        <!-- Kanan: Tombol CTA -->
-        <div class="col-md-3 text-md-end">
-          <a href="index.php?page=sapa-warga#formAspirasi"
-             class="btn btn-success prog-cta-btn shadow-sm d-block d-md-inline-block">
-            <i class="bi bi-send-fill me-1"></i>Sapa Warga Sekarang
+        <div class="col-lg-4 text-lg-end">
+          <a href="index.php?page=sapa-warga#formAspirasi" class="potensi-cta-btn">
+            <i class="bi bi-send-fill"></i> Sapa Warga Sekarang
           </a>
-          <div class="prog-cta-secure text-center text-md-end">
-            <i class="bi bi-shield-check text-success me-1"></i>Aman &amp; Terjaga Privasinya
-          </div>
         </div>
-
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <!-- MODAL DETAIL LENGKAP UNTUK 7 PROGRAM PRIORITAS -->
 <?php foreach ($programData as $p): ?>

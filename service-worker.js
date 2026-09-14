@@ -1,11 +1,12 @@
 // Service Worker untuk PWA Sapa Warga Tampirkulon (Edy Susanto No. 2)
 // Strategi: ONLINE FIRST (Network-First dengan Offline Cache Fallback)
-const CACHE_NAME = 'sapa-warga-v3';
+const CACHE_NAME = 'sapa-warga-v5';
 const ASSETS_TO_CACHE = [
   './',
   './index.php?page=beranda',
   './index.php?page=sapa-warga',
   './index.php?page=program',
+  './index.php?page=potensi',
   './assets/css/style.css',
   './assets/js/main.js',
   './assets/images/logo/logo_no2.png',
