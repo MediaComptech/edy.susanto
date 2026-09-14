@@ -85,6 +85,10 @@ $stats = get_aspirasi_stats($pdo);
 // Ambil Aspirasi Terbaru dari DB
 $stmtFeed = $pdo->query("SELECT * FROM aspirasi ORDER BY created_at DESC LIMIT 10");
 $aspirasiFeed = $stmtFeed->fetchAll();
+// Ambil Pengaturan Dinamis Hero Sapa Warga
+$fotoSapa   = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_warga.jpg');
+$quoteSapa  = get_pengaturan($pdo, 'quote_sapa_warga', 'Setiap masukan dari warga adalah langkah menuju desa yang lebih baik.');
+$namaCalon  = get_pengaturan($pdo, 'nama_calon', APP_NAME);
 ?>
 
 <div class="container-custom py-4">
@@ -108,12 +112,12 @@ $aspirasiFeed = $stmtFeed->fetchAll();
           <div class="pe-2">
             <i class="bi bi-quote fs-2 text-danger lh-1"></i>
             <p class="mb-1 fw-bold font-handwriting fs-5 text-dark" style="line-height: 1.25;">
-              "Setiap masukan dari warga adalah langkah menuju desa yang lebih baik."
+              "<?= e($quoteSapa) ?>"
             </p>
-            <div class="text-secondary small fw-bold font-handwriting fs-6 text-end">- Edy Susanto</div>
+            <div class="text-secondary small fw-bold font-handwriting fs-6 text-end">- <?= e($namaCalon) ?></div>
           </div>
           <div class="flex-shrink-0">
-            <img src="assets/images/banner/dialog_warga.jpg" alt="Edy Susanto Bersama Warga" class="rounded-3 shadow-sm object-fit-cover" style="width: 130px; height: 90px;">
+            <img src="<?= e($fotoSapa) ?>" alt="<?= e($namaCalon) ?> Bersama Warga" class="rounded-3 shadow-sm object-fit-cover" style="width: 130px; height: 90px;">
           </div>
         </div>
       </div>

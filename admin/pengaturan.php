@@ -93,6 +93,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             set_flash('success', 'Konten data diri & biodata Halaman Profil berhasil disimpan!');
             header("Location: pengaturan.php");
             exit;
+        } elseif ($_POST['action'] === 'ganti_foto_sapa_warga') {
+            if (!empty($_FILES['foto_sapa_baru']['name'])) {
+                $upload = handle_file_upload($_FILES['foto_sapa_baru'], 'uploads', 5);
+                if ($upload['status']) {
+                    set_pengaturan($pdo, 'foto_sapa_warga', $upload['relative_path'], 'Foto thumbnail kutipan hero Sapa Warga');
+                    set_flash('success', 'Foto Sapa Warga berhasil diperbarui!');
+                } else {
+                    set_flash('danger', $upload['error']);
+                }
+            } else {
+                set_flash('warning', 'Pilih berkas foto terlebih dahulu.');
+            }
+            header("Location: pengaturan.php");
+            exit;
+        } elseif ($_POST['action'] === 'reset_foto_sapa_warga') {
+            set_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_warga.jpg', 'Foto bawaan dialog warga');
+            set_flash('success', 'Foto Sapa Warga dikembalikan ke foto bawaan.');
+            header("Location: pengaturan.php");
+            exit;
+        } elseif ($_POST['action'] === 'simpan_quote_sapa_warga') {
+            $quote = sanitize($_POST['quote_sapa_warga'] ?? '');
+            set_pengaturan($pdo, 'quote_sapa_warga', $quote, 'Teks kutipan di kartu hero Sapa Warga');
+            set_flash('success', 'Kutipan Sapa Warga berhasil disimpan!');
+            header("Location: pengaturan.php");
+            exit;
         } elseif ($_POST['action'] === 'simpan_dusun') {
             // Proses daftar dusun yang dikirim
             $dusunRaw = $_POST['dusun'] ?? [];
@@ -133,6 +158,10 @@ $biodata1           = get_pengaturan($pdo, 'profil_biodata_1', 'Lahir dan tumbuh
 $biodata2           = get_pengaturan($pdo, 'profil_biodata_2', 'Dengan bekal pengalaman kepemimpinan sosial, dedikasi kemasyarakatan yang kuat, serta jejaring kolaborasi yang luas, beliau hadir membawa tekad mengabdi secara tulus tanpa sekat demi terciptanya pemerintahan desa yang bersih, transparan, dan melayani.');
 $nilaiKepemimpinan  = get_pengaturan($pdo, 'profil_nilai_kepemimpinan', 'Amanah, mendengarkan rakyat, transparan dalam pengelolaan dana desa, dan responsif terhadap keluhan warga.');
 $komitmenPengabdian = get_pengaturan($pdo, 'profil_komitmen_pengabdian', 'Hadir di tengah warga, membuka pintu komunikasi 24/7 melalui inovasi Sapa Warga dan rembug dusun rutin.');
+
+// Ambil data hero Sapa Warga
+$fotoSapaWarga  = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_warga.jpg');
+$quoteSapaWarga = get_pengaturan($pdo, 'quote_sapa_warga', 'Setiap masukan dari warga adalah langkah menuju desa yang lebih baik.');
 
 // Ambil daftar dusun dari database, fallback ke config.php
 $dusunJson = get_pengaturan($pdo, 'dusun_list', '');
@@ -432,6 +461,100 @@ if (!empty($dusunJson)) {
 </div>
 
 
+<!-- 2.7 KARTU KELOLA HERO SAPA WARGA (FOTO & KUTIPAN) -->
+<div class="row g-4 mt-1">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex align-items-center gap-2">
+          <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; background-color: #e8f5e9;">
+            <i class="bi bi-chat-heart-fill" style="color: #2e7d32; font-size: 1.1rem;"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-0">Pengaturan Hero Sapa Warga</h5>
+            <small class="text-muted">Kelola foto thumbnail dialog dan kutipan kartu pada banner hijau Sapa Warga</small>
+          </div>
+        </div>
+        <a href="../index.php?page=sapa-warga" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-3">
+          <i class="bi bi-box-arrow-up-right me-1"></i> Buka Sapa Warga
+        </a>
+      </div>
+
+      <div class="row g-4">
+        <!-- Kolom Kiri: Foto Thumbnail Dialog Warga -->
+        <div class="col-lg-5 border-end-lg">
+          <h6 class="fw-bold text-dark mb-2"><i class="bi bi-camera-fill me-1 text-success"></i> Foto Thumbnail Dialog Warga</h6>
+          <div class="alert alert-light border small text-muted py-2 mb-3">
+            <i class="bi bi-info-circle me-1 text-primary"></i>
+            <strong>Ukuran Ideal:</strong> Rasio <strong>4:3</strong> (landscape), resolusi rekomendasi <strong>600 &times; 400 px</strong> atau <strong>400 &times; 300 px</strong>. Maksimal 5 MB.
+          </div>
+
+          <div class="p-3 bg-light rounded-4 border text-center mb-3">
+            <div class="small fw-semibold text-muted mb-2">Foto Saat Ini:</div>
+            <img src="../<?= e($fotoSapaWarga) ?>" alt="Foto Sapa Warga" id="currentSapaPreview"
+              class="img-fluid rounded-3 shadow-sm border" style="max-height: 140px; object-fit: cover; width: 180px;">
+            <div class="text-muted small mt-2">
+              <code><?= e(basename($fotoSapaWarga)) ?></code>
+            </div>
+          </div>
+
+          <form action="pengaturan.php" method="POST" enctype="multipart/form-data" class="mb-2">
+            <?= csrf_field() ?>
+            <input type="hidden" name="action" value="ganti_foto_sapa_warga">
+            
+            <div class="mb-3">
+              <label for="inputFotoSapa" class="form-label small fw-semibold">Upload Foto Baru</label>
+              <input type="file" class="form-control rounded-3" id="inputFotoSapa" name="foto_sapa_baru"
+                accept="image/jpeg,image/png,image/webp" required>
+              <div class="form-text small text-muted">Format: JPG, PNG, WEBP. Subjek di tengah/center.</div>
+            </div>
+
+            <!-- Live Preview -->
+            <div id="sapaLivePreviewContainer" class="mb-3 text-center p-2 border rounded-3 bg-white" style="display:none;">
+              <div class="small fw-bold text-success mb-1"><i class="bi bi-eye-fill me-1"></i>Preview Foto:</div>
+              <img id="imgSapaLivePreview" src="" alt="Preview Sapa" class="img-fluid rounded-3" style="max-height: 120px; object-fit: cover;">
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 fw-bold rounded-3 py-2 shadow-sm">
+              <i class="bi bi-cloud-arrow-up-fill me-1"></i> Simpan Foto Sapa Warga
+            </button>
+          </form>
+
+          <form action="pengaturan.php" method="POST" onsubmit="return confirm('Kembalikan foto ke dialog warga bawaan?');">
+            <?= csrf_field() ?>
+            <input type="hidden" name="action" value="reset_foto_sapa_warga">
+            <button type="submit" class="btn btn-outline-secondary btn-sm w-100 rounded-3">
+              <i class="bi bi-arrow-counterclockwise me-1"></i> Reset ke Foto Bawaan
+            </button>
+          </form>
+        </div>
+
+        <!-- Kolom Kanan: Teks Kutipan / Quote Hero Sapa Warga -->
+        <div class="col-lg-7">
+          <h6 class="fw-bold text-dark mb-2"><i class="bi bi-quote me-1 text-danger"></i> Teks Kutipan Kartu Hero</h6>
+          <p class="text-muted small mb-3">Teks kutipan yang tampil di samping foto di dalam kartu putih pada banner hijau.</p>
+
+          <form action="pengaturan.php" method="POST">
+            <?= csrf_field() ?>
+            <input type="hidden" name="action" value="simpan_quote_sapa_warga">
+
+            <div class="mb-4">
+              <label class="form-label small fw-semibold">Isi Kutipan Hero Sapa Warga</label>
+              <textarea class="form-control rounded-3 font-handwriting fs-5" name="quote_sapa_warga" rows="3" required><?= e($quoteSapaWarga) ?></textarea>
+              <div class="form-text small text-muted">Akan ditampilkan dengan tulisan tangan khas (*font-handwriting*) dan ditutup otomatis dengan nama calon: <code>- <?= e($namaCalon) ?></code>.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary rounded-3 fw-bold px-4 py-2 shadow-sm">
+              <i class="bi bi-save-fill me-1"></i> Simpan Kutipan Sapa Warga
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- 3. KARTU EDIT DAFTAR DUSUN -->
 <div class="row g-4 mt-1">
   <div class="col-12">
@@ -631,6 +754,35 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.readAsDataURL(file);
       } else {
         profilContainer.style.display = 'none';
+      }
+    });
+  }
+
+  // ===== Live Preview Foto Sapa Warga =====
+  const sapaInput = document.getElementById('inputFotoSapa');
+  const sapaContainer = document.getElementById('sapaLivePreviewContainer');
+  const sapaImg = document.getElementById('imgSapaLivePreview');
+  const sapaCurrentPreview = document.getElementById('currentSapaPreview');
+
+  if (sapaInput && sapaContainer && sapaImg) {
+    sapaInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        if (file.size > 5 * 1024 * 1024) {
+          alert('Ukuran foto maksimal 5 MB!');
+          this.value = '';
+          sapaContainer.style.display = 'none';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          sapaImg.src = e.target.result;
+          sapaContainer.style.display = 'block';
+          if (sapaCurrentPreview) sapaCurrentPreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        sapaContainer.style.display = 'none';
       }
     });
   }

@@ -957,6 +957,45 @@ body {
   gap: 1rem;
 }
 
+@media (max-width: 991.98px) {
+  .sapa-banner-rich {
+    padding: 2rem 1.75rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .sapa-banner-rich {
+    padding: 1.5rem 1.25rem;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sapa-banner-rich {
+    padding: 1.25rem 1rem;
+  }
+  .sapa-banner-rich h1 {
+    font-size: 1.85rem !important;
+  }
+  .sapa-banner-rich p.fs-5 {
+    font-size: 0.92rem !important;
+    line-height: 1.45;
+  }
+  .sapa-quote-card {
+    padding: 0.85rem 1rem;
+    gap: 0.75rem;
+    border-radius: 12px;
+  }
+  .sapa-quote-card p {
+    font-size: 0.95rem !important;
+    line-height: 1.35 !important;
+  }
+  .sapa-quote-card img {
+    width: 95px !important;
+    height: 72px !important;
+  }
+}
+
 /* Red-Underlined Modern Tabs (as in UI/1.png) */
 .sapa-nav-tabs-clean {
   border-bottom: 1.5px solid #e2e8f0;
