@@ -1,7 +1,7 @@
-# Keamanan Dasar & Routing Apache Tampirkulon
+# Keamanan Dasar & Routing Apache / LiteSpeed Tampirkulon
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /edy_susanto/
+    # RewriteBase dinamis otomatis sesuai direktori saat ini
 
     # Cegah akses ke berkas sensitif .sql, .env, .git, .md
     <FilesMatch "\.(sql|env|git|md|log|ini)$">
