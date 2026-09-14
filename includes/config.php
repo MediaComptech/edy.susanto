@@ -27,7 +27,7 @@ define('TAGLINE', 'Bersama Membangun Desa yang Asri, Maju & Rukun');
 define('SLOGAN_QUOTE', 'Desa kuat karena warganya.');
 define('WHATSAPP_NUMBER', '6281234567890');
 define('EMAIL_DESA', 'edysusanto@tampirkulon.id');
-define('ALAMAT_DESA', 'Jl. Sastro Km 4, Tampirkulon, Kec. Candimulyo, Kab. Magelang');
+define('ALAMAT_DESA', 'Jl. Tampir II, Tampirkulon, Kec. Candimulyo, Kab. Magelang');
 
 // Daftar Dusun Resmi Tampirkulon
 $DUSUN_LIST = [

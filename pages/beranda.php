@@ -16,9 +16,14 @@ $stats = get_aspirasi_stats($pdo);
 
 // Ambil pengaturan dinamis untuk Hero Section
 $fotoHero = get_pengaturan($pdo, 'foto_hero', 'assets/images/banner/edy_susanto_hero_clean.jpg');
+$bgHero   = get_pengaturan($pdo, 'bg_hero', 'assets/images/banner/hero_bg_pure_landscape.jpg');
 $namaCalon = get_pengaturan($pdo, 'nama_calon', APP_NAME);
 $noUrut = get_pengaturan($pdo, 'no_urut', NO_URUT);
 $tagline = get_pengaturan($pdo, 'tagline', TAGLINE);
+$sloganQuote = get_pengaturan($pdo, 'slogan_quote', SLOGAN_QUOTE);
+if (trim($sloganQuote) === '' || trim($sloganQuote) === '-') {
+    $sloganQuote = SLOGAN_QUOTE;
+}
 ?>
 
 <!-- 1. Hero Section — Flayer Card (Bounded in Container, Tidak Panjang Sampai Pinggir) -->
@@ -26,8 +31,8 @@ $tagline = get_pengaturan($pdo, 'tagline', TAGLINE);
   <div class="container-custom">
     <section class="hero-section hero-card" id="hero-flayer">
 
-      <!-- Background Landscape: Pure Kota Hijau Landscape without any duplicate people -->
-      <div class="hero-bg-layer" style="background-image: url('assets/images/banner/hero_bg_pure_landscape.jpg');"></div>
+      <!-- Background Landscape: Dinamis dari database, fallback ke kota hijau -->
+      <div class="hero-bg-layer" style="background-image: url('<?= e($bgHero) ?>');" id="heroBgLayer"></div>
 
       <!-- FLAYER INNER: Two Column Layout -->
       <div class="hero-flayer-inner">
@@ -80,7 +85,7 @@ $tagline = get_pengaturan($pdo, 'tagline', TAGLINE);
           <!-- [3] Quote Box (Desktop) -->
           <div class="hero-quote-box d-none d-lg-block" aria-hidden="true">
             <span class="hero-quote-mark">"</span>
-            <p class="hero-quote-text font-handwriting">Desa kuat<br>karena warganya.</p>
+            <p class="hero-quote-text font-handwriting"><?= nl2br(e($sloganQuote)) ?></p>
             <p class="hero-quote-author">— <?= e($namaCalon) ?></p>
           </div>
 
@@ -158,7 +163,7 @@ $tagline = get_pengaturan($pdo, 'tagline', TAGLINE);
 </div>
 
 <!-- 3. Section: Tampirkulon yang Kita Kenal -->
-<section class="py-5 bg-white">
+<section class="pt-2 pb-5 bg-white">
   <div class="container-custom">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-end mb-4">
       <div>

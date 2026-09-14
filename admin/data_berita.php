@@ -97,15 +97,80 @@ $beritaList = $pdo->query("SELECT * FROM berita ORDER BY created_at DESC")->fetc
           <td><span class="badge bg-light text-dark border"><?= e($b['kategori']) ?></span></td>
           <td style="max-width: 300px;"><small class="text-muted"><?= e(substr($b['ringkasan'], 0, 80)) ?>...</small></td>
           <td><small class="text-secondary"><?= format_tanggal_id($b['created_at']) ?></small></td>
-          <td class="text-end">
+          <td class="text-end text-nowrap">
+            <button class="btn btn-sm btn-outline-primary rounded-3 me-1" data-bs-toggle="modal" data-bs-target="#modalEditBerita<?= $b['id'] ?>" title="Edit Berita">
+              <i class="bi bi-pencil"></i>
+            </button>
             <form action="data_berita.php" method="POST" class="d-inline" onsubmit="return confirm('Hapus artikel ini?');">
               <?= csrf_field() ?>
               <input type="hidden" name="action" value="hapus_berita">
               <input type="hidden" name="id" value="<?= $b['id'] ?>">
-              <button type="submit" class="btn btn-sm btn-outline-secondary rounded-3">
+              <button type="submit" class="btn btn-sm btn-outline-danger rounded-3" title="Hapus Berita">
                 <i class="bi bi-trash"></i>
               </button>
             </form>
+
+            <!-- Modal Edit Berita -->
+            <div class="modal fade" id="modalEditBerita<?= $b['id'] ?>" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content rounded-4 border-0 shadow">
+                  <div class="modal-header bg-light">
+                    <h6 class="modal-title fw-bold text-dark">Edit Berita &amp; Kegiatan</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <form action="data_berita.php" method="POST" enctype="multipart/form-data">
+                    <?= csrf_field() ?>
+                    <input type="hidden" name="action" value="simpan_berita">
+                    <input type="hidden" name="id" value="<?= $b['id'] ?>">
+                    <div class="modal-body p-4 text-start">
+                      <div class="row g-3">
+                        <div class="col-md-8">
+                          <label class="form-label small fw-semibold">Judul Berita</label>
+                          <input type="text" class="form-control rounded-3" name="judul" value="<?= e($b['judul']) ?>" required>
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label small fw-semibold">Kategori</label>
+                          <select class="form-select rounded-3" name="kategori">
+                            <option value="Kegiatan" <?= $b['kategori'] === 'Kegiatan' ? 'selected' : '' ?>>Kegiatan</option>
+                            <option value="Potensi" <?= $b['kategori'] === 'Potensi' ? 'selected' : '' ?>>Potensi</option>
+                            <option value="Sosialisasi" <?= $b['kategori'] === 'Sosialisasi' ? 'selected' : '' ?>>Sosialisasi</option>
+                            <option value="Pengumuman" <?= $b['kategori'] === 'Pengumuman' ? 'selected' : '' ?>>Pengumuman</option>
+                          </select>
+                        </div>
+                        <div class="col-12">
+                          <label class="form-label small fw-semibold">Ringkasan Berita</label>
+                          <textarea class="form-control rounded-3" name="ringkasan" rows="2" required><?= e($b['ringkasan']) ?></textarea>
+                        </div>
+                        <div class="col-12">
+                          <label class="form-label small fw-semibold">Konten Lengkap</label>
+                          <textarea class="form-control rounded-3" name="konten" rows="6" required><?= e($b['konten']) ?></textarea>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label small fw-semibold">Ganti Foto (Opsional)</label>
+                          <input type="file" class="form-control rounded-3" name="foto" accept="image/*">
+                          <?php if (!empty($b['foto'])): ?>
+                            <div class="small text-muted mt-2 d-flex align-items-center gap-2">
+                              <img src="../<?= e($b['foto']) ?>" alt="" class="rounded border" style="width: 40px; height: 30px; object-fit: cover;">
+                              <span class="text-truncate" style="max-width: 220px;"><?= e(basename($b['foto'])) ?></span>
+                            </div>
+                          <?php endif; ?>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label small fw-semibold">Penulis</label>
+                          <input type="text" class="form-control rounded-3" name="penulis" value="<?= e($b['penulis']) ?>">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                      <button type="button" class="btn btn-secondary btn-sm rounded-3" data-bs-dismiss="modal">Batal</button>
+                      <button type="submit" class="btn btn-primary btn-sm rounded-3 fw-bold">
+                        <i class="bi bi-save-fill me-1"></i> Simpan Perubahan
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
           </td>
         </tr>
         <?php endforeach; ?>

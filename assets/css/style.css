@@ -200,7 +200,7 @@ body {
 .hero-card-wrapper {
   position: relative;
   width: 100%;
-  padding: 0.5rem 0 1.25rem;
+  padding: 0.5rem 0 0;
 }
 
 /* Hero Section as a Bounded Card (Tidak Panjang Sampai Pinggir) */
@@ -229,7 +229,7 @@ body {
   transition: opacity 0.3s ease;
 }
 
-/* Flayer Inner: Content above background */
+/* Flayer Inner: Content above background — foto absolute di tengah */
 .hero-flayer-inner {
   position: relative;
   z-index: 2;
@@ -238,18 +238,21 @@ body {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  justify-content: space-between;
-  gap: 1.5rem;
+  justify-content: flex-start;
+  gap: 0;
   min-height: 420px;
   flex: 1;
 }
 
-/* [1] Text Block (Left Side) */
+/* [1] Text Block (Left Side) — 44% lebar, foto overlap di kanannya */
 .hero-text-block {
   flex: 0 0 auto;
-  width: 100%;
-  max-width: 500px;
+  width: 44%;
+  max-width: 480px;
   z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero-tagline-badge {
@@ -379,36 +382,50 @@ body {
   box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
 }
 
-/* Candidate Wrapper (Right Column Desktop, Bottom on Mobile) */
+/* Candidate Wrapper — ABSOLUTE di area kotak hijau (tengah-kanan hero) */
 .hero-candidate-wrapper {
-  position: relative;
-  flex: 0 0 48%;
-  width: 48%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 40%;           /* mulai dari 40% — tepat di area landscape hijau */
+  right: 0;
+  width: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  align-self: stretch;
-  min-height: 0;
+  z-index: 4;
+  pointer-events: none;  /* agar teks kiri tetap bisa diklik */
   overflow: hidden;
 }
 
+/* Aktifkan kembali pointer-events pada elemen interaktif di dalam wrapper */
+.hero-candidate-wrapper a,
+.hero-candidate-wrapper button {
+  pointer-events: auto;
+}
+
 .hero-candidate-img {
-  max-height: 400px;
-  max-width: 100%;
+  height: 98%;
+  max-height: 100%;
   width: auto;
-  height: auto;
+  max-width: 100%;
   object-fit: contain;
   object-position: bottom center;
   display: block;
-  filter: drop-shadow(0 12px 24px rgba(15, 23, 42, 0.15));
+  filter: drop-shadow(0 8px 20px rgba(15, 23, 42, 0.18));
   transition: transform 0.3s ease;
   z-index: 2;
-  align-self: flex-end;
+  align-self: center;
 }
 
 .hero-candidate-wrapper:hover .hero-candidate-img {
   transform: scale(1.02);
+}
+
+/* Sapa Warga pill tetap pointer-events auto */
+.hero-sapa-floating-pill {
+  pointer-events: auto;
 }
 
 .hero-quote-box {
@@ -537,27 +554,34 @@ body {
   .hero-flayer-inner {
     flex-direction: column;
     align-items: center;
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem 14rem;  /* padding bawah untuk ruang foto absolute */
     gap: 1rem;
-    min-height: auto;
+    min-height: 380px;
   }
   .hero-text-block {
     width: 100%;
     max-width: 100%;
     text-align: center;
   }
+  /* Kembali ke absolute tapi lebih compact di SM */
   .hero-candidate-wrapper {
-    flex: none;
-    width: 100%;
-    max-width: 320px;
-    min-height: auto;
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    width: 260px;
+    height: 200px;
     overflow: visible;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
   }
   .hero-candidate-img {
-    max-height: 260px;
-    align-self: auto;
+    height: 200px;
+    max-height: 200px;
+    width: auto;
+    align-self: flex-end;
   }
   .hero-sapa-floating-pill {
     position: relative;
@@ -566,6 +590,7 @@ body {
     width: 100%;
     max-width: 100%;
     margin: 0.75rem auto 0;
+    pointer-events: auto;
   }
   .hero-tagline-badge { margin: 0 auto; }
   .hero-pillars { justify-content: center; }
@@ -580,20 +605,19 @@ body {
   .hero-flayer-inner {
     padding: 2rem 1.5rem;
     min-height: 380px;
-    gap: 1rem;
-    align-items: center;
+    align-items: stretch;
   }
   .hero-text-block {
-    flex: 1 1 0;
-    max-width: 52%;
+    width: 46%;
+    max-width: 46%;
   }
+  /* Absolute positioning tetap, hanya ukuran disesuaikan */
   .hero-candidate-wrapper {
-    flex: 0 0 44%;
-    width: 44%;
-    min-height: auto;
+    left: 42%;
   }
   .hero-candidate-img {
-    max-height: 340px;
+    height: 95%;
+    max-height: 100%;
   }
   .hero-sapa-floating-pill {
     right: 0.75rem;
@@ -610,19 +634,18 @@ body {
   .hero-flayer-inner {
     padding: 2.5rem 2rem;
     min-height: 440px;
-    align-items: center;
+    align-items: stretch;
   }
   .hero-text-block {
-    flex: 1 1 0;
-    max-width: 50%;
+    width: 43%;
+    max-width: 43%;
   }
   .hero-candidate-wrapper {
-    flex: 0 0 46%;
-    width: 46%;
-    min-height: auto;
+    left: 39%;
   }
   .hero-candidate-img {
-    max-height: 400px;
+    height: 95%;
+    max-height: 100%;
   }
   .hero-sapa-floating-pill {
     right: 1.5rem;
@@ -636,19 +659,20 @@ body {
     min-height: 480px;
   }
   .hero-flayer-inner {
-    padding: 3rem 2.5rem;
+    padding: 3rem 2.5rem 3rem 3.5rem;
     min-height: 480px;
+    align-items: stretch;
   }
   .hero-text-block {
-    flex: 1 1 0;
-    max-width: 48%;
+    width: 42%;
+    max-width: 42%;
   }
   .hero-candidate-wrapper {
-    flex: 0 0 48%;
-    width: 48%;
+    left: 38%;
   }
   .hero-candidate-img {
-    max-height: 450px;
+    height: 96%;
+    max-height: 100%;
   }
   .hero-sapa-floating-pill {
     right: 2rem;
@@ -656,10 +680,10 @@ body {
   }
 }
 
-/* --- Mobile (< 576px) --- */
+/* --- Mobile (< 576px) — foto kembali ke flow normal stacked */
 @media (max-width: 575.98px) {
   .hero-card-wrapper {
-    padding: 0.5rem 0 1rem;
+    padding: 0.5rem 0 0;
   }
   .hero-section.hero-card {
     min-height: auto;
@@ -667,15 +691,15 @@ body {
     background-color: #ffffff;
   }
   .hero-bg-layer {
-    opacity: 0.12;
+    opacity: 0.15;
     background-position: center center;
     background-size: cover;
   }
   .hero-flayer-inner {
-    padding: 1.5rem 1rem 1rem;
+    padding: 1.5rem 1rem 0;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     min-height: auto;
   }
   .hero-text-block {
@@ -706,22 +730,28 @@ body {
     font-size: 0.88rem;
     padding: 0.55rem 1.1rem;
   }
+  /* Mobile: foto kembali static (bukan absolute) agar stack normal */
   .hero-candidate-wrapper {
-    flex: none;
+    position: static;
     width: 100%;
-    max-width: 260px;
+    max-width: 280px;
+    height: auto;
     min-height: auto;
-    margin: 0 auto;
+    margin: 0.5rem auto 0;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     overflow: visible;
     order: 2;
+    transform: none;
+    pointer-events: auto;
   }
   .hero-candidate-img {
-    max-height: 230px;
-    margin: 0 auto;
-    align-self: auto;
+    height: auto;
+    max-height: 240px;
     width: auto;
+    margin: 0 auto;
+    align-self: center;
+    display: block;
   }
   .hero-quote-box {
     display: none !important;
@@ -730,12 +760,13 @@ body {
     position: relative;
     right: auto;
     bottom: auto;
-    width: calc(100% + 0px);
+    width: 100%;
     max-width: 100%;
-    margin: 0.75rem 0 0;
-    border-radius: 30px;
-    padding: 0.6rem 1rem;
+    margin: 0.5rem 0 0;
+    border-radius: 0 0 16px 16px;
+    padding: 0.65rem 1rem;
     order: 3;
+    pointer-events: auto;
   }
   .hero-sapa-pill-title {
     font-size: 0.9rem;
@@ -750,10 +781,10 @@ body {
    ========================================================================== */
 .quick-nav-wrapper {
   margin-top: 0;
-  padding-top: 2.5rem;
+  padding-top: 0.75rem;   /* dikurangi dari 2.5rem agar rapat ke hero */
   position: relative;
   z-index: 10;
-  margin-bottom: 3rem;
+  margin-bottom: 0.5rem;  /* dikurangi dari 2.5rem agar rapat dengan section bawah */
 }
 
 .quick-card {
