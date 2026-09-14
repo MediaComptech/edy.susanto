@@ -1,0 +1,27 @@
+# Keamanan Dasar & Routing Apache Tampirkulon
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /edy_susanto/
+
+    # Cegah akses ke berkas sensitif .sql, .env, .git, .md
+    <FilesMatch "\.(sql|env|git|md|log|ini)$">
+        Require all denied
+    </FilesMatch>
+
+    # Jangan rewrite jika file atau folder fisik nyata ada
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Rewrite clean URL: /profil -> index.php?page=profil
+    RewriteRule ^([a-zA-Z0-9_-]+)/?$ index.php?page=$1 [L,QSA]
+</IfModule>
+
+# Nonaktifkan directory listing
+Options -Indexes
+
+# Header Keamanan
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>

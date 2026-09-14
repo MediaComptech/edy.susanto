@@ -1,0 +1,1225 @@
+/* ==========================================================================
+   Website Resmi & Sapa Warga Edy Susanto (No. Urut 2)
+   Calon Kepala Desa Tampirkulon
+   Desain Modern, Responsif, Fullscreen & Terintegrasi PWA
+   ========================================================================== */
+
+:root {
+  --color-primary: #b71c1c;
+  --color-primary-dark: #8e0000;
+  --color-primary-light: #d32f2f;
+  --color-primary-soft: #fff5f5;
+  --color-asri: #2e7d32;
+  --color-asri-soft: #e8f5e9;
+  --color-maju: #c62828;
+  --color-maju-soft: #ffebee;
+  --color-rukun: #ef6c00;
+  --color-rukun-soft: #fff3e0;
+  --color-dark: #1e293b;
+  --color-muted: #64748b;
+  --color-border: #f1f5f9;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.1);
+  --radius-card: 16px;
+  --radius-pill: 50px;
+  --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-handwrite: 'Caveat', cursive, serif;
+}
+
+/* Base & Fullscreen Container Utility */
+body {
+  font-family: var(--font-main);
+  color: var(--color-dark);
+  background-color: #fcfdfd;
+  line-height: 1.6;
+  overflow-x: hidden;
+  padding-bottom: 70px;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 0;
+  }
+}
+
+/* Custom Wide Fluid Container for Fullscreen Modern Feel */
+.container-custom {
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 1200px) {
+  .container-custom {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Typography */
+.font-handwriting {
+  font-family: var(--font-handwrite);
+  line-height: 1.2;
+}
+
+.text-primary-red {
+  color: var(--color-primary) !important;
+}
+
+.bg-primary-red {
+  background-color: var(--color-primary) !important;
+}
+
+.bg-primary-soft {
+  background-color: var(--color-primary-soft) !important;
+}
+
+/* ==========================================================================
+   Header & Navbar (Sleek, Compact, Centered)
+   ========================================================================== */
+.main-header {
+  height: 72px;
+  display: flex;
+  align-items: center;
+}
+
+.badge-no-urut {
+  width: 38px;
+  height: 38px;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(183, 28, 28, 0.35);
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  color: #334155;
+  padding: 0.4rem 0.85rem !important;
+  font-size: 0.94rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--color-primary) !important;
+}
+
+.navbar-nav .nav-link.active {
+  color: var(--color-primary) !important;
+  font-weight: 700;
+  position: relative;
+}
+
+.navbar-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0.85rem;
+  right: 0.85rem;
+  height: 2.5px;
+  background-color: var(--color-primary);
+  border-radius: 2px;
+}
+
+/* Sapa Warga Pill on Navbar */
+.nav-badge-sapa {
+  border: 1.5px solid #ef5350 !important;
+  color: var(--color-primary) !important;
+  border-radius: 30px !important;
+  padding: 0.35rem 0.95rem !important;
+  font-weight: 600 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap !important;
+}
+
+.nav-badge-sapa:hover, .nav-badge-sapa.active {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary) !important;
+}
+
+.nav-badge-sapa.active::after {
+  display: none !important;
+}
+
+/* Tombol Sampaikan Aspirasi (Compact & Modern) */
+.btn-aspirasi-header {
+  background-color: var(--color-primary);
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 0.92rem;
+  border-radius: 30px;
+  padding: 0.5rem 1.4rem;
+  box-shadow: 0 4px 12px rgba(183, 28, 28, 0.25);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  border: none;
+}
+
+.btn-aspirasi-header:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(183, 28, 28, 0.35);
+}
+
+.btn-search-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s;
+}
+
+.btn-search-icon:hover {
+  background: #f1f5f9;
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Hero Section — Contained Flayer Card (Match UI/1.png)
+   Tidak Panjang Sampai Pinggir & Tanpa Garis Vertikal
+   ========================================================================== */
+
+.hero-card-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 0.5rem 0 1.25rem;
+}
+
+/* Hero Section as a Bounded Card (Tidak Panjang Sampai Pinggir) */
+.hero-section.hero-card {
+  position: relative;
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 10px 32px rgba(15, 23, 42, 0.08);
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+/* Layer 0: Seamless Background Image (Zero Vertical Lines) */
+.hero-bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Flayer Inner: Content above background */
+.hero-flayer-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 2.5rem 2.5rem 2.5rem 3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 420px;
+  flex: 1;
+}
+
+/* [1] Text Block (Left Side) */
+.hero-text-block {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 500px;
+  z-index: 3;
+}
+
+.hero-tagline-badge {
+  background-color: #fee2e2;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.84rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 2px 6px rgba(183, 28, 28, 0.08);
+}
+
+.hero-name {
+  font-size: clamp(2.3rem, 4.2vw, 3.4rem);
+  font-weight: 900;
+  letter-spacing: -1.2px;
+  color: #0f172a;
+  line-height: 1.05;
+  margin: 0.4rem 0 0.45rem;
+}
+
+.badge-hero-no {
+  background-color: var(--color-primary);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.92rem;
+  padding: 0.3rem 0.95rem;
+  border-radius: 7px;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 3px 10px rgba(183, 28, 28, 0.3);
+}
+
+.hero-quote-slogan {
+  font-family: var(--font-handwrite);
+  font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+  color: #1e293b;
+  line-height: 1.15;
+  font-weight: 700;
+  margin-bottom: 1.1rem;
+}
+
+.hero-pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.pillar-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 1rem;
+  border-radius: 30px;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #edf2f7;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #334155;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pillar-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.09);
+}
+
+.pillar-icon-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.pillar-icon-asri  { background-color: var(--color-asri); }
+.pillar-icon-maju  { background-color: var(--color-maju); }
+.pillar-icon-rukun { background-color: var(--color-rukun); }
+
+.hero-cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.hero-cta-buttons .btn-danger {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 14px rgba(183, 28, 28, 0.35);
+  transition: all 0.25s ease;
+}
+
+.hero-cta-buttons .btn-danger:hover {
+  background: #8e0000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(183, 28, 28, 0.45);
+}
+
+.hero-cta-buttons .btn-light {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  font-weight: 700;
+  padding: 0.65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+}
+
+.hero-cta-buttons .btn-light:hover {
+  background: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* Candidate Wrapper (Right Column Desktop, Bottom on Mobile) */
+.hero-candidate-wrapper {
+  position: relative;
+  flex: 0 0 48%;
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  align-self: stretch;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.hero-candidate-img {
+  max-height: 400px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: bottom center;
+  display: block;
+  filter: drop-shadow(0 12px 24px rgba(15, 23, 42, 0.15));
+  transition: transform 0.3s ease;
+  z-index: 2;
+  align-self: flex-end;
+}
+
+.hero-candidate-wrapper:hover .hero-candidate-img {
+  transform: scale(1.02);
+}
+
+.hero-quote-box {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  max-width: 200px;
+  text-align: right;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.hero-quote-mark {
+  font-family: var(--font-handwrite);
+  font-size: 4rem;
+  color: rgba(30, 41, 59, 0.45);
+  line-height: 0.5;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.hero-quote-text {
+  font-family: var(--font-handwrite);
+  font-size: 1.45rem;
+  color: #1e293b;
+  line-height: 1.25;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 1px 4px rgba(255,255,255,0.9);
+}
+
+.hero-quote-author {
+  font-size: 0.82rem;
+  color: #475569;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* [4] Sapa Warga Floating Capsule Pill */
+.hero-sapa-floating-pill {
+  position: absolute;
+  bottom: 1.2rem;
+  right: 1.5rem;
+  z-index: 10;
+  background: linear-gradient(90deg, #b71c1c 0%, #c62828 60%, #e53935 100%);
+  color: #fff !important;
+  text-decoration: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: 50px;
+  box-shadow: 0 10px 24px rgba(183, 28, 28, 0.45);
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  max-width: 420px;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.hero-sapa-floating-pill:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(183, 28, 28, 0.55);
+  background: linear-gradient(90deg, #8e0000 0%, #b71c1c 60%, #c62828 100%);
+}
+
+.hero-sapa-pill-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero-sapa-pill-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.hero-sapa-pill-title {
+  font-weight: 800;
+  font-size: 1rem;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.hero-sapa-pill-sub {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.2;
+}
+
+.hero-sapa-pill-arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #b71c1c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+}
+
+.hero-sapa-floating-pill:hover .hero-sapa-pill-arrow {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   Hero Card — Responsive Breakpoints
+   ============================================================ */
+
+/* --- SM (576px - 767.98px) --- */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .hero-section.hero-card {
+    min-height: auto;
+  }
+  .hero-flayer-inner {
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1.5rem;
+    gap: 1rem;
+    min-height: auto;
+  }
+  .hero-text-block {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+  .hero-candidate-wrapper {
+    flex: none;
+    width: 100%;
+    max-width: 320px;
+    min-height: auto;
+    overflow: visible;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-candidate-img {
+    max-height: 260px;
+    align-self: auto;
+  }
+  .hero-sapa-floating-pill {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 0.75rem auto 0;
+  }
+  .hero-tagline-badge { margin: 0 auto; }
+  .hero-pillars { justify-content: center; }
+  .hero-cta-buttons { justify-content: center; }
+}
+
+/* --- MD (768px - 991.98px) --- */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .hero-section.hero-card {
+    min-height: 380px;
+  }
+  .hero-flayer-inner {
+    padding: 2rem 1.5rem;
+    min-height: 380px;
+    gap: 1rem;
+    align-items: center;
+  }
+  .hero-text-block {
+    flex: 1 1 0;
+    max-width: 52%;
+  }
+  .hero-candidate-wrapper {
+    flex: 0 0 44%;
+    width: 44%;
+    min-height: auto;
+  }
+  .hero-candidate-img {
+    max-height: 340px;
+  }
+  .hero-sapa-floating-pill {
+    right: 0.75rem;
+    bottom: 0.75rem;
+    max-width: 300px;
+  }
+}
+
+/* --- LG (992px+) --- */
+@media (min-width: 992px) {
+  .hero-section.hero-card {
+    min-height: 440px;
+  }
+  .hero-flayer-inner {
+    padding: 2.5rem 2rem;
+    min-height: 440px;
+    align-items: center;
+  }
+  .hero-text-block {
+    flex: 1 1 0;
+    max-width: 50%;
+  }
+  .hero-candidate-wrapper {
+    flex: 0 0 46%;
+    width: 46%;
+    min-height: auto;
+  }
+  .hero-candidate-img {
+    max-height: 400px;
+  }
+  .hero-sapa-floating-pill {
+    right: 1.5rem;
+    bottom: 1.25rem;
+  }
+}
+
+/* --- XL (1200px+) --- */
+@media (min-width: 1200px) {
+  .hero-section.hero-card {
+    min-height: 480px;
+  }
+  .hero-flayer-inner {
+    padding: 3rem 2.5rem;
+    min-height: 480px;
+  }
+  .hero-text-block {
+    flex: 1 1 0;
+    max-width: 48%;
+  }
+  .hero-candidate-wrapper {
+    flex: 0 0 48%;
+    width: 48%;
+  }
+  .hero-candidate-img {
+    max-height: 450px;
+  }
+  .hero-sapa-floating-pill {
+    right: 2rem;
+    bottom: 1.5rem;
+  }
+}
+
+/* --- Mobile (< 576px) --- */
+@media (max-width: 575.98px) {
+  .hero-card-wrapper {
+    padding: 0.5rem 0 1rem;
+  }
+  .hero-section.hero-card {
+    min-height: auto;
+    border-radius: 16px;
+    background-color: #ffffff;
+  }
+  .hero-bg-layer {
+    opacity: 0.12;
+    background-position: center center;
+    background-size: cover;
+  }
+  .hero-flayer-inner {
+    padding: 1.5rem 1rem 1rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: auto;
+  }
+  .hero-text-block {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    order: 1;
+  }
+  .hero-tagline-badge {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-name {
+    font-size: 1.9rem;
+  }
+  .hero-quote-slogan {
+    font-size: 1.35rem;
+  }
+  .hero-pillars {
+    justify-content: center;
+  }
+  .hero-cta-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .hero-cta-buttons .btn {
+    font-size: 0.88rem;
+    padding: 0.55rem 1.1rem;
+  }
+  .hero-candidate-wrapper {
+    flex: none;
+    width: 100%;
+    max-width: 260px;
+    min-height: auto;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    order: 2;
+  }
+  .hero-candidate-img {
+    max-height: 230px;
+    margin: 0 auto;
+    align-self: auto;
+    width: auto;
+  }
+  .hero-quote-box {
+    display: none !important;
+  }
+  .hero-sapa-floating-pill {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: calc(100% + 0px);
+    max-width: 100%;
+    margin: 0.75rem 0 0;
+    border-radius: 30px;
+    padding: 0.6rem 1rem;
+    order: 3;
+  }
+  .hero-sapa-pill-title {
+    font-size: 0.9rem;
+  }
+  .hero-sapa-pill-sub {
+    font-size: 0.73rem;
+  }
+}
+
+/* ==========================================================================
+   Quick Navigation Cards Bar (Match UI/1.png)
+   ========================================================================== */
+.quick-nav-wrapper {
+  margin-top: 0;
+  padding-top: 2.5rem;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 3rem;
+}
+
+.quick-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.25rem 0.75rem;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  color: #334155;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.quick-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  color: var(--color-primary);
+  border-color: #fecdd3;
+}
+
+.quick-card.active-card {
+  border: 1.5px solid #ef5350;
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.quick-card-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+  color: #c62828;
+}
+
+.quick-card-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ==========================================================================
+   Section: Tampirkulon yang Kita Kenal & 3 Pillars
+   ========================================================================== */
+.card-pillar-feature {
+  border-radius: var(--radius-card);
+  border: 1px solid #f1f5f9;
+  background: #fff;
+  padding: 1.75rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  height: 100%;
+  transition: all 0.25s ease;
+}
+
+.card-pillar-feature:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.circle-pillar-large {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 1.1rem;
+}
+
+.card-tubing-featured {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  min-height: 200px;
+}
+
+.card-tubing-featured img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card-tubing-featured:hover img {
+  transform: scale(1.04);
+}
+
+.card-tubing-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.88) 100%);
+  padding: 1.25rem 1.4rem;
+  color: #fff;
+}
+
+/* ==========================================================================
+   7 Program Unggulan
+   ========================================================================== */
+.program-card {
+  border-radius: var(--radius-card);
+  border: 1px solid #f1f5f9;
+  background: #ffffff;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  height: 100%;
+  transition: all 0.25s ease;
+}
+
+.program-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.program-card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.program-card-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+  color: #0f172a;
+}
+
+.program-card-desc {
+  font-size: 0.88rem;
+  color: var(--color-muted);
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   Sapa Warga Sub-Page (Exact UI/1.png match)
+   ========================================================================== */
+.sapa-banner-rich {
+  background: linear-gradient(135deg, #246d32 0%, #175424 100%);
+  border-radius: 20px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(23, 84, 36, 0.2);
+}
+
+.sapa-quote-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  color: #1e293b;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Red-Underlined Modern Tabs (as in UI/1.png) */
+.sapa-nav-tabs-clean {
+  border-bottom: 1.5px solid #e2e8f0;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.sapa-nav-tabs-clean .tab-link-clean {
+  background: transparent;
+  border: none;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.6rem 0.2rem 0.8rem;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.sapa-nav-tabs-clean .tab-link-clean:hover {
+  color: var(--color-primary);
+}
+
+.sapa-nav-tabs-clean .tab-link-clean.active {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.sapa-nav-tabs-clean .tab-link-clean.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1.5px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: var(--color-primary);
+  border-radius: 2px;
+}
+
+/* Sapa Warga Form Styling */
+.form-card-aspirasi {
+  background: #ffffff;
+  border-radius: var(--radius-card);
+  padding: 2.25rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+}
+
+/* 2 Columns of Clean Radio Buttons */
+.radio-clean-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  cursor: pointer;
+}
+
+.radio-clean-item input[type="radio"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* Statistik Box */
+.stat-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  border: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.stat-number {
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #0f172a;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Status Badges */
+.badge-status {
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.badge-status-proses {
+  background-color: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #fed7aa;
+}
+
+.badge-status-selesai {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.badge-status-rencana {
+  background-color: #faf5ff;
+  color: #7e22ce;
+  border: 1px solid #e9d5ff;
+}
+
+/* Feed Aspirasi */
+.card-aspirasi-item {
+  border-radius: 14px;
+  border: 1px solid #f1f5f9;
+  background: #fff;
+  padding: 1.1rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  margin-bottom: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.card-aspirasi-item:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  border-color: #e2e8f0;
+}
+
+/* ==========================================================================
+   Mobile Bottom Nav & PWA Banner Toast
+   ========================================================================== */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 64px;
+  z-index: 1030;
+  padding: 0 0.5rem;
+}
+
+.mobile-bottom-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 500;
+  gap: 2px;
+  transition: all 0.2s ease;
+}
+
+.mobile-bottom-item i {
+  font-size: 1.25rem;
+}
+
+.mobile-bottom-item.active {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.mobile-bottom-item.btn-sapa-center {
+  position: relative;
+  top: -10px;
+}
+
+.mobile-bottom-item.btn-sapa-center .circle-sapa-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  box-shadow: 0 4px 12px rgba(183, 28, 28, 0.4);
+}
+
+@media (min-width: 768px) {
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+/* PWA Toast Notification (Polished & Non-obstructive) */
+.pwa-install-banner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 380px;
+  max-width: calc(100% - 32px);
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid #fee2e2;
+  padding: 0.9rem 1.1rem;
+  z-index: 1040;
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .pwa-install-banner {
+    bottom: 74px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+  }
+}
+
+/* Footer */
+.site-footer {
+  background-color: #0f172a;
+  color: #cbd5e1;
+  padding: 4rem 0 2rem;
+  font-size: 0.95rem;
+}
+
+.site-footer a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-footer a:hover {
+  color: #ffffff;
+}
+
+.footer-heading {
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.footer-social-link {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #1e293b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff !important;
+  margin-right: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.footer-social-link:hover {
+  background: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.btn-whatsapp-float {
+  background-color: #25d366;
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 0.55rem 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-whatsapp-float:hover {
+  background-color: #1ebc57;
+  transform: translateY(-2px);
+}
