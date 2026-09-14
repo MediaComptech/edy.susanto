@@ -67,16 +67,42 @@ function initCleanTabs() {
 let deferredPrompt = null;
 
 function initPWA() {
-  // Registrasi Service Worker
+  // Registrasi Service Worker - ONLINE FIRST STRATEGY
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./service-worker.js')
         .then((reg) => {
           console.log('Service Worker Tampirkulon terdaftar:', reg.scope);
+          // Online First: Selalu cek pembaruan file ke server saat online
+          if (navigator.onLine && typeof reg.update === 'function') {
+            reg.update();
+          }
+
+          // Dengarkan event jika ada update SW baru terinstall
+          reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            if (newWorker) {
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  console.log('PWA: Versi baru berhasil diperbarui dari server (Online First).');
+                }
+              });
+            }
+          });
         })
         .catch((err) => {
           console.log('Registrasi Service Worker gagal:', err);
         });
+
+      // Deteksi ketika perangkat beralih kembali online
+      window.addEventListener('online', () => {
+        navigator.serviceWorker.ready.then((reg) => {
+          if (typeof reg.update === 'function') {
+            reg.update();
+            console.log('Koneksi online pulih. Sinkronisasi data PWA terbaru...');
+          }
+        });
+      });
     });
   }
 

@@ -1300,7 +1300,7 @@ body {
    HALAMAN PROGRAM KERJA - PROG-* STYLES (MATCH UI MOCKUP)
    ============================================================ */
 
-/* Badge Nomor Section (Lingkaran Hijau) */
+/* Badge Nomor Section - diganti dengan accent bar (garis hijau vertikal) */
 .prog-section-num-badge {
   width: 34px;
   height: 34px;
@@ -1310,31 +1310,40 @@ body {
   box-shadow: 0 2px 8px rgba(27, 94, 32, 0.25);
 }
 
-/* ------ SECTION 1: HERO BANNER ------ */
-.prog-hero-section {
-  background: linear-gradient(135deg, #0d320d 0%, #1b5e20 50%, #2e7d32 100%);
-  background-image: url('../images/banner/hero_bg_clean.jpg');
-  background-size: cover;
-  background-position: center center;
-  min-height: 480px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 70px 0 60px;
-  overflow: hidden;
+/* Accent Bar: garis hijau vertikal sebagai pengganti badge angka section */
+.prog-section-accent-bar {
+  width: 4px;
+  min-height: 42px;
+  background: linear-gradient(180deg, #2e7d32 0%, #66bb6a 100%);
+  border-radius: 4px;
+  align-self: stretch;
 }
 
-.prog-hero-section::before {
+/* ------ SECTION 1: HERO BANNER (BOUNDED CARD SEPERTI BERANDA) ------ */
+.prog-hero-card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0d320d 0%, #1b5e20 50%, #2e7d32 100%);
+  background-image: url('../images/banner/hero_bg_pure_landscape.jpg');
+  background-size: cover;
+  background-position: center 40%;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.prog-hero-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(13, 50, 13, 0.82) 0%, rgba(27, 94, 32, 0.72) 55%, rgba(15, 61, 18, 0.82) 100%);
+  background: linear-gradient(135deg, rgba(13, 50, 13, 0.84) 0%, rgba(27, 94, 32, 0.72) 55%, rgba(15, 61, 18, 0.84) 100%);
   z-index: 1;
 }
 
-.prog-hero-section .container-custom {
+.prog-hero-inner {
   position: relative;
   z-index: 2;
+  padding: 2.25rem 2rem;
 }
 
 .prog-hero-badge {
@@ -1349,24 +1358,24 @@ body {
   padding: 0.35rem 0.95rem;
   border-radius: 30px;
   backdrop-filter: blur(6px);
-  margin-bottom: 1.15rem;
+  margin-bottom: 1rem;
 }
 
 .prog-hero-title {
-  font-size: clamp(1.85rem, 4vw, 2.9rem);
+  font-size: clamp(1.75rem, 3.8vw, 2.75rem);
   font-weight: 800;
   color: #ffffff;
   line-height: 1.22;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
   letter-spacing: -0.01em;
 }
 
 .prog-hero-subtitle {
-  font-size: 0.98rem;
+  font-size: 0.96rem;
   color: rgba(255, 255, 255, 0.88);
   line-height: 1.6;
-  margin-bottom: 1.75rem;
-  max-width: 580px;
+  margin-bottom: 1.25rem;
+  max-width: 560px;
 }
 
 .prog-hero-cta {
@@ -1381,94 +1390,96 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.25rem 1.75rem;
+  padding: 1.15rem 1.65rem;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 18px;
   backdrop-filter: blur(10px);
   text-align: center;
-  max-width: 380px;
+  max-width: 360px;
 }
 
 .prog-hero-watermark {
   position: static !important;
   font-family: 'Caveat', cursive, var(--font-handwriting);
-  font-size: clamp(1.5rem, 2.8vw, 2.15rem);
+  font-size: clamp(1.45rem, 2.6vw, 2rem);
   color: #ffffff;
   font-weight: 700;
   line-height: 1.25;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   letter-spacing: 0.01em;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
   display: block;
 }
 
 .prog-hero-slogan-meta {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: rgba(255, 255, 255, 0.75);
   margin-top: 0;
   line-height: 1.3;
 }
 
-/* ------ SECTION 2: STATISTIK SINGKAT (STATS BAR LEBIH KECIL & COMPACT) ------ */
+/* ------ SECTION 2: STATISTIK SINGKAT (STATS BAR ULTRA COMPACT & LEBIH KECIL) ------ */
 .prog-stats-section {
   background: transparent;
   position: relative;
   z-index: 10;
-  margin-top: -28px;
-  padding-bottom: 0;
+  margin-top: -24px;
+  padding: 0;
   margin-bottom: 0;
 }
 
-.prog-stats-bar {
+.prog-stats-bar-compact {
   background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  padding: 0.85rem 1.25rem;
+  border-radius: 50px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+  padding: 0.75rem 1.5rem;
   border: 1px solid #edf2f7;
-  max-width: 1100px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
-.prog-stat-card {
-  padding: 0.35rem 0.5rem;
+.prog-stat-compact-item {
+  padding: 0.4rem 0.75rem;
 }
 
-.prog-stat-icon-circle {
-  width: 38px;
-  height: 38px;
+.prog-stat-mini-icon {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   background-color: #e8f5e9;
   color: #2e7d32;
+  flex-shrink: 0;
 }
 
-.prog-stat-number {
-  font-size: clamp(1.3rem, 2.5vw, 1.65rem);
+.prog-stat-mini-val {
+  font-size: 1.22rem;
   font-weight: 800;
   line-height: 1.15;
-  margin-bottom: 0.15rem;
+  color: #1a1a2e;
 }
 
-.prog-stat-title-top {
-  font-size: 0.95rem;
-  font-weight: 800;
-  line-height: 1.15;
-  margin-bottom: 0.15rem;
-}
-
-.prog-stat-label {
-  font-size: 0.74rem;
-  color: #64748b;
+.prog-stat-mini-txt {
+  font-size: 0.78rem;
+  color: #495057;
   font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .border-start-md {
+    border-left: 1px solid #eef2f6 !important;
+  }
 }
 
 /* Rapatkan Jarak Section 2 dan Section 3 (Hilangkan Gap Kotak Kuning) */
 .prog-section-spacing-top {
-  padding-top: 2rem !important;
+  padding-top: 1.85rem !important;
 }
 
 /* ------ SECTION 3: 7 PROGRAM PRIORITAS CARDS ------ */
@@ -1578,27 +1589,76 @@ body {
   border: 1px solid #e9ecef;
 }
 
-.prog-potensi-hero-banner {
-  height: 165px;
+/* Banner kiri: aspect-ratio 16:9, foto tidak terpotong */
+.prog-potensi-banner-wrap {
+  width: 100%;
+}
+
+.prog-potensi-banner-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
 }
 
 .prog-potensi-hero-overlay {
   position: absolute;
-  bottom: 10px;
+  bottom: 8px;
   left: 10px;
   z-index: 2;
 }
 
-.prog-potensi-mini-img {
-  height: 85px;
+/* Photo card kanan: aspect-ratio 4:3, foto tampil penuh */
+.prog-potensi-photo-card {
+  background: #f8f9fa;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.prog-potensi-mini-item:hover .prog-potensi-mini-img img {
-  transform: scale(1.06);
-  transition: transform 0.3s ease;
+.prog-potensi-photo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
 }
 
-/* ------ SECTION 5: ROADMAP STEPPER ------ */
+.prog-potensi-photo-ratio {
+  position: relative;
+  width: 100%;
+  padding-top: 75%; /* aspect-ratio 4:3 */
+  overflow: hidden;
+}
+
+.prog-potensi-photo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;    /* contain = tidak terpotong, foto tampil penuh */
+  object-position: center;
+  background: #eef2f7;
+}
+
+/* Label bawah foto dengan ikon warna */
+.prog-potensi-photo-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  background: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  border-top: 1px solid #f0f0f0;
+}
+
+.prog-potensi-photo-label i {
+  font-size: 0.68rem;
+  flex-shrink: 0;
+}
+
+/* Backward-compat: class lama tidak dipakai lagi tapi jaga kalau masih ada */
+.prog-potensi-hero-banner { height: auto; }
+.prog-potensi-mini-img    { height: auto; }
+
+
 .prog-stepper-card {
   background: #ffffff;
   border: 1.5px solid #e9ecef;
@@ -1702,9 +1762,71 @@ body {
   margin-bottom: 0;
 }
 
-/* ------ SECTION 8: BANNER CTA SAPA WARGA ------ */
+/* ------ SECTION 8: BANNER CTA SAPA WARGA (COMPACT SEPERTI KOTAK BIRU) ------ */
 .prog-cta-sapa-card {
   border: 1px solid #c8e6c9;
+  background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+  padding: 0.65rem 1.25rem;
+}
+
+.prog-cta-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1b5e20;
+  margin-bottom: 0.15rem;
+  line-height: 1.25;
+}
+
+.prog-cta-subtitle {
+  font-size: 0.76rem;
+  color: #495057;
+  margin-bottom: 0;
+  line-height: 1.35;
+}
+
+.prog-cta-icon-circle {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 50%;
+  background: #2e7d32;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+/* Foto dialog warga di tengah CTA - Presisi & Sleek seimbang dengan teks & tombol */
+.prog-cta-photo-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prog-cta-photo {
+  height: 54px;
+  width: auto;
+  max-width: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(200, 230, 201, 0.8);
+}
+
+.prog-cta-btn {
+  font-size: 0.8rem;
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.prog-cta-secure {
+  font-size: 0.65rem;
+  color: #6c757d;
+  margin-top: 3px;
 }
 
 /* ------ RESPONSIVE BREAKPOINTS ------ */
@@ -1727,9 +1849,7 @@ body {
     margin-top: -24px;
   }
 
-  .prog-potensi-hero-banner {
-    height: 140px;
-  }
+  /* potensi-hero-banner sudah diganti dengan aspect-ratio, tidak perlu override */
 }
 
 @media (max-width: 767px) {
@@ -1741,12 +1861,14 @@ body {
     font-size: 1.6rem;
   }
 
-  .prog-potensi-mini-img {
-    height: 70px;
-  }
-
   .prog-news-img-wrap {
     height: 140px;
+  }
+
+  /* Section 4: label lebih kecil di mobile */
+  .prog-potensi-photo-label {
+    font-size: 0.62rem;
+    padding: 4px 6px;
   }
 }
 
@@ -1781,12 +1903,14 @@ body {
     font-size: 0.72rem;
   }
 
-  .prog-potensi-mini-img {
-    height: 60px;
+  .prog-potensi-photo-label {
+    font-size: 0.58rem;
+    padding: 3px 5px;
+    gap: 2px;
   }
 
-  .prog-potensi-mini-label {
-    font-size: 0.7rem;
+  .prog-potensi-photo-label i {
+    display: none; /* sembunyikan icon di layar sangat kecil */
   }
 }
 

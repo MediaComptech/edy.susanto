@@ -1,15 +1,17 @@
 // Service Worker untuk PWA Sapa Warga Tampirkulon (Edy Susanto No. 2)
-const CACHE_NAME = 'sapa-warga-v1';
+// Strategi: ONLINE FIRST (Network-First dengan Offline Cache Fallback)
+const CACHE_NAME = 'sapa-warga-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.php?page=beranda',
   './index.php?page=sapa-warga',
+  './index.php?page=program',
   './assets/css/style.css',
   './assets/js/main.js',
   './assets/images/logo/logo_no2.png',
   './assets/images/icons/icon-192.png',
   './assets/images/icons/icon-512.png',
-  './assets/images/banner/edy_susanto_hero.jpg'
+  './assets/images/banner/hero_bg_clean.jpg'
 ];
 
 // Install event - caching basic shell
@@ -21,34 +23,39 @@ self.addEventListener('install', (event) => {
       });
     })
   );
+  // Segera aktifkan worker baru tanpa menunggu tab ditutup
   self.skipWaiting();
 });
 
-// Activate event - clean old caches
+// Activate event - bersihkan semua cache lama secara instan
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log('Menghapus cache versi lama:', key);
             return caches.delete(key);
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// Fetch event - network first with cache fallback
+// Fetch event - ONLINE FIRST (Network First dengan Cache Fallback)
 self.addEventListener('fetch', (event) => {
   // Hanya tangani GET requests
   if (event.request.method !== 'GET') return;
 
+  // Jangan cache request ke area admin atau API POST
+  if (event.request.url.includes('/admin/')) return;
+
   event.respondWith(
+    // 1. Selalu utamakan ambil dari JARINGAN (Online First)
     fetch(event.request)
       .then((networkResponse) => {
-        // Jika response valid, clone ke cache jika berasal dari origin yang sama
+        // Jika respons valid, perbarui cache di latar belakang
         if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
@@ -58,12 +65,13 @@ self.addEventListener('fetch', (event) => {
         return networkResponse;
       })
       .catch(() => {
+        // 2. Hanya jika offline / jaringan gagal, ambil dari cache
         return caches.match(event.request).then((cachedResponse) => {
           if (cachedResponse) {
             return cachedResponse;
           }
-          // Fallback sederhana jika offline
-          if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
+          // Fallback navigasi jika offline
+          if (event.request.mode === 'navigate' || (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html'))) {
             return caches.match('./index.php?page=beranda');
           }
         });

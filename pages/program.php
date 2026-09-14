@@ -225,88 +225,102 @@ try {
 } catch (Exception $e) {
     $relatedNews = [];
 }
+
+// Ambil Pengaturan Gambar Hero & Banner CTA (Dapat diganti via Admin Pengaturan)
+$bgHero  = get_pengaturan($pdo, 'bg_hero', 'assets/images/banner/hero_bg_pure_landscape.jpg');
+$fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_warga.jpg');
 ?>
 
-<!-- SECTION 1: HERO BANNER DENGAN BACKGROUND ALAM & WATERMARK -->
-<section class="prog-hero-section">
-  <div class="container-custom position-relative">
-    <div class="row align-items-center">
-      <div class="col-lg-8 col-xl-7">
-        <span class="prog-hero-badge">
-          PROGRAM KERJA
-        </span>
-        <h1 class="prog-hero-title">
-          Bersama Wujudkan Tampirkulon yang<br class="d-none d-md-inline"> Maju, Sejahtera dan Lestari
-        </h1>
-        <p class="prog-hero-subtitle">
-          Program kerja ini disusun berdasarkan potensi desa, kebutuhan masyarakat, dan data yang ada. Dengan kolaborasi, kita wujudkan perubahan nyata untuk Tampirkulon.
-        </p>
-        <div class="prog-hero-cta">
-          <a href="#programPrioritas" class="btn btn-success btn-lg rounded-pill fw-bold shadow-sm px-4">
-            Lihat Program &rarr;
-          </a>
-          <a href="index.php?page=sapa-warga" class="btn btn-light btn-lg rounded-pill fw-bold px-4 text-dark shadow-sm">
-            <i class="bi bi-chat-dots me-2 text-success"></i> Sapa Warga
-          </a>
-        </div>
-      </div>
-      <div class="col-lg-4 col-xl-5 text-center text-lg-end mt-4 mt-lg-0">
-        <div class="prog-hero-slogan-box">
-          <span class="prog-hero-watermark">
-            &ldquo;Desa Kuat, Warganya Hebat&rdquo;
+<!-- SECTION 1: HERO BANNER STANDAR (BOUNDED IN CONTAINER-CUSTOM SEPERTI BERANDA) -->
+<div class="container-custom pt-3 pb-1">
+  <section class="prog-hero-card" style="background-image: url('<?= e($bgHero) ?>');">
+    <div class="prog-hero-inner position-relative">
+      <div class="row align-items-center">
+        <div class="col-lg-8 col-xl-7">
+          <span class="prog-hero-badge">
+            PROGRAM KERJA
           </span>
-          <div class="prog-hero-slogan-meta">
-            <i class="bi bi-check2-circle text-success me-1"></i> Komitmen Bersama Edy Susanto (No. Urut 2)
+          <h1 class="prog-hero-title">
+            Bersama Wujudkan Tampirkulon yang<br class="d-none d-md-inline"> Maju, Sejahtera dan Lestari
+          </h1>
+          <p class="prog-hero-subtitle">
+            Program kerja ini disusun berdasarkan potensi desa, kebutuhan masyarakat, dan data yang ada. Dengan kolaborasi, kita wujudkan perubahan nyata untuk Tampirkulon.
+          </p>
+          <div class="prog-hero-cta">
+            <a href="#programPrioritas" class="btn btn-success btn-sm rounded-pill fw-semibold shadow-sm px-3">
+              Lihat Program &rarr;
+            </a>
+            <a href="index.php?page=sapa-warga" class="btn btn-light btn-sm rounded-pill fw-semibold px-3 text-dark shadow-sm">
+              <i class="bi bi-chat-dots me-1 text-success"></i> Sapa Warga
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xl-5 text-center text-lg-end mt-4 mt-lg-0">
+          <div class="prog-hero-slogan-box">
+            <span class="prog-hero-watermark">
+              &ldquo;Desa Kuat, Warganya Hebat&rdquo;
+            </span>
+            <div class="prog-hero-slogan-meta">
+              <i class="bi bi-check2-circle text-success me-1"></i> Komitmen Bersama Edy Susanto (No. Urut 2)
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
-<!-- SECTION 2: STATISTIK SINGKAT (STATS BAR LEBIH KECIL & DATA REALTIME) -->
+<!-- SECTION 2: STATISTIK SINGKAT (STATS BAR ULTRA COMPACT & DATA REALTIME) -->
 <section class="prog-stats-section">
   <div class="container-custom">
-    <div class="prog-stats-bar">
-      <div class="row g-2 g-md-3 text-center align-items-center">
+    <div class="prog-stats-bar-compact">
+      <div class="row g-2 g-md-0 align-items-center">
         <!-- Item 1: 7 Bidang Prioritas Realtime -->
         <div class="col-6 col-md-3">
-          <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
-            <div class="prog-stat-icon-circle mb-1">
-              <i class="bi bi-briefcase"></i>
+          <div class="prog-stat-compact-item d-flex align-items-center justify-content-center gap-2">
+            <div class="prog-stat-mini-icon">
+              <i class="bi bi-briefcase-fill"></i>
             </div>
-            <div class="prog-stat-number text-dark"><?= $totalBidang ?></div>
-            <div class="prog-stat-label">Bidang Prioritas</div>
+            <div class="text-start">
+              <div class="prog-stat-mini-val text-dark"><?= $totalBidang ?></div>
+              <div class="prog-stat-mini-txt">Bidang Prioritas</div>
+            </div>
           </div>
         </div>
         <!-- Item 2: Rencana Program Realtime -->
-        <div class="col-6 col-md-3">
-          <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
-            <div class="prog-stat-icon-circle mb-1">
+        <div class="col-6 col-md-3 border-start-md">
+          <div class="prog-stat-compact-item d-flex align-items-center justify-content-center gap-2">
+            <div class="prog-stat-mini-icon">
               <i class="bi bi-journal-text"></i>
             </div>
-            <div class="prog-stat-number text-dark"><?= $totalRencanaAksi ?>+</div>
-            <div class="prog-stat-label">Rencana Program</div>
+            <div class="text-start">
+              <div class="prog-stat-mini-val text-dark"><?= $totalRencanaAksi ?>+</div>
+              <div class="prog-stat-mini-txt">Rencana Program</div>
+            </div>
           </div>
         </div>
         <!-- Item 3: Data & Aspirasi Realtime -->
-        <div class="col-6 col-md-3">
-          <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
-            <div class="prog-stat-icon-circle mb-1">
-              <i class="bi bi-bar-chart"></i>
+        <div class="col-6 col-md-3 border-start-md">
+          <div class="prog-stat-compact-item d-flex align-items-center justify-content-center gap-2">
+            <div class="prog-stat-mini-icon">
+              <i class="bi bi-chat-heart-fill"></i>
             </div>
-            <div class="prog-stat-number text-dark"><?= $totalAspirasiRealtime ?>+</div>
-            <div class="prog-stat-label">Aspirasi Masuk</div>
+            <div class="text-start">
+              <div class="prog-stat-mini-val text-dark"><?= $totalAspirasiRealtime ?>+</div>
+              <div class="prog-stat-mini-txt">Aspirasi Masuk</div>
+            </div>
           </div>
         </div>
         <!-- Item 4: Untuk Semua 6 Dusun Warga Tampirkulon -->
-        <div class="col-6 col-md-3">
-          <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
-            <div class="prog-stat-icon-circle mb-1">
-              <i class="bi bi-people"></i>
+        <div class="col-6 col-md-3 border-start-md">
+          <div class="prog-stat-compact-item d-flex align-items-center justify-content-center gap-2">
+            <div class="prog-stat-mini-icon">
+              <i class="bi bi-geo-alt-fill"></i>
             </div>
-            <div class="prog-stat-title-top text-dark">6 Dusun</div>
-            <div class="prog-stat-label">Warga Tampirkulon</div>
+            <div class="text-start">
+              <div class="prog-stat-mini-val text-dark">6 Dusun</div>
+              <div class="prog-stat-mini-txt">Semua Warga</div>
+            </div>
           </div>
         </div>
       </div>
@@ -317,12 +331,10 @@ try {
 <!-- SECTION 3: 7 BIDANG PROGRAM PRIORITAS + KARTU QUOTE (8 CARDS) -->
 <section id="programPrioritas" class="prog-section-spacing-top pb-5 bg-light-subtle">
   <div class="container-custom">
-    <!-- Header Section Sesuai Mockup (Ada Lingkaran Nomor 3) -->
+    <!-- Header Section -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2">
       <div class="d-flex align-items-start gap-3">
-        <div class="prog-section-num-badge bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold">
-          3
-        </div>
+        <div class="prog-section-accent-bar flex-shrink-0"></div>
         <div>
           <h2 class="fw-bold fs-3 text-dark mb-1">7 Bidang Program Prioritas</h2>
           <p class="text-muted mb-0 small">
@@ -389,89 +401,80 @@ try {
 </section>
 
 <!-- SECTION 4: HIGHLIGHT POTENSI DESA (PROGRAM BERBASIS POTENSI TAMPIRKULON) -->
-<section class="py-5 bg-white">
+<section class="py-4 bg-white">
   <div class="container-custom">
-    <div class="prog-potensi-unified-card p-4 p-lg-5 rounded-4 shadow-sm border">
-      <div class="row g-4 align-items-center">
-        <!-- Sisi Kiri: Deskripsi & Tombol Aksi -->
-        <div class="col-lg-5">
-          <div class="pe-lg-3">
-            <div class="prog-potensi-hero-banner mb-3 position-relative rounded-3 overflow-hidden shadow-sm">
-              <img src="assets/images/banner/hero_bg_clean.jpg" alt="Bentang Alam Tampirkulon" class="w-100 h-100 object-fit-cover">
+    <!-- Header Section -->
+    <div class="d-flex align-items-start gap-3 mb-3">
+      <div class="prog-section-accent-bar flex-shrink-0"></div>
+      <div>
+        <h2 class="fw-bold fs-5 text-dark mb-0">Program Berbasis Potensi Tampirkulon</h2>
+        <p class="text-muted mb-0 small">6 potensi unggulan desa yang menjadi fondasi program kerja.</p>
+      </div>
+    </div>
+
+    <div class="prog-potensi-unified-card p-3 p-lg-4 rounded-4 shadow-sm border">
+      <div class="row g-3 align-items-stretch">
+
+        <!-- Sisi Kiri: Banner + Info + CTA -->
+        <div class="col-lg-4">
+          <div class="d-flex flex-column h-100 gap-3">
+            <!-- Banner Foto Utama - aspect-ratio 16:9 tidak terpotong -->
+            <div class="prog-potensi-banner-wrap rounded-3 overflow-hidden shadow-sm position-relative">
+              <img src="assets/images/banner/hero_bg_clean.jpg"
+                   alt="Bentang Alam Tampirkulon"
+                   class="prog-potensi-banner-img">
               <div class="prog-potensi-hero-overlay">
-                <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill fs-7">
-                  Program Berbasis Potensi Tampirkulon
+                <span class="badge bg-success text-white px-2 py-1 rounded-pill" style="font-size:0.68rem;">
+                  <i class="bi bi-geo-alt-fill me-1"></i>Tampirkulon
                 </span>
               </div>
             </div>
-            <p class="text-muted small leading-relaxed mb-4">
-              Setiap program dikembangkan dari potensi nyata yang ada di desa, seperti sumber mata air, wisata tubing, UMKM lokal, kesenian, pertanian, dan semangat masyarakat yang luar biasa.
-            </p>
-            <a href="index.php?page=potensi" class="btn btn-outline-success rounded-pill fw-bold btn-sm px-4">
-              Lihat Potensi Desa &rarr;
-            </a>
+            <!-- Deskripsi + CTA -->
+            <div class="flex-grow-1 d-flex flex-column justify-content-between">
+              <p class="text-muted small lh-base mb-2">
+                Setiap program dikembangkan dari <strong class="text-dark">potensi nyata</strong> yang ada di desa — mata air, wisata, UMKM, kesenian, pertanian, dan semangat warganya.
+              </p>
+              <a href="index.php?page=potensi"
+                 class="btn btn-success btn-sm rounded-pill fw-semibold px-3 align-self-start">
+                <i class="bi bi-arrow-right-circle me-1"></i>Lihat Potensi Desa
+              </a>
+            </div>
           </div>
         </div>
 
-        <!-- Sisi Kanan: Grid 3x2 Thumbnail Potensi Sesuai Mockup -->
-        <div class="col-lg-7">
-          <div class="row g-3">
-            <!-- 1. Mata Air -->
+        <!-- Sisi Kanan: Grid 6 Foto — TIDAK TERPOTONG (aspect-ratio 4:3) -->
+        <div class="col-lg-8">
+          <div class="row g-2">
+            <?php
+            $potensiItems = [
+              ['img' => 'potensi_mata_air.jpg',   'label' => 'Mata Air',      'icon' => 'bi-droplet-fill',      'color' => '#0288d1'],
+              ['img' => 'potensi_tubing.jpg',     'label' => 'Wisata Tubing', 'icon' => 'bi-water',             'color' => '#00838f'],
+              ['img' => 'potensi_umkm.jpg',       'label' => 'UMKM Lokal',   'icon' => 'bi-shop-window',       'color' => '#e65100'],
+              ['img' => 'potensi_jathilan.jpg',   'label' => 'Jathilan',      'icon' => 'bi-music-note-beamed', 'color' => '#6a1b9a'],
+              ['img' => 'potensi_pertanian.jpg',  'label' => 'Pertanian',     'icon' => 'bi-tree-fill',         'color' => '#2e7d32'],
+              ['img' => 'potensi_pendidikan.jpg', 'label' => 'Pendidikan',    'icon' => 'bi-mortarboard-fill',  'color' => '#1565c0'],
+            ];
+            foreach ($potensiItems as $item):
+            ?>
             <div class="col-4">
-              <div class="prog-potensi-mini-item text-center">
-                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
-                  <img src="assets/images/program/potensi_mata_air.jpg" alt="Mata Air" class="w-100 h-100 object-fit-cover">
+              <div class="prog-potensi-photo-card rounded-3 overflow-hidden shadow-sm position-relative">
+                <!-- aspect-ratio 4:3 — foto tampil penuh, tidak terpotong -->
+                <div class="prog-potensi-photo-ratio">
+                  <img src="assets/images/program/<?= e($item['img']) ?>"
+                       alt="<?= e($item['label']) ?>"
+                       class="prog-potensi-photo-img">
                 </div>
-                <div class="prog-potensi-mini-label fw-bold text-dark small">Mata Air</div>
+                <!-- Label dengan ikon warna -->
+                <div class="prog-potensi-photo-label">
+                  <i class="bi <?= $item['icon'] ?>" style="color:<?= $item['color'] ?>;"></i>
+                  <span><?= e($item['label']) ?></span>
+                </div>
               </div>
             </div>
-            <!-- 2. Wisata Tubing -->
-            <div class="col-4">
-              <div class="prog-potensi-mini-item text-center">
-                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
-                  <img src="assets/images/program/potensi_tubing.jpg" alt="Wisata Tubing" class="w-100 h-100 object-fit-cover">
-                </div>
-                <div class="prog-potensi-mini-label fw-bold text-dark small">Wisata Tubing</div>
-              </div>
-            </div>
-            <!-- 3. UMKM Lokal -->
-            <div class="col-4">
-              <div class="prog-potensi-mini-item text-center">
-                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
-                  <img src="assets/images/program/potensi_umkm.jpg" alt="UMKM Lokal" class="w-100 h-100 object-fit-cover">
-                </div>
-                <div class="prog-potensi-mini-label fw-bold text-dark small">UMKM Lokal</div>
-              </div>
-            </div>
-            <!-- 4. Jathilan -->
-            <div class="col-4">
-              <div class="prog-potensi-mini-item text-center">
-                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
-                  <img src="assets/images/program/potensi_jathilan.jpg" alt="Jathilan" class="w-100 h-100 object-fit-cover">
-                </div>
-                <div class="prog-potensi-mini-label fw-bold text-dark small">Jathilan</div>
-              </div>
-            </div>
-            <!-- 5. Pertanian -->
-            <div class="col-4">
-              <div class="prog-potensi-mini-item text-center">
-                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
-                  <img src="assets/images/program/potensi_pertanian.jpg" alt="Pertanian" class="w-100 h-100 object-fit-cover">
-                </div>
-                <div class="prog-potensi-mini-label fw-bold text-dark small">Pertanian</div>
-              </div>
-            </div>
-            <!-- 6. Pendidikan -->
-            <div class="col-4">
-              <div class="prog-potensi-mini-item text-center">
-                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
-                  <img src="assets/images/program/potensi_pendidikan.jpg" alt="Pendidikan" class="w-100 h-100 object-fit-cover">
-                </div>
-                <div class="prog-potensi-mini-label fw-bold text-dark small">Pendidikan</div>
-              </div>
-            </div>
+            <?php endforeach; ?>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -480,11 +483,9 @@ try {
 <!-- SECTION 5: ROADMAP PENGEMBANGAN DESA (STEPPER 4 TAHAPAN SESUAI MOCKUP) -->
 <section class="py-5 bg-light-subtle">
   <div class="container-custom">
-    <!-- Header Section Sesuai Mockup (Ada Lingkaran Nomor 5) -->
+    <!-- Header Section -->
     <div class="d-flex align-items-start gap-3 mb-4 pb-2">
-      <div class="prog-section-num-badge bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold">
-        5
-      </div>
+      <div class="prog-section-accent-bar flex-shrink-0"></div>
       <div>
         <h2 class="fw-bold fs-3 text-dark mb-1">Roadmap Pengembangan Desa</h2>
         <p class="text-muted mb-0 small">
@@ -579,12 +580,10 @@ try {
 <!-- SECTION 6: TRANSPARANSI & PROGRES (SESUAI MOCKUP) -->
 <section class="py-5 bg-white">
   <div class="container-custom">
-    <!-- Header Section Sesuai Mockup (Ada Lingkaran Nomor 6) -->
+    <!-- Header Section -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2">
       <div class="d-flex align-items-start gap-3">
-        <div class="prog-section-num-badge bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold">
-          6
-        </div>
+        <div class="prog-section-accent-bar flex-shrink-0"></div>
         <div>
           <h2 class="fw-bold fs-3 text-dark mb-1">Transparansi &amp; Progres</h2>
           <p class="text-muted mb-0 small">
@@ -659,12 +658,10 @@ try {
 <!-- SECTION 7: BERITA & KEGIATAN TERKAIT PROGRAM (SESUAI MOCKUP) -->
 <section class="py-5 bg-light-subtle">
   <div class="container-custom">
-    <!-- Header Section Sesuai Mockup -->
+    <!-- Header Section -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2">
       <div class="d-flex align-items-start gap-3">
-        <div class="prog-section-num-badge bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold">
-          8
-        </div>
+        <div class="prog-section-accent-bar flex-shrink-0"></div>
         <div>
           <h2 class="fw-bold fs-3 text-dark mb-1">Berita &amp; Kegiatan Terkait Program</h2>
           <p class="text-muted mb-0 small">Update terbaru seputar pelaksanaan program dan kegiatan masyarakat.</p>
@@ -756,35 +753,50 @@ try {
   </div>
 </section>
 
-<!-- SECTION 8: BANNER CTA SAPA WARGA SESUAI MOCKUP -->
-<section class="py-5 bg-white">
+<!-- SECTION 8: BANNER CTA SAPA WARGA (COMPACT SEPERTI KOTAK BIRU) -->
+<section class="py-2 bg-white">
   <div class="container-custom">
-    <div class="prog-cta-sapa-card p-4 p-md-5 rounded-4 shadow-sm position-relative overflow-hidden" style="background-color: #e8f5e9;">
-      <div class="row align-items-center">
+    <div class="prog-cta-sapa-card rounded-4 shadow-sm position-relative overflow-hidden">
+      <div class="row align-items-center g-2 g-md-3">
+
         <!-- Kiri: Icon & Teks -->
-        <div class="col-lg-5 mb-3 mb-lg-0">
-          <div class="d-flex align-items-center gap-3 mb-2">
-            <div class="prog-cta-icon-wrap bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px; font-size: 1.35rem;">
-              <i class="bi bi-chat-dots-fill"></i>
+        <div class="col-md-5">
+          <div class="d-flex align-items-center gap-2">
+            <!-- Icon bulat hijau kecil -->
+            <div class="flex-shrink-0 prog-cta-icon-circle">
+              <i class="bi bi-chat-heart-fill"></i>
             </div>
-            <h3 class="fw-bold text-dark mb-0 fs-4">Punya Ide, Saran atau Aspirasi?</h3>
+            <div>
+              <h4 class="prog-cta-title">
+                Punya Ide, Saran atau Aspirasi?
+              </h4>
+              <p class="prog-cta-subtitle">
+                Sampaikan langsung melalui Sapa Warga untuk kemajuan desa.
+              </p>
+            </div>
           </div>
-          <p class="text-muted small ps-lg-5 ms-lg-3 mb-0">
-            Sampaikan langsung melalui Sapa Warga. Suara anda sangat berarti.
-          </p>
-        </div>
-        
-        <!-- Tengah: Ilustrasi Orang / Sapa Warga -->
-        <div class="col-lg-4 text-center my-3 my-lg-0 d-none d-md-block">
-          <img src="assets/images/banner/sapa_warga_people.jpg" alt="Aspirasi Warga Tampirkulon" class="img-fluid rounded-3" style="max-height: 80px; object-fit: contain;">
         </div>
 
-        <!-- Kanan: Tombol Sapa Warga Sekarang -->
-        <div class="col-lg-3 text-lg-end">
-          <a href="index.php?page=sapa-warga#formAspirasi" class="btn btn-success btn-lg rounded-pill fw-bold px-4 shadow-sm w-100 w-lg-auto">
-            Sapa Warga Sekarang &rarr;
-          </a>
+        <!-- Tengah: Foto dialog dengan warga (Dapat diganti) -->
+        <div class="col-md-4 text-center d-none d-md-block">
+          <div class="prog-cta-photo-wrap">
+            <img src="<?= e($fotoCta) ?>"
+                 alt="Edy Susanto Berdialog dengan Warga"
+                 class="prog-cta-photo">
+          </div>
         </div>
+
+        <!-- Kanan: Tombol CTA -->
+        <div class="col-md-3 text-md-end">
+          <a href="index.php?page=sapa-warga#formAspirasi"
+             class="btn btn-success prog-cta-btn shadow-sm d-block d-md-inline-block">
+            <i class="bi bi-send-fill me-1"></i>Sapa Warga Sekarang
+          </a>
+          <div class="prog-cta-secure text-center text-md-end">
+            <i class="bi bi-shield-check text-success me-1"></i>Aman &amp; Terjaga Privasinya
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

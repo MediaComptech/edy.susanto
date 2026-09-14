@@ -471,8 +471,8 @@ if (!empty($dusunJson)) {
             <i class="bi bi-chat-heart-fill" style="color: #2e7d32; font-size: 1.1rem;"></i>
           </div>
           <div>
-            <h5 class="fw-bold mb-0">Pengaturan Hero Sapa Warga</h5>
-            <small class="text-muted">Kelola foto thumbnail dialog dan kutipan kartu pada banner hijau Sapa Warga</small>
+            <h5 class="fw-bold mb-0">Pengaturan Hero Sapa Warga &amp; Banner CTA Program</h5>
+            <small class="text-muted">Kelola foto dialog warga pada banner Sapa Warga dan Banner CTA di Halaman Program Kerja</small>
           </div>
         </div>
         <a href="../index.php?page=sapa-warga" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-3">
