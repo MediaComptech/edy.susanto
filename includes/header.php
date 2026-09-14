@@ -51,7 +51,7 @@ $metaDesc = 'Website Resmi Edy Susanto (No. Urut 2) Calon Kepala Desa Tampirkulo
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Custom CSS with Auto Cache-Busting -->
+  <link rel="stylesheet" href="assets/css/style.css?v=<?= file_exists(__DIR__ . '/../assets/css/style.css') ? filemtime(__DIR__ . '/../assets/css/style.css') : '20260914' ?>">
 </head>
 <body>

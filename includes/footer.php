@@ -144,8 +144,8 @@ if (!defined('APP_NAME')) {
 <!-- Bottom Nav untuk Mobile -->
 <?php require_once __DIR__ . '/bottom-nav.php'; ?>
 
-<!-- Scripts Bootstrap Bundle & Main JS -->
+<!-- Scripts Bootstrap Bundle & Main JS with Auto Cache-Busting -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/main.js?v=<?= file_exists(__DIR__ . '/../assets/js/main.js') ? filemtime(__DIR__ . '/../assets/js/main.js') : '20260914' ?>"></script>
 </body>
 </html>
