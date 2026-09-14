@@ -485,7 +485,7 @@ $namaCalon  = get_pengaturan($pdo, 'nama_calon', APP_NAME);
             <tbody>
               <tr>
                 <td><strong>Sabtu, 18 Juni 2026</strong><br><small class="text-muted">19.30 WIB</small></td>
-                <td>Balai Pertemuan Dusun Krajan</td>
+                <td>Balai Pertemuan Dusun Tampirkulon</td>
                 <td>Rembug Tani &amp; Sosialisasi Program Pupuk Tepat Sasaran</td>
                 <td><span class="badge bg-success">Terjadwal</span></td>
               </tr>

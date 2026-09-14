@@ -3,21 +3,22 @@
  * Halaman 7 Bidang Program Prioritas & Rencana Pengembangan Desa
  * Calon Kepala Desa Tampirkulon - Edy Susanto (No. Urut 2)
  *
- * Implementasi berdasarkan update_program.md dan standar UI/Program
+ * Sesuai dengan UI Mockup: UI/Program/program kerja.png & program kerja mobile.png
  */
 if (!defined('APP_NAME')) {
     require_once __DIR__ . '/../includes/config.php';
 }
 
-// Data Lengkap 7 Bidang Program Kerja Prioritas & Faktual
+// Data 7 Bidang Program Kerja Prioritas
 $programData = [
     1 => [
         'id' => 1,
-        'bidang' => 'Pertanian Modern & Ketahanan Pangan',
+        'bidang' => 'Pertanian & Ketahanan Pangan',
+        'sub_desc' => 'Pertanian maju, petani sejahtera.',
         'kategori' => 'pertanian-wisata',
-        'kategori_label' => 'Pertanian & Wisata',
-        'icon' => 'bi-flower1',
-        'card_bg' => '#e8f5e9',
+        'kategori_label' => 'Pertanian & Ketahanan Pangan',
+        'icon' => 'bi-tree',
+        'card_bg' => '#eef9ee',
         'border_color' => '#c8e6c9',
         'icon_color' => '#2e7d32',
         'ringkasan' => 'Optimalisasi saluran irigasi tersier di 6 dusun, fasilitasi ketersediaan pupuk dan bibit unggul, serta pendampingan PPL berkelanjutan bagi para petani Tampirkulon.',
@@ -39,11 +40,12 @@ $programData = [
     ],
     2 => [
         'id' => 2,
-        'bidang' => 'Pemberdayaan UMKM & Ekonomi Kreatif',
+        'bidang' => 'UMKM & Ekonomi Lokal',
+        'sub_desc' => 'Produk lokal berdaya saing, ekonomi tumbuh.',
         'kategori' => 'ekonomi-umkm',
-        'kategori_label' => 'Ekonomi & UMKM',
+        'kategori_label' => 'UMKM & Ekonomi Lokal',
         'icon' => 'bi-shop',
-        'card_bg' => '#fff3e0',
+        'card_bg' => '#fff5ea',
         'border_color' => '#ffe0b2',
         'icon_color' => '#e65100',
         'ringkasan' => 'Pendampingan legalitas izin usaha (P-IRT, NIB, Halal), pengemasan modern, serta penyediaan display center produk lokal Tampirkulon di titik strategis desa.',
@@ -65,11 +67,12 @@ $programData = [
     ],
     3 => [
         'id' => 3,
-        'bidang' => 'Pengembangan Desa Wisata Terpadu',
+        'bidang' => 'Wisata Desa',
+        'sub_desc' => 'Wisata berkembang, masyarakat sejahtera.',
         'kategori' => 'pertanian-wisata',
-        'kategori_label' => 'Pertanian & Wisata',
-        'icon' => 'bi-compass',
-        'card_bg' => '#e1f5fe',
+        'kategori_label' => 'Wisata Desa',
+        'icon' => 'bi-person-walking',
+        'card_bg' => '#eef7fe',
         'border_color' => '#b3e5fc',
         'icon_color' => '#0288d1',
         'ringkasan' => 'Integrasi destinasi Tuk Lanang & Tuk Putri (0,33 km) serta Tubing Tampirkulon (1,89 km) melalui penguatan Pokdarwis 2026 dan promosi digital terarah.',
@@ -91,11 +94,12 @@ $programData = [
     ],
     4 => [
         'id' => 4,
-        'bidang' => 'Pendidikan Berkualitas & Karakter Generasi',
+        'bidang' => 'Pendidikan & Literasi',
+        'sub_desc' => 'Generasi cerdas, masa depan cerah.',
         'kategori' => 'sdm-pemuda',
-        'kategori_label' => 'SDM & Pemuda',
-        'icon' => 'bi-mortarboard',
-        'card_bg' => '#f3e5f5',
+        'kategori_label' => 'Pendidikan & Literasi',
+        'icon' => 'bi-journal-bookmark',
+        'card_bg' => '#f6effc',
         'border_color' => '#e1bee7',
         'icon_color' => '#7b1fa2',
         'ringkasan' => 'Dukungan perlengkapan sekolah bagi siswa pra-sejahtera, revitalisasi sarana PAUD/TK Pertiwi & SDN, serta rintisan pojok baca literasi di setiap dusun.',
@@ -117,11 +121,12 @@ $programData = [
     ],
     5 => [
         'id' => 5,
-        'bidang' => 'Pemberdayaan Pemuda, Olahraga & Budaya',
+        'bidang' => 'Pemuda & Olahraga',
+        'sub_desc' => 'Ruang tumbuh generasi muda.',
         'kategori' => 'sdm-pemuda',
-        'kategori_label' => 'SDM & Pemuda',
-        'icon' => 'bi-people',
-        'card_bg' => '#ffebee',
+        'kategori_label' => 'Pemuda & Olahraga',
+        'icon' => 'bi-people-fill',
+        'card_bg' => '#feeeee',
         'border_color' => '#ffcdd2',
         'icon_color' => '#c2185b',
         'ringkasan' => 'Revitalisasi lapangan olahraga dusun, penguatan peran Karang Taruna, dan pelestarian seni tradisional seperti paguyuban Jathilan Krido Budoyo.',
@@ -143,11 +148,12 @@ $programData = [
     ],
     6 => [
         'id' => 6,
-        'bidang' => 'Infrastruktur Ramah Lingkungan & Sanitasi',
+        'bidang' => 'Lingkungan & Sumber Air',
+        'sub_desc' => 'Lingkungan lestari untuk masa depan.',
         'kategori' => 'pelayanan-lingkungan',
-        'kategori_label' => 'Pelayanan & Lingkungan',
-        'icon' => 'bi-tree',
-        'card_bg' => '#e8f8f0',
+        'kategori_label' => 'Lingkungan & Sumber Air',
+        'icon' => 'bi-droplet-half',
+        'card_bg' => '#eaf8f1',
         'border_color' => '#b2dfdb',
         'icon_color' => '#00897b',
         'ringkasan' => 'Pengelolaan sampah terpadu (pemilahan organik/anorganik), pemeliharaan drainase permukiman bebas genangan, serta konservasi mata air desa.',
@@ -169,11 +175,12 @@ $programData = [
     ],
     7 => [
         'id' => 7,
-        'bidang' => 'Pelayanan Publik Cepat, Transparan & Akuntabel',
+        'bidang' => 'Pelayanan Desa',
+        'sub_desc' => 'Pelayanan cepat, transparan, dan mudah.',
         'kategori' => 'pelayanan-lingkungan',
-        'kategori_label' => 'Pelayanan & Lingkungan',
-        'icon' => 'bi-shield-check',
-        'card_bg' => '#fff8e1',
+        'kategori_label' => 'Pelayanan & Tata Kelola Desa',
+        'icon' => 'bi-gear-fill',
+        'card_bg' => '#fff9e6',
         'border_color' => '#ffecb3',
         'icon_color' => '#f57f17',
         'ringkasan' => 'Digitalisasi pengurusan surat menyurat lewat integrasi Sapa Warga, transparansi publikasi APBDes terbuka di website, dan pelayanan ramah tanpa pungli.',
@@ -210,20 +217,20 @@ try {
     <div class="row align-items-center">
       <div class="col-lg-8 col-xl-7">
         <span class="prog-hero-badge">
-          <i class="bi bi-stars me-1 text-warning"></i> PROGRAM KERJA &amp; RENCANA PENGEMBANGAN DESA
+          PROGRAM KERJA
         </span>
         <h1 class="prog-hero-title">
-          Membangun Tampirkulon yang Maju, Sejahtera, dan Berkelanjutan
+          Bersama Wujudkan Tampirkulon yang<br class="d-none d-md-inline"> Maju, Sejahtera dan Lestari
         </h1>
         <p class="prog-hero-subtitle">
-          Rencana strategis berbasis potensi lokal, kebutuhan riil warga, dan prinsip tata kelola pemerintahan desa yang transparan, amanah, dan akuntabel.
+          Program kerja ini disusun berdasarkan potensi desa, kebutuhan masyarakat, dan data yang ada. Dengan kolaborasi, kita wujudkan perubahan nyata untuk Tampirkulon.
         </p>
         <div class="prog-hero-cta">
-          <a href="#programPrioritas" class="btn btn-danger btn-lg rounded-pill fw-bold shadow-sm">
-            <i class="bi bi-grid-fill me-2"></i> Jelajahi 7 Program
+          <a href="#programPrioritas" class="btn btn-success btn-lg rounded-pill fw-bold shadow-sm px-4">
+            Lihat Program &rarr;
           </a>
-          <a href="index.php?page=sapa-warga#formAspirasi" class="btn btn-outline-light btn-lg rounded-pill fw-bold">
-            <i class="bi bi-chat-quote me-2"></i> Sampaikan Masukan
+          <a href="index.php?page=sapa-warga" class="btn btn-light btn-lg rounded-pill fw-bold px-4 text-dark shadow-sm">
+            <i class="bi bi-chat-dots me-2 text-success"></i> Sapa Warga
           </a>
         </div>
       </div>
@@ -241,33 +248,49 @@ try {
   </div>
 </section>
 
-<!-- SECTION 2: BAR 4 STATISTIK SINGKAT -->
+<!-- SECTION 2: STATISTIK SINGKAT (STATS BAR SESUAI MOCKUP) -->
 <section class="prog-stats-section">
   <div class="container-custom">
     <div class="prog-stats-bar">
-      <div class="row g-3 g-md-4 text-center">
+      <div class="row g-3 g-md-4 text-center align-items-center">
+        <!-- Item 1: 7 Bidang Prioritas -->
         <div class="col-6 col-md-3">
-          <div class="prog-stat-item">
-            <div class="prog-stat-number text-danger">7</div>
-            <div class="prog-stat-label">Bidang Program Prioritas</div>
+          <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
+            <div class="prog-stat-icon-circle bg-success-subtle text-success mb-2">
+              <i class="bi bi-briefcase"></i>
+            </div>
+            <div class="prog-stat-number text-dark">7</div>
+            <div class="prog-stat-label">Bidang Prioritas</div>
           </div>
         </div>
+        <!-- Item 2: 20+ Rencana Program -->
         <div class="col-6 col-md-3">
-          <div class="prog-stat-item">
-            <div class="prog-stat-number text-success">6</div>
-            <div class="prog-stat-label">Dusun Terjangkau Merata</div>
+          <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
+            <div class="prog-stat-icon-circle bg-success-subtle text-success mb-2">
+              <i class="bi bi-journal-text"></i>
+            </div>
+            <div class="prog-stat-number text-dark">20+</div>
+            <div class="prog-stat-label">Rencana Program</div>
           </div>
         </div>
+        <!-- Item 3: Berdasarkan Data & Aspirasi -->
         <div class="col-6 col-md-3">
-          <div class="prog-stat-item">
-            <div class="prog-stat-number text-primary">100%</div>
-            <div class="prog-stat-label">Berbasis Aspirasi Warga</div>
+          <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
+            <div class="prog-stat-icon-circle bg-success-subtle text-success mb-2">
+              <i class="bi bi-bar-chart"></i>
+            </div>
+            <div class="prog-stat-title-top text-dark fw-bold">Berdasarkan</div>
+            <div class="prog-stat-label">Data &amp; Aspirasi</div>
           </div>
         </div>
+        <!-- Item 4: Untuk Semua Warga Tampirkulon -->
         <div class="col-6 col-md-3">
-          <div class="prog-stat-item">
-            <div class="prog-stat-number text-warning">4</div>
-            <div class="prog-stat-label">Tahapan Roadmap Terukur</div>
+          <div class="prog-stat-card d-flex flex-column align-items-center justify-content-center">
+            <div class="prog-stat-icon-circle bg-success-subtle text-success mb-2">
+              <i class="bi bi-people"></i>
+            </div>
+            <div class="prog-stat-title-top text-dark fw-bold">Untuk Semua</div>
+            <div class="prog-stat-label">Warga Tampirkulon</div>
           </div>
         </div>
       </div>
@@ -278,66 +301,70 @@ try {
 <!-- SECTION 3: 7 BIDANG PROGRAM PRIORITAS + KARTU QUOTE (8 CARDS) -->
 <section id="programPrioritas" class="py-5 bg-light-subtle">
   <div class="container-custom">
-    <div class="text-center max-w-700 mx-auto mb-4">
-      <span class="badge bg-danger-subtle text-danger fw-bold px-3 py-2 rounded-pill mb-2">
-        <i class="bi bi-bullseye me-1"></i> FOKUS STRATEGIS DESA
-      </span>
-      <h2 class="fw-bold display-6 text-dark mb-2">7 Bidang Program Prioritas</h2>
-      <p class="text-muted">
-        Gagasan aksi konkret yang dirumuskan secara partisipatif untuk menjawab persoalan dan mengangkat martabat warga Tampirkulon.
-      </p>
+    <!-- Header Section Sesuai Mockup (Ada Lingkaran Nomor 3) -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2">
+      <div class="d-flex align-items-start gap-3">
+        <div class="prog-section-num-badge bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold">
+          3
+        </div>
+        <div>
+          <h2 class="fw-bold fs-3 text-dark mb-1">7 Bidang Program Prioritas</h2>
+          <p class="text-muted mb-0 small">
+            Program disusun dari potensi, kebutuhan dan harapan masyarakat Tampirkulon.
+          </p>
+        </div>
+      </div>
+      <div class="mt-3 mt-md-0">
+        <a href="#modalProgramAll" class="btn btn-outline-secondary btn-sm rounded-pill fw-semibold px-3" data-bs-toggle="dropdown" aria-expanded="false">
+          Lihat Semua Program <i class="bi bi-chevron-down ms-1"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3">
+          <?php foreach ($programData as $p): ?>
+            <li>
+              <a class="dropdown-item py-2 small" href="#modalProgram<?= $p['id'] ?>" data-bs-toggle="modal">
+                <i class="bi <?= e($p['icon']) ?> me-2" style="color: <?= e($p['icon_color']) ?>;"></i>
+                <?= e($p['bidang']) ?>
+              </a>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
     </div>
 
-    <!-- Filter Kategori Tabs -->
-    <div class="prog-filter-tabs text-center mb-4">
-      <button type="button" class="btn prog-filter-btn active" data-filter="all">Semua Program (7)</button>
-      <button type="button" class="btn prog-filter-btn" data-filter="ekonomi-umkm">Ekonomi &amp; UMKM</button>
-      <button type="button" class="btn prog-filter-btn" data-filter="pertanian-wisata">Pertanian &amp; Wisata</button>
-      <button type="button" class="btn prog-filter-btn" data-filter="sdm-pemuda">SDM &amp; Pemuda</button>
-      <button type="button" class="btn prog-filter-btn" data-filter="pelayanan-lingkungan">Pelayanan &amp; Lingkungan</button>
-    </div>
-
-    <!-- 8 Cards Grid -->
+    <!-- 8 Cards Grid (7 Program + 1 Quote) -->
     <div class="row g-4" id="programGrid">
       <?php foreach ($programData as $p): ?>
-      <div class="col-md-6 col-lg-4 prog-grid-item" data-category="<?= e($p['kategori']) ?>">
+      <div class="col-md-6 col-lg-3">
         <div class="card prog-card h-100" style="background-color: <?= e($p['card_bg']) ?>; border-color: <?= e($p['border_color']) ?>;">
-          <div class="prog-card-top">
-            <div class="prog-card-icon-box" style="background-color: <?= e($p['icon_color']) ?>;">
-              <i class="bi <?= e($p['icon']) ?>"></i>
-            </div>
-            <div class="prog-card-header-info">
-              <span class="prog-card-num-badge" style="color: <?= e($p['icon_color']) ?>; border-color: <?= e($p['border_color']) ?>;">
-                #0<?= $p['id'] ?>
-              </span>
-              <span class="prog-card-cat-tag"><?= e($p['kategori_label']) ?></span>
-            </div>
+          <div class="prog-card-icon-box mb-3" style="background-color: rgba(255,255,255,0.85); color: <?= e($p['icon_color']) ?>;">
+            <i class="bi <?= e($p['icon']) ?>"></i>
           </div>
           
           <h3 class="prog-card-title"><?= e($p['bidang']) ?></h3>
-          <p class="prog-card-desc"><?= e($p['ringkasan']) ?></p>
+          <p class="prog-card-desc"><?= e($p['sub_desc']) ?></p>
           
-          <div class="prog-card-action">
-            <button type="button" class="btn btn-sm prog-card-detail-btn" data-bs-toggle="modal" data-bs-target="#modalProgram<?= $p['id'] ?>" style="color: <?= e($p['icon_color']) ?>;">
-              Lihat Rencana Aksi &amp; Detail <i class="bi bi-arrow-right ms-1"></i>
+          <div class="prog-card-action pt-2">
+            <button type="button" class="btn btn-sm btn-white prog-card-detail-btn shadow-sm rounded-pill px-3 py-1" data-bs-toggle="modal" data-bs-target="#modalProgram<?= $p['id'] ?>">
+              Lihat Detail <i class="bi bi-arrow-right ms-1"></i>
             </button>
           </div>
         </div>
       </div>
       <?php endforeach; ?>
 
-      <!-- KARTU KE-8: QUOTE KANDIDAT -->
-      <div class="col-md-6 col-lg-4 prog-grid-item" data-category="all quote">
+      <!-- KARTU KE-8: QUOTE KANDIDAT SESUAI MOCKUP -->
+      <div class="col-md-6 col-lg-3">
         <div class="card prog-card prog-quote-card h-100">
-          <div class="prog-quote-icon">
-            <i class="bi bi-quote"></i>
+          <div class="prog-quote-icon mb-2">
+            &ldquo;
           </div>
           <p class="prog-quote-text">
-            &ldquo;Membangun desa bukan tentang menebar janji muluk, tetapi tentang mendengarkan dengan hati, merencanakan bersama warga, dan mengeksekusi dengan amanah.&rdquo;
+            Program ini adalah ikhtiar bersama, bukan janji satu orang.
           </p>
-          <div class="prog-quote-author">
-            <strong>Edy Susanto</strong>
-            <span>Calon Kepala Desa Tampirkulon • No. Urut 2</span>
+          <div class="prog-quote-signature mt-auto">
+            <div class="prog-sig-name">Edy Susanto</div>
+            <div class="prog-sig-role">Calon Kepala Desa</div>
+            <div class="prog-sig-num">No. Urut 2</div>
           </div>
         </div>
       </div>
@@ -345,130 +372,88 @@ try {
   </div>
 </section>
 
-<!-- SECTION 4: PROGRAM BERBASIS POTENSI TAMPIRKULON -->
+<!-- SECTION 4: HIGHLIGHT POTENSI DESA (PROGRAM BERBASIS POTENSI TAMPIRKULON) -->
 <section class="py-5 bg-white">
   <div class="container-custom">
-    <div class="text-center max-w-700 mx-auto mb-5">
-      <span class="badge bg-success-subtle text-success fw-bold px-3 py-2 rounded-pill mb-2">
-        <i class="bi bi-geo-alt-fill me-1"></i> KEARIFAN &amp; POTENSI ASLI
-      </span>
-      <h2 class="fw-bold display-6 text-dark mb-2">Program Berbasis Potensi Tampirkulon</h2>
-      <p class="text-muted">
-        Bukan konsep dari luar, program kerja ini berakar langsung pada kekayaan alam, tradisi budaya, dan mata pencaharian warga di 6 dusun Tampirkulon.
-      </p>
-    </div>
-
-    <!-- Featured Potensi Card (Tuk Lanang / Tuk Putri & Tubing) -->
-    <div class="card prog-potensi-featured border-0 mb-5">
-      <div class="row g-0 align-items-center">
-        <div class="col-lg-6">
-          <div class="prog-potensi-featured-img-wrap">
-            <img src="assets/images/program/potensi_mata_air.jpg" alt="Mata Air Tuk Lanang dan Tuk Putri" class="img-fluid w-100 h-100 object-fit-cover">
+    <div class="prog-potensi-unified-card p-4 p-lg-5 rounded-4 shadow-sm border">
+      <div class="row g-4 align-items-center">
+        <!-- Sisi Kiri: Deskripsi & Tombol Aksi -->
+        <div class="col-lg-5">
+          <div class="pe-lg-3">
+            <div class="prog-potensi-hero-banner mb-3 position-relative rounded-3 overflow-hidden shadow-sm">
+              <img src="assets/images/banner/hero_bg_landscape.jpg" alt="Bentang Alam Tampirkulon" class="w-100 h-100 object-fit-cover">
+              <div class="prog-potensi-hero-overlay">
+                <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill fs-7">
+                  Program Berbasis Potensi Tampirkulon
+                </span>
+              </div>
+            </div>
+            <p class="text-muted small leading-relaxed mb-4">
+              Setiap program dikembangkan dari potensi nyata yang ada di desa, seperti sumber mata air, wisata tubing, UMKM lokal, kesenian, pertanian, dan semangat masyarakat yang luar biasa.
+            </p>
+            <a href="index.php?page=potensi" class="btn btn-outline-success rounded-pill fw-bold btn-sm px-4">
+              Lihat Potensi Desa &rarr;
+            </a>
           </div>
         </div>
-        <div class="col-lg-6 p-4 p-md-5">
-          <div class="d-flex flex-wrap gap-2 mb-3">
-            <span class="badge bg-success text-white px-3 py-1 rounded-pill">Wisata &amp; Konservasi</span>
-            <span class="badge bg-primary-subtle text-primary px-3 py-1 rounded-pill">Pokdarwis 2026 (19 Pengurus)</span>
-          </div>
-          <h3 class="fw-bold text-dark mb-3">Pengembangan Koridor Wisata Sumber Air &amp; Tubing Tampirkulon</h3>
-          <p class="text-muted mb-4 leading-relaxed">
-            Integrasi mata air alami <strong>Tuk Lanang &amp; Tuk Putri (0,33 km)</strong> dengan rute susur sungai <strong>Tubing Tampirkulon (1,89 km)</strong>. Ditopang kesiapan pengurus Pokdarwis desa, kawasan ini akan dikembangkan menjadi pusat rekreasi keluarga yang asri, aman, dan mendongkrak omzet ekonomi warung warga sekitar.
-          </p>
+
+        <!-- Sisi Kanan: Grid 3x2 Thumbnail Potensi Sesuai Mockup -->
+        <div class="col-lg-7">
           <div class="row g-3">
-            <div class="col-sm-6">
-              <div class="p-3 bg-light rounded-3 border-start border-3 border-success">
-                <strong class="d-block text-dark small mb-1"><i class="bi bi-droplet-half text-success me-1"></i> Pelestarian Air</strong>
-                <small class="text-muted">Penjagaan debit mata air abadi untuk irigasi sawah dan konsumsi.</small>
+            <!-- 1. Mata Air -->
+            <div class="col-4">
+              <div class="prog-potensi-mini-item text-center">
+                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
+                  <img src="assets/images/program/potensi_mata_air.jpg" alt="Mata Air" class="w-100 h-100 object-fit-cover">
+                </div>
+                <div class="prog-potensi-mini-label fw-bold text-dark small">Mata Air</div>
               </div>
             </div>
-            <div class="col-sm-6">
-              <div class="p-3 bg-light rounded-3 border-start border-3 border-primary">
-                <strong class="d-block text-dark small mb-1"><i class="bi bi-cash-stack text-primary me-1"></i> Ekonomi Wisata</strong>
-                <small class="text-muted">Pemberdayaan pemuda pemandu tubing dan stan kuliner lokal.</small>
+            <!-- 2. Wisata Tubing -->
+            <div class="col-4">
+              <div class="prog-potensi-mini-item text-center">
+                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
+                  <img src="assets/images/program/potensi_tubing.jpg" alt="Wisata Tubing" class="w-100 h-100 object-fit-cover">
+                </div>
+                <div class="prog-potensi-mini-label fw-bold text-dark small">Wisata Tubing</div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 6 Grid Thumbnails Potensi Riil Tampirkulon -->
-    <div class="row g-4">
-      <div class="col-md-6 col-lg-4">
-        <div class="prog-potensi-thumb-card">
-          <div class="prog-potensi-thumb-img">
-            <img src="assets/images/program/potensi_mata_air.jpg" alt="Tuk Lanang dan Tuk Putri" class="w-100 h-100 object-fit-cover">
-          </div>
-          <div class="prog-potensi-thumb-body">
-            <h5 class="fw-bold text-dark mb-1">Mata Air Tuk Lanang &amp; Tuk Putri</h5>
-            <small class="text-success fw-semibold d-block mb-2"><i class="bi bi-geo-alt me-1"></i> 0,33 km dari Pusat Dusun</small>
-            <p class="text-muted small mb-0">Cagar konservasi air bersih abadi yang mengalir ke areal persawahan dan permukiman warga.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="prog-potensi-thumb-card">
-          <div class="prog-potensi-thumb-img">
-            <img src="assets/images/program/potensi_tubing.jpg" alt="Wisata Tubing Tampirkulon" class="w-100 h-100 object-fit-cover">
-          </div>
-          <div class="prog-potensi-thumb-body">
-            <h5 class="fw-bold text-dark mb-1">Wisata Tubing Tampirkulon</h5>
-            <small class="text-primary fw-semibold d-block mb-2"><i class="bi bi-water me-1"></i> Rute Arung Sungai 1,89 km</small>
-            <p class="text-muted small mb-0">Daya tarik wisata petualangan ramah keluarga yang siap dipromosikan lebih luas bersama Pokdarwis.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="prog-potensi-thumb-card">
-          <div class="prog-potensi-thumb-img">
-            <img src="assets/images/program/potensi_umkm.jpg" alt="Sentra Keripik Tempe" class="w-100 h-100 object-fit-cover">
-          </div>
-          <div class="prog-potensi-thumb-body">
-            <h5 class="fw-bold text-dark mb-1">Sentra UMKM Keripik Tempe</h5>
-            <small class="text-warning-emphasis fw-semibold d-block mb-2"><i class="bi bi-bag-check me-1"></i> Bu Tatik, Pak Budi &amp; Warga</small>
-            <p class="text-muted small mb-0">Produksi olahan tempe khas berkualitas tinggi yang siap difasilitasi izin P-IRT, Halal, dan kemasan ritel.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="prog-potensi-thumb-card">
-          <div class="prog-potensi-thumb-img">
-            <img src="assets/images/program/potensi_jathilan.jpg" alt="Kesenian Jathilan Krido Budoyo" class="w-100 h-100 object-fit-cover">
-          </div>
-          <div class="prog-potensi-thumb-body">
-            <h5 class="fw-bold text-dark mb-1">Seni Jathilan &amp; Budaya Warga</h5>
-            <small class="text-danger fw-semibold d-block mb-2"><i class="bi bi-music-note-beamed me-1"></i> Paguyuban Krido Budoyo</small>
-            <p class="text-muted small mb-0">Pelestarian seni tari tradisional sebagai perekat kegotongroyongan dan pengisi panggung festival desa.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="prog-potensi-thumb-card">
-          <div class="prog-potensi-thumb-img">
-            <img src="assets/images/program/potensi_pertanian.jpg" alt="Lahan Pertanian Tampirkulon" class="w-100 h-100 object-fit-cover">
-          </div>
-          <div class="prog-potensi-thumb-body">
-            <h5 class="fw-bold text-dark mb-1">Hamparan Pertanian Subur</h5>
-            <small class="text-success fw-semibold d-block mb-2"><i class="bi bi-flower2 me-1"></i> 6 Dusun Persawahan &amp; Hortikultura</small>
-            <p class="text-muted small mb-0">Lumbung pangan desa yang membutuhkan jaminan perbaikan jaringan irigasi dan kemudahan akses pupuk.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="prog-potensi-thumb-card">
-          <div class="prog-potensi-thumb-img">
-            <img src="assets/images/program/potensi_pendidikan.jpg" alt="Pendidikan Dasar Tampirkulon" class="w-100 h-100 object-fit-cover">
-          </div>
-          <div class="prog-potensi-thumb-body">
-            <h5 class="fw-bold text-dark mb-1">Pendidikan Dasar &amp; Karakter</h5>
-            <small class="text-secondary fw-semibold d-block mb-2"><i class="bi bi-building me-1"></i> SDN 1-2 &amp; TK Pertiwi 1-2</small>
-            <p class="text-muted small mb-0">Fasilitas pembentukan karakter generasi penerus Tampirkulon dengan dukungan beasiswa santunan desa.</p>
+            <!-- 3. UMKM Lokal -->
+            <div class="col-4">
+              <div class="prog-potensi-mini-item text-center">
+                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
+                  <img src="assets/images/program/potensi_umkm.jpg" alt="UMKM Lokal" class="w-100 h-100 object-fit-cover">
+                </div>
+                <div class="prog-potensi-mini-label fw-bold text-dark small">UMKM Lokal</div>
+              </div>
+            </div>
+            <!-- 4. Jathilan -->
+            <div class="col-4">
+              <div class="prog-potensi-mini-item text-center">
+                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
+                  <img src="assets/images/program/potensi_jathilan.jpg" alt="Jathilan" class="w-100 h-100 object-fit-cover">
+                </div>
+                <div class="prog-potensi-mini-label fw-bold text-dark small">Jathilan</div>
+              </div>
+            </div>
+            <!-- 5. Pertanian -->
+            <div class="col-4">
+              <div class="prog-potensi-mini-item text-center">
+                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
+                  <img src="assets/images/program/potensi_pertanian.jpg" alt="Pertanian" class="w-100 h-100 object-fit-cover">
+                </div>
+                <div class="prog-potensi-mini-label fw-bold text-dark small">Pertanian</div>
+              </div>
+            </div>
+            <!-- 6. Pendidikan -->
+            <div class="col-4">
+              <div class="prog-potensi-mini-item text-center">
+                <div class="prog-potensi-mini-img rounded-3 overflow-hidden shadow-sm mb-2">
+                  <img src="assets/images/program/potensi_pendidikan.jpg" alt="Pendidikan" class="w-100 h-100 object-fit-cover">
+                </div>
+                <div class="prog-potensi-mini-label fw-bold text-dark small">Pendidikan</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -476,66 +461,98 @@ try {
   </div>
 </section>
 
-<!-- SECTION 5: ROADMAP PENGEMBANGAN DESA (STEPPER 4 TAHAPAN) -->
+<!-- SECTION 5: ROADMAP PENGEMBANGAN DESA (STEPPER 4 TAHAPAN SESUAI MOCKUP) -->
 <section class="py-5 bg-light-subtle">
   <div class="container-custom">
-    <div class="text-center max-w-700 mx-auto mb-5">
-      <span class="badge bg-danger-subtle text-danger fw-bold px-3 py-2 rounded-pill mb-2">
-        <i class="bi bi-signpost-split me-1"></i> TAHAPAN EKSEKUSI TERUKUR
-      </span>
-      <h2 class="fw-bold display-6 text-dark mb-2">Roadmap Pengembangan Desa</h2>
-      <p class="text-muted">
-        Pembangunan tidak dilakukan serampangan, melainkan melalui 4 tahapan strategis yang terstruktur dari konsolidasi hingga kemandirian desa.
-      </p>
+    <!-- Header Section Sesuai Mockup (Ada Lingkaran Nomor 5) -->
+    <div class="d-flex align-items-start gap-3 mb-4 pb-2">
+      <div class="prog-section-num-badge bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold">
+        5
+      </div>
+      <div>
+        <h2 class="fw-bold fs-3 text-dark mb-1">Roadmap Pengembangan Desa</h2>
+        <p class="text-muted mb-0 small">
+          Tahapan pelaksanaan program secara bertahap dan terukur.
+        </p>
+      </div>
     </div>
 
-    <div class="prog-roadmap-wrap">
+    <!-- Stepper 4 Tahapan -->
+    <div class="prog-roadmap-grid">
       <div class="row g-4">
-        <!-- Tahap 1 -->
+        <!-- Tahap 1: Pendataan (0–6 bulan) - Hijau -->
         <div class="col-md-6 col-lg-3">
-          <div class="prog-roadmap-step h-100">
-            <div class="prog-roadmap-badge">Tahap 1</div>
-            <span class="prog-roadmap-period">Bulan 1 &ndash; 6</span>
-            <h4 class="prog-roadmap-title">Konsolidasi &amp; Pendataan Riil</h4>
-            <p class="prog-roadmap-desc">
-              Audit kondisi fisik jalan dan irigasi di 6 dusun, pemetaan legalitas UMKM, penyiapan layanan digital Sapa Warga, serta musyawarah bersama para tokoh masyarakat.
-            </p>
+          <div class="prog-stepper-card h-100">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <div class="prog-step-circle bg-success text-white fw-bold">1</div>
+              <div>
+                <h4 class="prog-step-title mb-0">Pendataan</h4>
+                <small class="prog-step-duration text-success fw-semibold">0&ndash;6 bulan</small>
+              </div>
+            </div>
+            <ul class="prog-step-list list-unstyled mb-0">
+              <li><i class="bi bi-diamond-fill text-success"></i> Pendataan potensi</li>
+              <li><i class="bi bi-diamond-fill text-success"></i> Database UMKM</li>
+              <li><i class="bi bi-diamond-fill text-success"></i> Pemetaan lokasi</li>
+              <li><i class="bi bi-diamond-fill text-success"></i> Baseline indikator</li>
+            </ul>
           </div>
         </div>
 
-        <!-- Tahap 2 -->
+        <!-- Tahap 2: Penguatan (6–18 bulan) - Biru -->
         <div class="col-md-6 col-lg-3">
-          <div class="prog-roadmap-step h-100">
-            <div class="prog-roadmap-badge">Tahap 2</div>
-            <span class="prog-roadmap-period">Tahun 1 &ndash; 2</span>
-            <h4 class="prog-roadmap-title">Penguatan Pondasi &amp; Infrastruktur</h4>
-            <p class="prog-roadmap-desc">
-              Pembersihan dan normalisasi irigasi, pembinaan intensif Pokdarwis 2026, fasilitasi sertifikasi Halal &amp; NIB bagi UMKM, serta pengoperasian sistem pelayanan cepat balai desa.
-            </p>
+          <div class="prog-stepper-card h-100">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <div class="prog-step-circle bg-primary text-white fw-bold">2</div>
+              <div>
+                <h4 class="prog-step-title mb-0">Penguatan</h4>
+                <small class="prog-step-duration text-primary fw-semibold">6&ndash;18 bulan</small>
+              </div>
+            </div>
+            <ul class="prog-step-list list-unstyled mb-0">
+              <li><i class="bi bi-diamond-fill text-primary"></i> Pendampingan</li>
+              <li><i class="bi bi-diamond-fill text-primary"></i> Peningkatan kapasitas</li>
+              <li><i class="bi bi-diamond-fill text-primary"></i> Digitalisasi</li>
+              <li><i class="bi bi-diamond-fill text-primary"></i> Kolaborasi</li>
+            </ul>
           </div>
         </div>
 
-        <!-- Tahap 3 -->
+        <!-- Tahap 3: Pengembangan (18–36 bulan) - Teal / Biru Tua -->
         <div class="col-md-6 col-lg-3">
-          <div class="prog-roadmap-step h-100">
-            <div class="prog-roadmap-badge">Tahap 3</div>
-            <span class="prog-roadmap-period">Tahun 3 &ndash; 4</span>
-            <h4 class="prog-roadmap-title">Akselerasi Ekonomi &amp; Wisata</h4>
-            <p class="prog-roadmap-desc">
-              Pembangunan display center UMKM di koridor wisata, promosi digital Tubing &amp; Mata Air, penyelenggaraan festival budaya Krido Budoyo tahunan, dan penguatan unit usaha BUMDes.
-            </p>
+          <div class="prog-stepper-card h-100">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <div class="prog-step-circle bg-info-subtle text-info-emphasis fw-bold" style="background-color: #00838f !important; color: #fff !important;">3</div>
+              <div>
+                <h4 class="prog-step-title mb-0">Pengembangan</h4>
+                <small class="prog-step-duration fw-semibold" style="color: #00838f;">18&ndash;36 bulan</small>
+              </div>
+            </div>
+            <ul class="prog-step-list list-unstyled mb-0">
+              <li><i class="bi bi-diamond-fill" style="color: #00838f;"></i> Integrasi wisata</li>
+              <li><i class="bi bi-diamond-fill" style="color: #00838f;"></i> Penguatan ekonomi</li>
+              <li><i class="bi bi-diamond-fill" style="color: #00838f;"></i> Pemasaran</li>
+              <li><i class="bi bi-diamond-fill" style="color: #00838f;"></i> Evaluasi indikator</li>
+            </ul>
           </div>
         </div>
 
-        <!-- Tahap 4 -->
+        <!-- Tahap 4: Keberlanjutan (36–60 bulan) - Ungu -->
         <div class="col-md-6 col-lg-3">
-          <div class="prog-roadmap-step h-100">
-            <div class="prog-roadmap-badge">Tahap 4</div>
-            <span class="prog-roadmap-period">Tahun 5 &ndash; 6</span>
-            <h4 class="prog-roadmap-title">Kemandirian &amp; Keberlanjutan</h4>
-            <p class="prog-roadmap-desc">
-              Tercapainya kemandirian kas desa melalui BUMDes produktif, pengelolaan lingkungan bebas sampah liar, dan Tampirkulon menjadi desa percontohan tata kelola transparan di Magelang.
-            </p>
+          <div class="prog-stepper-card h-100">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <div class="prog-step-circle bg-purple text-white fw-bold" style="background-color: #7b1fa2 !important;">4</div>
+              <div>
+                <h4 class="prog-step-title mb-0">Keberlanjutan</h4>
+                <small class="prog-step-duration fw-semibold" style="color: #7b1fa2;">36&ndash;60 bulan</small>
+              </div>
+            </div>
+            <ul class="prog-step-list list-unstyled mb-0">
+              <li><i class="bi bi-diamond-fill" style="color: #7b1fa2;"></i> Evaluasi program</li>
+              <li><i class="bi bi-diamond-fill" style="color: #7b1fa2;"></i> Replikasi yang berhasil</li>
+              <li><i class="bi bi-diamond-fill" style="color: #7b1fa2;"></i> Penguatan kelembagaan</li>
+              <li><i class="bi bi-diamond-fill" style="color: #7b1fa2;"></i> Keberlanjutan pembiayaan</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -543,85 +560,103 @@ try {
   </div>
 </section>
 
-<!-- SECTION 6: TRANSPARANSI & PROGRES -->
+<!-- SECTION 6: TRANSPARANSI & PROGRES (SESUAI MOCKUP) -->
 <section class="py-5 bg-white">
   <div class="container-custom">
-    <div class="text-center max-w-700 mx-auto mb-5">
-      <span class="badge bg-primary-subtle text-primary fw-bold px-3 py-2 rounded-pill mb-2">
-        <i class="bi bi-eye me-1"></i> AKUNTABILITAS PUBLIK
-      </span>
-      <h2 class="fw-bold display-6 text-dark mb-2">Transparansi &amp; Pengawasan Program</h2>
-      <p class="text-muted">
-        Kami percaya setiap rupiah dana desa dan setiap butir program kerja adalah amanah rakyat yang harus dipertanggungjawabkan secara terbuka.
-      </p>
-    </div>
-
-    <div class="row g-4">
-      <div class="col-md-6 col-lg-3">
-        <div class="prog-transparansi-card text-center">
-          <div class="prog-trans-icon text-success">
-            <i class="bi bi-check-circle-fill"></i>
-          </div>
-          <h5 class="fw-bold text-dark mt-3 mb-1">100% Selesai Dirumuskan</h5>
-          <p class="text-muted small mb-0">
-            Dokumen 7 Program Kerja telah rampung disinkronkan dengan hasil temu warga di 6 dusun.
+    <!-- Header Section Sesuai Mockup (Ada Lingkaran Nomor 6) -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2">
+      <div class="d-flex align-items-start gap-3">
+        <div class="prog-section-num-badge bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold">
+          6
+        </div>
+        <div>
+          <h2 class="fw-bold fs-3 text-dark mb-1">Transparansi &amp; Progres</h2>
+          <p class="text-muted mb-0 small">
+            Kami berkomitmen menjalankan program secara terbuka dan terukur.
           </p>
         </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="prog-transparansi-card text-center">
-          <div class="prog-trans-icon text-primary">
-            <i class="bi bi-clipboard2-data-fill"></i>
-          </div>
-          <h5 class="fw-bold text-dark mt-3 mb-1">Faktual &amp; Terverifikasi</h5>
-          <p class="text-muted small mb-0">
-            Disusun berdasarkan fakta lapangan, profil desa terkini, dan data potensi riil yang terukur.
-          </p>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="prog-transparansi-card text-center">
-          <div class="prog-trans-icon text-warning">
-            <i class="bi bi-graph-up-arrow"></i>
-          </div>
-          <h5 class="fw-bold text-dark mt-3 mb-1">Publikasi APBDes Terbuka</h5>
-          <p class="text-muted small mb-0">
-            Komitmen penayangan laporan anggaran desa secara berkala di website dan papan informasi balai desa.
-          </p>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="prog-transparansi-card text-center">
-          <div class="prog-trans-icon text-danger">
-            <i class="bi bi-shield-lock-fill"></i>
-          </div>
-          <h5 class="fw-bold text-dark mt-3 mb-1">Pengawasan Warga 24/7</h5>
-          <p class="text-muted small mb-0">
-            Kanal Sapa Warga siap menampung tanggapan, koreksi, dan laporan warga secara aman dan terjamin.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 7: BERITA & KEGIATAN TERKAIT PROGRAM -->
-<section class="py-5 bg-light-subtle">
-  <div class="container-custom">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
-      <div>
-        <span class="badge bg-danger-subtle text-danger fw-bold px-3 py-2 rounded-pill mb-2">
-          <i class="bi bi-newspaper me-1"></i> KABAR &amp; SOSIALISASI
-        </span>
-        <h2 class="fw-bold display-6 text-dark mb-1">Berita &amp; Kegiatan Terkait Program</h2>
-        <p class="text-muted mb-0">Dokumentasi silaturahmi, rembuk warga, dan sosialisasi rencana kerja di dusun-dusun.</p>
       </div>
       <div class="mt-3 mt-md-0">
-        <a href="index.php?page=berita" class="btn btn-outline-danger rounded-pill fw-bold btn-sm px-4">
-          Lihat Semua Berita <i class="bi bi-arrow-right ms-1"></i>
+        <a href="index.php?page=sapa-warga#transparansi" class="btn btn-outline-secondary btn-sm rounded-pill fw-semibold px-3">
+          Lihat Semua Progres &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- 4 Cards Horisontal Sesuai Mockup -->
+    <div class="row g-3 g-md-4">
+      <!-- 1. 5 Program Persiapan (Hijau) -->
+      <div class="col-6 col-md-3">
+        <div class="prog-stat-box p-3 rounded-4 d-flex align-items-center gap-3" style="background-color: #e8f5e9;">
+          <div class="prog-stat-box-icon bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
+            <i class="bi bi-check-lg"></i>
+          </div>
+          <div>
+            <div class="prog-stat-box-num text-dark fw-bold">5</div>
+            <div class="prog-stat-box-label text-muted small">Program Persiapan</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 3 Program Berjalan (Biru) -->
+      <div class="col-6 col-md-3">
+        <div class="prog-stat-box p-3 rounded-4 d-flex align-items-center gap-3" style="background-color: #e3f2fd;">
+          <div class="prog-stat-box-icon bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
+            <i class="bi bi-gear-fill"></i>
+          </div>
+          <div>
+            <div class="prog-stat-box-num text-dark fw-bold">3</div>
+            <div class="prog-stat-box-label text-muted small">Program Berjalan</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 2 Program Direncanakan (Oranye) -->
+      <div class="col-6 col-md-3">
+        <div class="prog-stat-box p-3 rounded-4 d-flex align-items-center gap-3" style="background-color: #fff3e0;">
+          <div class="prog-stat-box-icon text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="background-color: #f57c00;">
+            <i class="bi bi-clock-fill"></i>
+          </div>
+          <div>
+            <div class="prog-stat-box-num text-dark fw-bold">2</div>
+            <div class="prog-stat-box-label text-muted small">Program Direncanakan</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 12 Total Rencana Kegiatan (Ungu) -->
+      <div class="col-6 col-md-3">
+        <div class="prog-stat-box p-3 rounded-4 d-flex align-items-center gap-3" style="background-color: #f3e5f5;">
+          <div class="prog-stat-box-icon text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="background-color: #7b1fa2;">
+            <i class="bi bi-bar-chart-fill"></i>
+          </div>
+          <div>
+            <div class="prog-stat-box-num text-dark fw-bold">12</div>
+            <div class="prog-stat-box-label text-muted small">Total Rencana Kegiatan</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: BERITA & KEGIATAN TERKAIT PROGRAM (SESUAI MOCKUP) -->
+<section class="py-5 bg-light-subtle">
+  <div class="container-custom">
+    <!-- Header Section Sesuai Mockup -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2">
+      <div class="d-flex align-items-start gap-3">
+        <div class="prog-section-num-badge bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold">
+          8
+        </div>
+        <div>
+          <h2 class="fw-bold fs-3 text-dark mb-1">Berita &amp; Kegiatan Terkait Program</h2>
+          <p class="text-muted mb-0 small">Update terbaru seputar pelaksanaan program dan kegiatan masyarakat.</p>
+        </div>
+      </div>
+      <div class="mt-3 mt-md-0">
+        <a href="index.php?page=berita" class="btn btn-outline-secondary btn-sm rounded-pill fw-semibold px-3">
+          Lihat Semua Berita &rarr;
         </a>
       </div>
     </div>
@@ -639,86 +674,64 @@ try {
                   <i class="bi bi-newspaper fs-1"></i>
                 </div>
               <?php endif; ?>
-              <span class="prog-news-badge"><?= e($n['kategori'] ?? 'Kegiatan') ?></span>
             </div>
             <div class="prog-news-body d-flex flex-column">
-              <small class="text-muted mb-2">
-                <i class="bi bi-calendar3 me-1"></i><?= format_tanggal_id($n['created_at']) ?>
+              <small class="text-muted mb-1">
+                <?= format_tanggal_id($n['created_at']) ?>
               </small>
               <h5 class="prog-news-title"><?= e($n['judul']) ?></h5>
               <p class="prog-news-desc flex-grow-1"><?= e($n['ringkasan']) ?></p>
-              <div class="pt-2 border-top">
-                <a href="index.php?page=berita" class="text-danger fw-bold small text-decoration-none">
-                  Baca Selengkapnya &rarr;
-                </a>
-              </div>
             </div>
           </div>
         </div>
         <?php endforeach; ?>
       <?php else: ?>
-        <!-- Fallback jika belum ada berita di database -->
+        <!-- Fallback 4 kartu berita sesuai mockup -->
         <div class="col-md-6 col-lg-3">
           <div class="card prog-news-card h-100">
             <div class="prog-news-img-wrap">
-              <img src="assets/images/program/potensi_pertanian.jpg" alt="Rembuk Petani" class="w-100 h-100 object-fit-cover">
-              <span class="prog-news-badge">Pertanian</span>
+              <img src="assets/images/program/potensi_pertanian.jpg" alt="Pembentukan Pokdarwis" class="w-100 h-100 object-fit-cover">
             </div>
             <div class="prog-news-body d-flex flex-column">
-              <small class="text-muted mb-2"><i class="bi bi-calendar3 me-1"></i>Terkini</small>
-              <h5 class="prog-news-title">Rembuk Tani: Memetakan Kebutuhan Irigasi Tampir Kulon I</h5>
-              <p class="prog-news-desc flex-grow-1">Diskusi santai bersama para petani mengenai langkah konkret perbaikan parit dan pembagian air yang adil.</p>
-              <div class="pt-2 border-top">
-                <a href="index.php?page=sapa-warga#formAspirasi" class="text-danger fw-bold small text-decoration-none">Beri Tanggapan &rarr;</a>
-              </div>
+              <small class="text-muted mb-1">12 Jul 2026</small>
+              <h5 class="prog-news-title">Pembentukan Pokdarwis Desa Tampirkulon</h5>
+              <p class="prog-news-desc flex-grow-1">Melibatkan 26 peserta dan 19 pengurus dalam pengembangan potensi desa.</p>
             </div>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
           <div class="card prog-news-card h-100">
             <div class="prog-news-img-wrap">
-              <img src="assets/images/program/potensi_umkm.jpg" alt="Silaturahmi UMKM" class="w-100 h-100 object-fit-cover">
-              <span class="prog-news-badge">UMKM</span>
+              <img src="assets/images/program/potensi_mata_air.jpg" alt="Kegiatan Bersih Sumber Air" class="w-100 h-100 object-fit-cover">
             </div>
             <div class="prog-news-body d-flex flex-column">
-              <small class="text-muted mb-2"><i class="bi bi-calendar3 me-1"></i>Terkini</small>
-              <h5 class="prog-news-title">Silaturahmi Sentra Keripik Tempe Dusun Dukuh Kidul</h5>
-              <p class="prog-news-desc flex-grow-1">Mendengar aspirasi perajin tempe terkait kemudahan perizinan P-IRT dan sarana display oleh-oleh khas.</p>
-              <div class="pt-2 border-top">
-                <a href="index.php?page=sapa-warga#formAspirasi" class="text-danger fw-bold small text-decoration-none">Beri Tanggapan &rarr;</a>
-              </div>
+              <small class="text-muted mb-1">5 Jul 2026</small>
+              <h5 class="prog-news-title">Kegiatan Bersih Sumber Air</h5>
+              <p class="prog-news-desc flex-grow-1">Warga bersama menjaga kelestarian lingkungan dan debit air alami.</p>
             </div>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
           <div class="card prog-news-card h-100">
             <div class="prog-news-img-wrap">
-              <img src="assets/images/program/potensi_tubing.jpg" alt="Tinjau Tubing" class="w-100 h-100 object-fit-cover">
-              <span class="prog-news-badge">Wisata</span>
+              <img src="assets/images/program/potensi_umkm.jpg" alt="Pelatihan UMKM Lokal" class="w-100 h-100 object-fit-cover">
             </div>
             <div class="prog-news-body d-flex flex-column">
-              <small class="text-muted mb-2"><i class="bi bi-calendar3 me-1"></i>Terkini</small>
-              <h5 class="prog-news-title">Tinjauan Jalur Wisata Tubing Bersama Pemuda Karang Taruna</h5>
-              <p class="prog-news-desc flex-grow-1">Mengecek kesiapan safety tubing dan kebersihan aliran air untuk menyambut kolaborasi Pokdarwis 2026.</p>
-              <div class="pt-2 border-top">
-                <a href="index.php?page=sapa-warga#formAspirasi" class="text-danger fw-bold small text-decoration-none">Beri Tanggapan &rarr;</a>
-              </div>
+              <small class="text-muted mb-1">28 Jun 2026</small>
+              <h5 class="prog-news-title">Pelatihan UMKM Lokal</h5>
+              <p class="prog-news-desc flex-grow-1">Peningkatan kapasitas pelaku usaha olahan tempe dan jajanan desa.</p>
             </div>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
           <div class="card prog-news-card h-100">
             <div class="prog-news-img-wrap">
-              <img src="assets/images/program/potensi_jathilan.jpg" alt="Latihan Budaya" class="w-100 h-100 object-fit-cover">
-              <span class="prog-news-badge">Budaya</span>
+              <img src="assets/images/program/potensi_tubing.jpg" alt="Turnamen Sepak Bola Desa" class="w-100 h-100 object-fit-cover">
             </div>
             <div class="prog-news-body d-flex flex-column">
-              <small class="text-muted mb-2"><i class="bi bi-calendar3 me-1"></i>Terkini</small>
-              <h5 class="prog-news-title">Apresiasi Kesenian Tradisional Bersama Paguyuban Krido Budoyo</h5>
-              <p class="prog-news-desc flex-grow-1">Mendorong pelestarian seni Jathilan sebagai magnet budaya desa yang membanggakan generasi muda.</p>
-              <div class="pt-2 border-top">
-                <a href="index.php?page=sapa-warga#formAspirasi" class="text-danger fw-bold small text-decoration-none">Beri Tanggapan &rarr;</a>
-              </div>
+              <small class="text-muted mb-1">20 Jun 2026</small>
+              <h5 class="prog-news-title">Turnamen Olahraga Pemuda Desa</h5>
+              <p class="prog-news-desc flex-grow-1">Semangat olahraga antardusun untuk generasi muda yang sehat dan rukun.</p>
             </div>
           </div>
         </div>
@@ -727,29 +740,34 @@ try {
   </div>
 </section>
 
-<!-- SECTION 8: BANNER CTA SAPA WARGA -->
+<!-- SECTION 8: BANNER CTA SAPA WARGA SESUAI MOCKUP -->
 <section class="py-5 bg-white">
   <div class="container-custom">
-    <div class="prog-cta-banner">
+    <div class="prog-cta-sapa-card p-4 p-md-5 rounded-4 shadow-sm position-relative overflow-hidden" style="background-color: #e8f5e9;">
       <div class="row align-items-center">
-        <div class="col-lg-8">
-          <span class="badge bg-white text-success fw-bold px-3 py-2 rounded-pill mb-3">
-            <i class="bi bi-chat-heart-fill me-1 text-danger"></i> PARTISIPASI WARGA ADALAH KUNCI
-          </span>
-          <h3 class="fw-bold text-white mb-2 fs-2">Punya Saran atau Masukan untuk Dusun Anda?</h3>
-          <p class="text-white-50 mb-4 mb-lg-0 fs-6 leading-relaxed">
-            Program ini adalah awal dari ikhtiar bersama. Jika ada kebutuhan lingkungan dusun Anda yang belum terangkum, sampaikan aspirasi Anda sekarang secara langsung lewat kanal Sapa Warga.
+        <!-- Kiri: Icon & Teks -->
+        <div class="col-lg-5 mb-3 mb-lg-0">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <div class="prog-cta-icon-wrap bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px; font-size: 1.35rem;">
+              <i class="bi bi-chat-dots-fill"></i>
+            </div>
+            <h3 class="fw-bold text-dark mb-0 fs-4">Punya Ide, Saran atau Aspirasi?</h3>
+          </div>
+          <p class="text-muted small ps-lg-5 ms-lg-3 mb-0">
+            Sampaikan langsung melalui Sapa Warga. Suara anda sangat berarti.
           </p>
         </div>
-        <div class="col-lg-4 text-lg-end">
-          <div class="d-flex flex-column flex-sm-row flex-lg-column gap-2 justify-content-lg-end">
-            <a href="index.php?page=sapa-warga#formAspirasi" class="btn btn-danger btn-lg rounded-pill fw-bold shadow-sm px-4">
-              <i class="bi bi-pencil-square me-2"></i> Kirim Aspirasi Warga
-            </a>
-            <a href="https://wa.me/6281234567890?text=Halo%20Pak%20Edy%20Susanto,%20saya%20warga%20Tampirkulon%20ingin%20memberi%20masukan%20program" target="_blank" class="btn btn-outline-light btn-lg rounded-pill fw-bold px-4">
-              <i class="bi bi-whatsapp me-2"></i> Hubungi Tim via WA
-            </a>
-          </div>
+        
+        <!-- Tengah: Ilustrasi Orang / Sapa Warga -->
+        <div class="col-lg-4 text-center my-3 my-lg-0 d-none d-md-block">
+          <img src="assets/images/banner/sapa_warga_people.jpg" alt="Aspirasi Warga Tampirkulon" class="img-fluid rounded-3" style="max-height: 80px; object-fit: contain;">
+        </div>
+
+        <!-- Kanan: Tombol Sapa Warga Sekarang -->
+        <div class="col-lg-3 text-lg-end">
+          <a href="index.php?page=sapa-warga#formAspirasi" class="btn btn-success btn-lg rounded-pill fw-bold px-4 shadow-sm w-100 w-lg-auto">
+            Sapa Warga Sekarang &rarr;
+          </a>
         </div>
       </div>
     </div>
@@ -769,7 +787,7 @@ try {
           </div>
           <div>
             <span class="badge bg-white-subtle text-white rounded-pill px-2 py-0 small mb-1">
-              Program #0<?= $p['id'] ?> • <?= e($p['kategori_label']) ?>
+              Program #0<?= $p['id'] ?> &bull; <?= e($p['kategori_label']) ?>
             </span>
             <h5 class="modal-title fw-bold text-white mb-0" id="modalLabelProgram<?= $p['id'] ?>">
               <?= e($p['bidang']) ?>
@@ -857,35 +875,3 @@ try {
   </div>
 </div>
 <?php endforeach; ?>
-
-<!-- VANILLA JS UNTUK FILTER KATEGORI -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const filterBtns = document.querySelectorAll('.prog-filter-btn');
-  const gridItems = document.querySelectorAll('.prog-grid-item');
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-      // Update active state
-      filterBtns.forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-
-      const filterValue = this.getAttribute('data-filter');
-
-      gridItems.forEach(item => {
-        const itemCat = item.getAttribute('data-category');
-        if (filterValue === 'all') {
-          item.style.display = 'block';
-        } else if (itemCat && itemCat.includes(filterValue)) {
-          item.style.display = 'block';
-        } else if (itemCat && itemCat.includes('quote')) {
-          // Tetap tampilkan kartu quote untuk keseimbangan layout jika semua atau bisa diatur
-          item.style.display = 'none';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    });
-  });
-});
-</script>

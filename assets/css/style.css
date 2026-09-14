@@ -1833,21 +1833,30 @@ body {
 }
 
 /* ============================================================
-   HALAMAN PROGRAM KERJA - PROG-* STYLES
+   HALAMAN PROGRAM KERJA - PROG-* STYLES (MATCH UI MOCKUP)
    ============================================================ */
+
+/* Badge Nomor Section (Lingkaran Hijau) */
+.prog-section-num-badge {
+  width: 34px;
+  height: 34px;
+  background-color: #1b5e20 !important;
+  color: #fff;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(27, 94, 32, 0.25);
+}
 
 /* ------ SECTION 1: HERO BANNER ------ */
 .prog-hero-section {
-  background: linear-gradient(135deg, #1a2a1a 0%, #2d5a27 40%, #1b5e20 70%, #0f3d12 100%);
-  background-image: url('../images/program/hero_bg.jpg');
+  background: linear-gradient(135deg, #0d320d 0%, #1b5e20 50%, #2e7d32 100%);
+  background-image: url('../images/banner/hero_bg_landscape.jpg');
   background-size: cover;
   background-position: center;
-  background-blend-mode: multiply;
   min-height: 520px;
   display: flex;
   align-items: center;
   position: relative;
-  padding: 80px 0 60px;
+  padding: 85px 0 70px;
   overflow: hidden;
 }
 
@@ -1855,7 +1864,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(13, 50, 13, 0.88) 0%, rgba(27, 94, 32, 0.75) 60%, rgba(15, 61, 18, 0.85) 100%);
+  background: linear-gradient(135deg, rgba(13, 50, 13, 0.88) 0%, rgba(27, 94, 32, 0.78) 55%, rgba(15, 61, 18, 0.88) 100%);
   z-index: 1;
 }
 
@@ -1867,30 +1876,30 @@ body {
 .prog-hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #fff;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  padding: 0.4rem 1rem;
+  padding: 0.35rem 0.95rem;
   border-radius: 30px;
   backdrop-filter: blur(4px);
   margin-bottom: 1.25rem;
 }
 
 .prog-hero-title {
-  font-size: clamp(1.75rem, 4vw, 2.8rem);
+  font-size: clamp(1.85rem, 4.2vw, 3rem);
   font-weight: 800;
   color: #ffffff;
   line-height: 1.2;
   margin-bottom: 1rem;
+  letter-spacing: -0.01em;
 }
 
 .prog-hero-subtitle {
   font-size: 1rem;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.65;
   margin-bottom: 2rem;
   max-width: 580px;
@@ -1899,107 +1908,91 @@ body {
 .prog-hero-cta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
 .prog-hero-slogan-box {
   padding: 1.5rem 2rem;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
   backdrop-filter: blur(8px);
   text-align: center;
 }
 
 .prog-hero-watermark {
-  font-family: 'Caveat', 'Dancing Script', 'Pacifico', cursive;
-  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-family: 'Caveat', 'Dancing Script', cursive;
+  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
   color: #ffffff;
   font-weight: 700;
   line-height: 1.3;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.35);
   letter-spacing: 0.02em;
 }
 
-/* ------ SECTION 2: QUICK STATS BAR ------ */
+/* ------ SECTION 2: STATISTIK SINGKAT (STATS BAR FLOATING CARD) ------ */
 .prog-stats-section {
-  background: #fff;
-  border-bottom: 1px solid #e9ecef;
-  padding: 0;
+  background: transparent;
+  position: relative;
+  z-index: 10;
+  margin-top: -36px;
+  padding-bottom: 1rem;
 }
 
 .prog-stats-bar {
-  padding: 1.75rem 0;
-  border-top: 4px solid #d32f2f;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  padding: 1.5rem 1rem;
+  border: 1px solid #f0f0f0;
 }
 
-.prog-stat-item {
-  padding: 0.5rem 0;
+.prog-stat-card {
+  padding: 0.5rem;
+}
+
+.prog-stat-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
 }
 
 .prog-stat-number {
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
-  font-weight: 900;
-  line-height: 1;
-  margin-bottom: 0.35rem;
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+}
+
+.prog-stat-title-top {
+  font-size: 1.05rem;
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
 }
 
 .prog-stat-label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #6c757d;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
-/* ------ SECTION 3: PROGRAM CARDS GRID ------ */
-.prog-filter-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
-}
-
-.prog-filter-btn {
-  padding: 0.45rem 1.1rem;
-  border-radius: 30px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  border: 2px solid #dee2e6;
-  color: #495057;
-  background: #fff;
-  transition: all 0.2s ease;
-}
-
-.prog-filter-btn:hover {
-  border-color: #d32f2f;
-  color: #d32f2f;
-}
-
-.prog-filter-btn.active {
-  background: #d32f2f;
-  border-color: #d32f2f;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(211,47,47,0.3);
-}
-
+/* ------ SECTION 3: 7 PROGRAM PRIORITAS CARDS ------ */
 .prog-card {
-  border: 2px solid;
+  border: 1.5px solid;
   border-radius: 16px;
-  padding: 1.4rem;
+  padding: 1.5rem 1.35rem;
+  display: flex;
+  flex-direction: column;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .prog-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
-}
-
-.prog-card-top {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 }
 
 .prog-card-icon-box {
@@ -2009,281 +2002,202 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  font-size: 1.25rem;
-  flex-shrink: 0;
-}
-
-.prog-card-header-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.prog-card-num-badge {
-  font-size: 0.75rem;
-  font-weight: 700;
-  border: 1.5px solid;
-  padding: 0.1rem 0.5rem;
-  border-radius: 6px;
-  display: inline-block;
-}
-
-.prog-card-cat-tag {
-  font-size: 0.7rem;
-  color: #6c757d;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: 1.35rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .prog-card-title {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #1a1a2e;
-  line-height: 1.3;
-  margin-bottom: 0.65rem;
+  line-height: 1.35;
+  margin-bottom: 0.5rem;
 }
 
 .prog-card-desc {
-  font-size: 0.845rem;
+  font-size: 0.835rem;
   color: #555;
-  line-height: 1.6;
-  margin-bottom: 1rem;
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
   flex-grow: 1;
 }
 
-.prog-card-action {
-  margin-top: auto;
-}
-
 .prog-card-detail-btn {
-  font-size: 0.82rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #333;
   font-weight: 600;
-  background: transparent;
-  border: none;
-  padding: 0;
-  text-decoration: none;
-  transition: gap 0.2s;
+  font-size: 0.78rem;
+  transition: all 0.2s ease;
 }
 
 .prog-card-detail-btn:hover {
-  text-decoration: underline;
+  background: #f8f9fa;
+  color: #000;
 }
 
-/* Quote Card */
+/* Quote Card Sesuai Mockup */
 .prog-quote-card {
-  background: linear-gradient(135deg, #e8f8f0 0%, #d4f1e1 100%) !important;
-  border: 2px solid #c8e6c9 !important;
+  background: #eef9ee !important;
+  border-color: #c8e6c9 !important;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 1.75rem 1.5rem;
 }
 
 .prog-quote-icon {
-  font-size: 3rem;
-  color: #2e7d32;
-  margin-bottom: 1rem;
-  opacity: 0.5;
+  font-size: 2.2rem;
   line-height: 1;
+  color: #2e7d32;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
 }
 
 .prog-quote-text {
   font-family: 'Georgia', serif;
-  font-size: 0.975rem;
-  color: #2d5a27;
-  font-style: italic;
-  line-height: 1.7;
-  margin-bottom: 1.25rem;
-}
-
-.prog-quote-author {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.prog-quote-author strong {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #1b5e20;
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.prog-sig-name {
+  font-family: 'Caveat', cursive;
+  font-size: 1.65rem;
+  color: #1b5e20;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.prog-sig-role {
+  font-size: 0.78rem;
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.prog-sig-num {
+  font-size: 0.74rem;
+  color: #4caf50;
   font-weight: 700;
 }
 
-.prog-quote-author span {
-  font-size: 0.75rem;
-  color: #388e3c;
+/* ------ SECTION 4: HIGHLIGHT POTENSI DESA ------ */
+.prog-potensi-unified-card {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
 }
 
-/* ------ SECTION 4: POTENSI LOKAL ------ */
-.prog-potensi-featured {
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-  background: #fff;
+.prog-potensi-hero-banner {
+  height: 165px;
 }
 
-.prog-potensi-featured-img-wrap {
-  height: 340px;
-  overflow: hidden;
+.prog-potensi-hero-overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 2;
 }
 
-.prog-potensi-thumb-card {
-  border-radius: 14px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border: 1px solid #f0f0f0;
+.prog-potensi-mini-img {
+  height: 85px;
 }
 
-.prog-potensi-thumb-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
-}
-
-.prog-potensi-thumb-img {
-  height: 180px;
-  overflow: hidden;
-}
-
-.prog-potensi-thumb-img img {
-  transition: transform 0.4s ease;
-}
-
-.prog-potensi-thumb-card:hover .prog-potensi-thumb-img img {
-  transform: scale(1.05);
-}
-
-.prog-potensi-thumb-body {
-  padding: 1rem 1.1rem 1.25rem;
+.prog-potensi-mini-item:hover .prog-potensi-mini-img img {
+  transform: scale(1.06);
+  transition: transform 0.3s ease;
 }
 
 /* ------ SECTION 5: ROADMAP STEPPER ------ */
-.prog-roadmap-wrap {
-  position: relative;
-}
-
-.prog-roadmap-step {
-  background: #fff;
-  border: 2px solid #e9ecef;
+.prog-stepper-card {
+  background: #ffffff;
+  border: 1.5px solid #e9ecef;
   border-radius: 16px;
-  padding: 1.75rem 1.5rem;
-  position: relative;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  padding: 1.5rem 1.25rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.prog-roadmap-step:hover {
-  border-color: #d32f2f;
-  box-shadow: 0 8px 24px rgba(211,47,47,0.1);
+.prog-stepper-card:hover {
+  border-color: #2e7d32;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
-.prog-roadmap-badge {
-  display: inline-block;
-  background: #d32f2f;
-  color: #fff;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 0.3rem 0.85rem;
-  border-radius: 20px;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.04em;
+.prog-step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  flex-shrink: 0;
 }
 
-.prog-roadmap-period {
-  display: block;
-  font-size: 0.78rem;
-  color: #6c757d;
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-}
-
-.prog-roadmap-title {
-  font-size: 1rem;
+.prog-step-title {
+  font-size: 1.05rem;
   font-weight: 700;
   color: #1a1a2e;
-  margin-bottom: 0.65rem;
-  line-height: 1.3;
 }
 
-.prog-roadmap-desc {
-  font-size: 0.845rem;
-  color: #666;
-  line-height: 1.65;
-  margin-bottom: 0;
+.prog-step-list li {
+  font-size: 0.835rem;
+  color: #495057;
+  margin-bottom: 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* ------ SECTION 6: TRANSPARANSI ------ */
-.prog-transparansi-card {
-  background: #fff;
-  border: 1px solid #f0f0f0;
-  border-radius: 16px;
-  padding: 1.75rem 1.25rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-  transition: transform 0.25s, box-shadow 0.25s;
+.prog-step-list li i {
+  font-size: 0.55rem;
 }
 
-.prog-transparansi-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+/* ------ SECTION 6: TRANSPARANSI & PROGRES ------ */
+.prog-stat-box {
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease;
 }
 
-.prog-trans-icon {
-  font-size: 2.5rem;
+.prog-stat-box:hover {
+  transform: translateY(-3px);
+}
+
+.prog-stat-box-icon {
+  width: 44px;
+  height: 44px;
+  font-size: 1.25rem;
+}
+
+.prog-stat-box-num {
+  font-size: 1.65rem;
   line-height: 1;
 }
 
-/* ------ SECTION 7: BERITA TERKAIT ------ */
+/* ------ SECTION 7: BERITA TERKAIT PROGRAM ------ */
 .prog-news-card {
-  border: none;
+  border: 1px solid #e9ecef;
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  background: #ffffff;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  background: #fff;
 }
 
 .prog-news-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.13);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
 }
 
 .prog-news-img-wrap {
-  height: 165px;
+  height: 155px;
   overflow: hidden;
-  position: relative;
-  background: #f0f0f0;
-}
-
-.prog-news-img-wrap img {
-  transition: transform 0.4s ease;
-}
-
-.prog-news-card:hover .prog-news-img-wrap img {
-  transform: scale(1.06);
-}
-
-.prog-news-badge {
-  position: absolute;
-  top: 0.65rem;
-  left: 0.65rem;
-  background: #d32f2f;
-  color: #fff;
-  font-size: 0.68rem;
-  font-weight: 700;
-  padding: 0.25rem 0.65rem;
-  border-radius: 20px;
-  letter-spacing: 0.04em;
+  background: #f8f9fa;
 }
 
 .prog-news-body {
-  padding: 1rem 1.1rem 1.25rem;
+  padding: 1rem 1.15rem 1.25rem;
 }
 
 .prog-news-title {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 700;
   color: #1a1a2e;
   line-height: 1.35;
@@ -2291,61 +2205,25 @@ body {
 }
 
 .prog-news-desc {
-  font-size: 0.81rem;
+  font-size: 0.8rem;
   color: #6c757d;
-  line-height: 1.6;
-  margin-bottom: 0.75rem;
+  line-height: 1.55;
+  margin-bottom: 0;
 }
 
-/* ------ SECTION 8: BANNER CTA ------ */
-.prog-cta-banner {
-  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #388e3c 100%);
-  border-radius: 20px;
-  padding: 3rem 2.5rem;
-  box-shadow: 0 12px 40px rgba(27, 94, 32, 0.3);
-  position: relative;
-  overflow: hidden;
-}
-
-.prog-cta-banner::before {
-  content: '';
-  position: absolute;
-  top: -50px;
-  right: -50px;
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.05);
-  pointer-events: none;
-}
-
-.prog-cta-banner::after {
-  content: '';
-  position: absolute;
-  bottom: -80px;
-  left: 30%;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.04);
-  pointer-events: none;
-}
-
-/* ------ MODAL DETAIL PROGRAM ------ */
-.prog-modal-icon-wrap i {
-  color: inherit !important;
+/* ------ SECTION 8: BANNER CTA SAPA WARGA ------ */
+.prog-cta-sapa-card {
+  border: 1px solid #c8e6c9;
 }
 
 /* ------ RESPONSIVE BREAKPOINTS ------ */
 @media (max-width: 991px) {
   .prog-hero-section {
-    min-height: auto;
     padding: 60px 0 50px;
     text-align: center;
   }
 
   .prog-hero-subtitle {
-    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
   }
@@ -2354,79 +2232,70 @@ body {
     justify-content: center;
   }
 
-  .prog-potensi-featured-img-wrap {
-    height: 260px;
+  .prog-stats-section {
+    margin-top: -24px;
   }
 
-  .prog-cta-banner {
-    padding: 2.25rem 1.75rem;
-    text-align: center;
+  .prog-potensi-hero-banner {
+    height: 140px;
   }
 }
 
 @media (max-width: 767px) {
   .prog-hero-watermark {
-    font-size: 1.3rem;
-  }
-
-  .prog-stats-bar {
-    padding: 1.25rem 0;
+    font-size: 1.35rem;
   }
 
   .prog-stat-number {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
-  .prog-filter-btn {
-    font-size: 0.78rem;
-    padding: 0.4rem 0.85rem;
+  .prog-potensi-mini-img {
+    height: 70px;
   }
 
-  .prog-roadmap-step {
-    padding: 1.25rem 1.1rem;
-  }
-
-  .prog-cta-banner {
-    padding: 2rem 1.25rem;
-  }
-
-  .prog-potensi-featured-img-wrap {
-    height: 220px;
+  .prog-news-img-wrap {
+    height: 140px;
   }
 }
 
 @media (max-width: 575px) {
-  .prog-hero-section {
-    padding: 50px 0 40px;
-  }
-
   .prog-hero-title {
     font-size: 1.65rem;
   }
 
   .prog-hero-cta .btn {
     width: 100%;
-    justify-content: center;
   }
 
-  .prog-stat-item {
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 0.75rem;
-    margin-bottom: 0.5rem;
+  .prog-stat-card {
+    padding: 0.25rem;
   }
 
-  .prog-potensi-thumb-img {
-    height: 160px;
+  .prog-stat-icon-circle {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
   }
 
-  .prog-news-img-wrap {
-    height: 140px;
+  .prog-stat-number {
+    font-size: 1.4rem;
   }
 
-  .prog-cta-banner .btn {
-    width: 100%;
-    text-align: center;
-    justify-content: center;
+  .prog-stat-title-top {
+    font-size: 0.9rem;
+  }
+
+  .prog-stat-label {
+    font-size: 0.72rem;
+  }
+
+  .prog-potensi-mini-img {
+    height: 60px;
+  }
+
+  .prog-potensi-mini-label {
+    font-size: 0.7rem;
   }
 }
 
