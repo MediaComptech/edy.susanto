@@ -4,6 +4,11 @@
  * Calon Kepala Desa Tampirkulon - Edy Susanto (No. Urut 2)
  */
 
+// Mulai output buffering global untuk mencegah error "headers already sent"
+if (ob_get_level() === 0) {
+    ob_start();
+}
+
 // Mulai sesi aman jika belum aktif
 if (session_status() === PHP_SESSION_NONE) {
     ini_set('session.cookie_httponly', 1);

@@ -1,7 +1,10 @@
 <?php
-require_once __DIR__ . '/header_admin.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/functions.php';
 
-// Handle Add / Edit / Delete Lokasi Potensi
+require_admin_auth();
+
+// Handle Add / Edit / Delete Lokasi Potensi (Diproses sebelum me-render output HTML)
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
     if (verify_csrf()) {
         if ($_POST['action'] === 'tambah_lokasi') {
@@ -24,16 +27,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
                     $fotoPath = $upload['relative_path'];
                 } else {
                     set_flash('danger', $upload['error']);
-                    header("Location: data_lokasi.php");
-                    exit;
+                    safe_redirect("data_lokasi.php");
                 }
             }
 
             $stmt = $pdo->prepare("INSERT INTO lokasi_potensi (nama, kategori, kategori_label, jarak, lokasi, lat, lng, foto, deskripsi, icon, color, urutan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([$nama, $kategori, $kategori_label, $jarak, $lokasi, $lat, $lng, $fotoPath, $deskripsi, $icon, $color, $urutan]);
             set_flash('success', 'Titik lokasi berhasil ditambahkan ke peta potensi.');
-            header("Location: data_lokasi.php");
-            exit;
+            safe_redirect("data_lokasi.php");
 
         } elseif ($_POST['action'] === 'edit_lokasi') {
             $id = (int)$_POST['id'];
@@ -63,21 +64,22 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
                 $stmt->execute([$nama, $kategori, $kategori_label, $jarak, $lokasi, $lat, $lng, $deskripsi, $icon, $color, $urutan, $id]);
                 set_flash('success', 'Data titik lokasi berhasil diperbarui.');
             }
-            header("Location: data_lokasi.php");
-            exit;
+            safe_redirect("data_lokasi.php");
 
         } elseif ($_POST['action'] === 'hapus_lokasi') {
             $id = (int)$_POST['id'];
             $stmt = $pdo->prepare("DELETE FROM lokasi_potensi WHERE id = ?");
             $stmt->execute([$id]);
             set_flash('success', 'Titik lokasi peta berhasil dihapus.');
-            header("Location: data_lokasi.php");
-            exit;
+            safe_redirect("data_lokasi.php");
         }
     }
 }
 
 $daftarLokasi = $pdo->query("SELECT * FROM lokasi_potensi ORDER BY urutan ASC, id ASC")->fetchAll(PDO::FETCH_ASSOC);
+
+// Render Template Admin Header & Navigasi
+require_once __DIR__ . '/header_admin.php';
 ?>
 
 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-2">

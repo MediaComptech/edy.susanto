@@ -1,7 +1,10 @@
 <?php
-require_once __DIR__ . '/header_admin.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/functions.php';
 
-// Handle Add / Edit / Delete
+require_admin_auth();
+
+// Handle Add / Edit / Delete (Diproses sebelum me-render output HTML)
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
     if (verify_csrf()) {
         if ($_POST['action'] === 'tambah_foto') {
@@ -22,8 +25,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
             } else {
                 set_flash('danger', 'File foto wajib diunggah.');
             }
-            header("Location: data_galeri.php");
-            exit;
+            safe_redirect("data_galeri.php");
         } elseif ($_POST['action'] === 'edit_foto') {
             $id = (int)$_POST['id'];
             $judul = sanitize($_POST['judul']);
@@ -45,20 +47,21 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
                 $stmt->execute([$judul, $deskripsi, $kategori, $jumlah_foto, $id]);
                 set_flash('success', 'Data galeri berhasil diperbarui.');
             }
-            header("Location: data_galeri.php");
-            exit;
+            safe_redirect("data_galeri.php");
         } elseif ($_POST['action'] === 'hapus_foto') {
             $id = (int)$_POST['id'];
             $stmt = $pdo->prepare("DELETE FROM galeri WHERE id = ?");
             $stmt->execute([$id]);
             set_flash('success', 'Foto dokumentasi berhasil dihapus.');
-            header("Location: data_galeri.php");
-            exit;
+            safe_redirect("data_galeri.php");
         }
     }
 }
 
 $galeri = $pdo->query("SELECT * FROM galeri ORDER BY created_at DESC")->fetchAll();
+
+// Render Template Admin Header & Navigasi
+require_once __DIR__ . '/header_admin.php';
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">

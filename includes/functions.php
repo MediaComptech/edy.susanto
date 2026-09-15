@@ -256,3 +256,119 @@ function set_pengaturan($pdo, $key, $value, $keterangan = '') {
     }
 }
 
+/**
+ * Redirect aman anti-error "headers already sent"
+ * Jika header HTTP belum dikirim, gunakan HTTP header redirect 302.
+ * Jika header HTTP sudah terlanjur dikirim oleh script lain, gunakan fallback JS + meta refresh.
+ */
+function safe_redirect($url) {
+    if (!headers_sent()) {
+        header("Location: " . $url);
+        exit;
+    }
+    echo '<script type="text/javascript">window.location.href = ' . json_encode($url) . ';</script>';
+    echo '<noscript><meta http-equiv="refresh" content="0;url=' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '"></noscript>';
+    exit;
+}
+
+/**
+ * Auto Self-Healing Database Schema & Default Seeds
+ * Menjamin saat aplikasi dideploy ke server baru (local / production live),
+ * seluruh tabel dan kolom yang dibutuhkan otomatis dibuat dan diisi tanpa error 500.
+ */
+function self_heal_database($pdo) {
+    static $hasRun = false;
+    if ($hasRun) return;
+    $hasRun = true;
+
+    try {
+        // 1. Pastikan tabel lokasi_potensi ada
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS `lokasi_potensi` (
+              `id` INT AUTO_INCREMENT PRIMARY KEY,
+              `nama` VARCHAR(150) NOT NULL,
+              `kategori` VARCHAR(50) NOT NULL DEFAULT 'sumber-air',
+              `kategori_label` VARCHAR(60) NOT NULL DEFAULT 'Sumber Mata Air',
+              `jarak` VARCHAR(100) NOT NULL DEFAULT '± 0,3 km dari Balai Desa',
+              `lokasi` VARCHAR(150) NOT NULL DEFAULT 'Tampirkulon, Candimulyo',
+              `lat` DECIMAL(10, 7) NOT NULL DEFAULT -7.5020000,
+              `lng` DECIMAL(10, 7) NOT NULL DEFAULT 110.2740000,
+              `foto` VARCHAR(255) NOT NULL DEFAULT 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg',
+              `deskripsi` TEXT DEFAULT NULL,
+              `icon` VARCHAR(60) NOT NULL DEFAULT 'bi-geo-alt-fill',
+              `color` VARCHAR(30) NOT NULL DEFAULT '#0288d1',
+              `urutan` INT NOT NULL DEFAULT 0,
+              `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ");
+
+        // Cek jika data lokasi_potensi kosong, seed data default 8 titik lokasi
+        $cntLok = (int)$pdo->query("SELECT COUNT(*) FROM `lokasi_potensi`")->fetchColumn();
+        if ($cntLok === 0) {
+            $seedLokasi = [
+                ['Kolam Ngudal Tuk Putri', 'sumber-air', 'Sumber Mata Air', '± 0,34 km dari Balai Desa', 'Tampirkulon, Candimulyo, Magelang', -7.5015, 110.2735, 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg', 'Sumber mata air alami yang jernih dan segar di tengah asrinya alam pedesaan Tampirkulon.', 'bi-droplet-fill', '#0288d1', 1],
+                ['Mata Air Tuk Lanang', 'sumber-air', 'Sumber Mata Air', '± 0,33 km dari Balai Desa', 'Tampirkulon, Candimulyo', -7.5008, 110.2728, 'assets/images/potensi/mata_air_tuk_lanang.jpg', 'Sumber mata air alami di bawah naungan pohon beringin purba yang menjaga pasokan air warga.', 'bi-droplet-fill', '#0288d1', 2],
+                ['Wisata Tubing Tampirkulon', 'wisata', 'Wisata Desa', '± 1,2 km dari Balai Desa', 'Aliran Sungai Tampirkulon', -7.5045, 110.2780, 'assets/images/potensi/wisata_tubing.jpg', 'Wahana wisata petualangan menyusuri sungai dengan ban karet didampingi tim Pokdarwis.', 'bi-tree-fill', '#2e7d32', 3],
+                ['Jathilan Krido Budoyo', 'budaya', 'Seni & Budaya', '± 0,8 km dari Balai Desa', 'Dusun Krajan, Tampirkulon', -7.5025, 110.2768, 'assets/images/potensi/jathilan_krido_budoyo.jpg', 'Sanggar kesenian tradisional jathilan kuda lumping warisan budaya leluhur desa.', 'bi-mask', '#7b1fa2', 4],
+                ['Warung Kupat Tahu Mbah Kenuk', 'kuliner', 'Kuliner Lokal', '± 1,1 km dari Balai Desa', 'Jl. Sudiro Km 4, Tampirkulon', -7.5060, 110.2748, 'assets/images/potensi/kuliner_kupat_tahu.jpg', 'Kuliner legendaris kupat tahu bumbu kacang gurih manis khas Magelang yang nikmat.', 'bi-cup-hot-fill', '#e64a19', 5],
+                ['Lahan Pertanian & Holtikultura', 'pertanian', 'Pertanian', '± 0,6 km dari Balai Desa', 'Kawasan Persawahan Dusun', -7.4985, 110.2710, 'assets/images/potensi/pertanian_tampirkulon.jpg', 'Hamparan persawahan terasering hijau penghasil beras dan sayur segar.', 'fa-solid fa-wheat-awn', '#f57c00', 6],
+                ['Sentra Keripik Tempe Bu Tatik', 'umkm', 'UMKM', '± 0,5 km dari Balai Desa', 'Dusun Tampir II, Tampirkulon', -7.5030, 110.2755, 'assets/images/potensi/umkm_tempe_kripik.jpg', 'Produksi keripik tempe renyah gurih berkualitas tinggi tanpa bahan pengawet.', 'bi-shop', '#d32f2f', 7],
+                ['Pojok Baca & PAUD Dusun', 'pendidikan', 'Pendidikan', '± 0,2 km dari Balai Desa', 'Kompleks Balai Desa Tampirkulon', -7.5018, 110.2730, 'assets/images/program/potensi_pendidikan.jpg', 'Fasilitas pendidikan usia dini dan literasi ramah anak bagi warga.', 'bi-book-fill', '#3949ab', 8]
+            ];
+            $stmt = $pdo->prepare("INSERT INTO `lokasi_potensi` (`nama`, `kategori`, `kategori_label`, `jarak`, `lokasi`, `lat`, `lng`, `foto`, `deskripsi`, `icon`, `color`, `urutan`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            foreach ($seedLokasi as $l) {
+                $stmt->execute($l);
+            }
+        }
+
+        // 2. Pastikan tabel galeri ada dan memiliki kolom jumlah_foto
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS `galeri` (
+              `id` INT AUTO_INCREMENT PRIMARY KEY,
+              `judul` VARCHAR(200) NOT NULL,
+              `deskripsi` TEXT DEFAULT NULL,
+              `foto` VARCHAR(255) NOT NULL,
+              `kategori` VARCHAR(60) DEFAULT 'Dokumentasi',
+              `jumlah_foto` VARCHAR(50) DEFAULT NULL,
+              `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ");
+
+        // Cek kolom jumlah_foto
+        try {
+            $pdo->query("SELECT `jumlah_foto` FROM `galeri` LIMIT 1");
+        } catch (Exception $e) {
+            $pdo->exec("ALTER TABLE `galeri` ADD COLUMN `jumlah_foto` VARCHAR(50) DEFAULT NULL AFTER `kategori`");
+        }
+
+        // Cek jika tabel galeri belum memiliki album potensi desa
+        $cntGal = (int)$pdo->query("SELECT COUNT(*) FROM `galeri`")->fetchColumn();
+        if ($cntGal < 3) {
+            $seedGaleri = [
+                ['Sumber Mata Air', 'Keindahan dan kejernihan Kolam Ngudal Tuk Putri & Tuk Lanang.', 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg', 'Sumber Air', '8 foto'],
+                ['Wisata Tubing', 'Aktivitas seru wisatawan menyusuri jeram sungai Tampirkulon.', 'assets/images/potensi/wisata_tubing.jpg', 'Wisata', '12 foto'],
+                ['Pertanian', 'Hamparan sawah terasering hijau dan panen hasil bumi petani.', 'assets/images/potensi/pertanian_tampirkulon.jpg', 'Pertanian', '10 foto'],
+                ['UMKM', 'Proses penggorengan dan pengemasan keripik tempe Bu Tatik.', 'assets/images/potensi/umkm_tempe_kripik.jpg', 'UMKM', '14 foto'],
+                ['Seni & Budaya', 'Pementasan atraktif Kesenian Jathilan Krido Budoyo Tampirkulon.', 'assets/images/potensi/jathilan_krido_budoyo.jpg', 'Seni & Budaya', '9 foto'],
+                ['Kuliner Lokal', 'Sajian hangat Kupat Tahu Mbah Kenuk dengan bumbu kacang khas.', 'assets/images/potensi/kuliner_kupat_tahu.jpg', 'Kuliner', '11 foto']
+            ];
+            $stmtGal = $pdo->prepare("INSERT INTO `galeri` (`judul`, `deskripsi`, `foto`, `kategori`, `jumlah_foto`) VALUES (?, ?, ?, ?, ?)");
+            $existingJudul = $pdo->query("SELECT `judul` FROM `galeri`")->fetchAll(PDO::FETCH_COLUMN);
+            foreach ($seedGaleri as $sg) {
+                if (!in_array($sg[0], $existingJudul)) {
+                    $stmtGal->execute($sg);
+                }
+            }
+        }
+    } catch (Exception $e) {
+        // Abaikan jika non-fatal
+    }
+}
+
+// Jalankan self-healing database otomatis setiap kali sistem diakses
+if (isset($pdo) && $pdo instanceof PDO) {
+    self_heal_database($pdo);
+}
+
+
+
