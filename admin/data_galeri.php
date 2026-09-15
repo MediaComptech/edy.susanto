@@ -1,19 +1,20 @@
 <?php
 require_once __DIR__ . '/header_admin.php';
 
-// Handle Add / Delete
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+// Handle Add / Edit / Delete
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
     if (verify_csrf()) {
         if ($_POST['action'] === 'tambah_foto') {
             $judul = sanitize($_POST['judul']);
             $kategori = sanitize($_POST['kategori'] ?? 'Dokumentasi');
+            $jumlah_foto = sanitize($_POST['jumlah_foto'] ?? '1 foto');
             $deskripsi = sanitize($_POST['deskripsi'] ?? '');
 
             if (!empty($_FILES['foto']['name'])) {
                 $upload = handle_file_upload($_FILES['foto'], 'uploads', 5);
                 if ($upload['status']) {
-                    $stmt = $pdo->prepare("INSERT INTO galeri (judul, deskripsi, foto, kategori) VALUES (?, ?, ?, ?)");
-                    $stmt->execute([$judul, $deskripsi, $upload['relative_path'], $kategori]);
+                    $stmt = $pdo->prepare("INSERT INTO galeri (judul, deskripsi, foto, kategori, jumlah_foto) VALUES (?, ?, ?, ?, ?)");
+                    $stmt->execute([$judul, $deskripsi, $upload['relative_path'], $kategori, $jumlah_foto]);
                     set_flash('success', 'Foto dokumentasi berhasil ditambahkan.');
                 } else {
                     set_flash('danger', $upload['error']);
@@ -27,20 +28,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $id = (int)$_POST['id'];
             $judul = sanitize($_POST['judul']);
             $kategori = sanitize($_POST['kategori'] ?? 'Dokumentasi');
+            $jumlah_foto = sanitize($_POST['jumlah_foto'] ?? '1 foto');
             $deskripsi = sanitize($_POST['deskripsi'] ?? '');
 
             if (!empty($_FILES['foto_baru']['name'])) {
                 $upload = handle_file_upload($_FILES['foto_baru'], 'uploads', 5);
                 if ($upload['status']) {
-                    $stmt = $pdo->prepare("UPDATE galeri SET judul = ?, deskripsi = ?, foto = ?, kategori = ? WHERE id = ?");
-                    $stmt->execute([$judul, $deskripsi, $upload['relative_path'], $kategori, $id]);
+                    $stmt = $pdo->prepare("UPDATE galeri SET judul = ?, deskripsi = ?, foto = ?, kategori = ?, jumlah_foto = ? WHERE id = ?");
+                    $stmt->execute([$judul, $deskripsi, $upload['relative_path'], $kategori, $jumlah_foto, $id]);
                     set_flash('success', 'Foto dan data galeri berhasil diperbarui.');
                 } else {
                     set_flash('danger', $upload['error']);
                 }
             } else {
-                $stmt = $pdo->prepare("UPDATE galeri SET judul = ?, deskripsi = ?, kategori = ? WHERE id = ?");
-                $stmt->execute([$judul, $deskripsi, $kategori, $id]);
+                $stmt = $pdo->prepare("UPDATE galeri SET judul = ?, deskripsi = ?, kategori = ?, jumlah_foto = ? WHERE id = ?");
+                $stmt->execute([$judul, $deskripsi, $kategori, $jumlah_foto, $id]);
                 set_flash('success', 'Data galeri berhasil diperbarui.');
             }
             header("Location: data_galeri.php");
@@ -82,7 +84,12 @@ $galeri = $pdo->query("SELECT * FROM galeri ORDER BY created_at DESC")->fetchAll
         <div class="card border rounded-3 overflow-hidden h-100 shadow-sm d-flex flex-column">
           <img src="../<?= e($item['foto']) ?>" alt="<?= e($item['judul']) ?>" style="height: 160px; object-fit: cover;" class="w-100">
           <div class="p-2 d-flex flex-column flex-grow-1">
-            <h6 class="fw-bold small mb-1 text-truncate" title="<?= e($item['judul']) ?>"><?= e($item['judul']) ?></h6>
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <h6 class="fw-bold small mb-0 text-truncate" title="<?= e($item['judul']) ?>"><?= e($item['judul']) ?></h6>
+              <?php if (!empty($item['jumlah_foto'])): ?>
+                <span class="badge bg-secondary-subtle text-secondary border px-1" style="font-size: 0.65rem;"><?= e($item['jumlah_foto']) ?></span>
+              <?php endif; ?>
+            </div>
             <small class="text-muted mb-2 flex-grow-1" style="font-size: 0.8rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"><?= e($item['deskripsi'] ?? '-') ?></small>
             <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
               <span class="badge bg-light text-dark border" style="font-size: 0.7rem;"><?= e($item['kategori'] ?? 'Dokumentasi') ?></span>
@@ -92,6 +99,7 @@ $galeri = $pdo->query("SELECT * FROM galeri ORDER BY created_at DESC")->fetchAll
                   data-judul="<?= htmlspecialchars($item['judul'], ENT_QUOTES) ?>"
                   data-deskripsi="<?= htmlspecialchars($item['deskripsi'] ?? '', ENT_QUOTES) ?>"
                   data-kategori="<?= htmlspecialchars($item['kategori'] ?? 'Dokumentasi', ENT_QUOTES) ?>"
+                  data-jumlah_foto="<?= htmlspecialchars($item['jumlah_foto'] ?? '1 foto', ENT_QUOTES) ?>"
                   data-foto="../<?= e($item['foto']) ?>">
                   <i class="bi bi-pencil me-1"></i>Edit
                 </button>
@@ -124,12 +132,18 @@ $galeri = $pdo->query("SELECT * FROM galeri ORDER BY created_at DESC")->fetchAll
         <input type="hidden" name="action" value="tambah_foto">
         <div class="modal-body p-4">
           <div class="mb-3">
-            <label class="form-label small fw-semibold">Judul Dokumentasi</label>
-            <input type="text" class="form-control" name="judul" required placeholder="Contoh: Kerja Bakti Dusun">
+            <label class="form-label small fw-semibold">Judul Dokumentasi / Album</label>
+            <input type="text" class="form-control" name="judul" required placeholder="Contoh: Sumber Mata Air, Wisata Tubing">
           </div>
-          <div class="mb-3">
-            <label class="form-label small fw-semibold">Kategori</label>
-            <input type="text" class="form-control" name="kategori" value="Kegiatan" placeholder="Contoh: Kegiatan, Wisata, Pertanian">
+          <div class="row g-2 mb-3">
+            <div class="col-7">
+              <label class="form-label small fw-semibold">Kategori</label>
+              <input type="text" class="form-control" name="kategori" value="Dokumentasi" placeholder="Sumber Air, Wisata, UMKM, dll">
+            </div>
+            <div class="col-5">
+              <label class="form-label small fw-semibold">Jumlah Foto / Label</label>
+              <input type="text" class="form-control" name="jumlah_foto" value="1 foto" placeholder="Contoh: 8 foto">
+            </div>
           </div>
           <div class="mb-3">
             <label class="form-label small fw-semibold">Deskripsi Singkat</label>
@@ -175,12 +189,18 @@ $galeri = $pdo->query("SELECT * FROM galeri ORDER BY created_at DESC")->fetchAll
             <div class="form-text small">Biarkan kosong jika tidak ingin mengganti file foto.</div>
           </div>
           <div class="mb-3">
-            <label class="form-label small fw-semibold">Judul Dokumentasi</label>
+            <label class="form-label small fw-semibold">Judul Dokumentasi / Album</label>
             <input type="text" class="form-control" name="judul" id="editGaleriJudul" required>
           </div>
-          <div class="mb-3">
-            <label class="form-label small fw-semibold">Kategori</label>
-            <input type="text" class="form-control" name="kategori" id="editGaleriKategori">
+          <div class="row g-2 mb-3">
+            <div class="col-7">
+              <label class="form-label small fw-semibold">Kategori</label>
+              <input type="text" class="form-control" name="kategori" id="editGaleriKategori">
+            </div>
+            <div class="col-5">
+              <label class="form-label small fw-semibold">Jumlah Foto / Label</label>
+              <input type="text" class="form-control" name="jumlah_foto" id="editGaleriJumlahFoto">
+            </div>
           </div>
           <div class="mb-3">
             <label class="form-label small fw-semibold">Deskripsi Singkat</label>
@@ -207,6 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const idInput = document.getElementById('editGaleriId');
   const judulInput = document.getElementById('editGaleriJudul');
   const kategoriInput = document.getElementById('editGaleriKategori');
+  const jumlahFotoInput = document.getElementById('editGaleriJumlahFoto');
   const deskripsiInput = document.getElementById('editGaleriDeskripsi');
   const previewImg = document.getElementById('editGaleriFotoPreview');
   const fileInput = document.getElementById('editGaleriFotoBaru');
@@ -217,6 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
       idInput.value = this.dataset.id || '';
       judulInput.value = this.dataset.judul || '';
       kategoriInput.value = this.dataset.kategori || '';
+      jumlahFotoInput.value = this.dataset.jumlah_foto || '1 foto';
       deskripsiInput.value = this.dataset.deskripsi || '';
       originalFotoSrc = this.dataset.foto || '';
       previewImg.src = originalFotoSrc;

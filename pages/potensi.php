@@ -139,167 +139,53 @@ $potensiUtama = [
     ]
 ];
 
-// 2. Data Lokasi Populer untuk Peta Interaktif
-$petaLokasi = [
-    [
-        'id' => 1,
-        'nama' => $spotPotensiJudul,
-        'kategori' => 'sumber-air',
-        'kategori_label' => 'Sumber Mata Air',
-        'jarak' => $spotPotensiJarak,
-        'lokasi' => $spotPotensiLokasi,
-        'lat' => -7.5015,
-        'lng' => 110.2735,
-        'foto' => $fotoSpotPotensi,
-        'desc' => $spotPotensiDesc,
-        'icon' => 'bi-droplet-fill',
-        'color' => '#0288d1'
-    ],
-    [
-        'id' => 2,
-        'nama' => 'Mata Air Tuk Lanang',
-        'kategori' => 'sumber-air',
-        'kategori_label' => 'Sumber Mata Air',
-        'jarak' => '± 0,33 km dari Balai Desa',
-        'lokasi' => 'Tampirkulon, Candimulyo',
-        'lat' => -7.5008,
-        'lng' => 110.2728,
-        'foto' => 'assets/images/potensi/mata_air_tuk_lanang.jpg',
-        'desc' => 'Sumber mata air alami di bawah naungan pohon beringin purba yang menjaga pasokan air warga.',
-        'icon' => 'bi-droplet-fill',
-        'color' => '#0288d1'
-    ],
-    [
-        'id' => 3,
-        'nama' => 'Wisata Tubing Tampirkulon',
-        'kategori' => 'wisata',
-        'kategori_label' => 'Wisata Desa',
-        'jarak' => '± 1,2 km dari Balai Desa',
-        'lokasi' => 'Aliran Sungai Tampirkulon',
-        'lat' => -7.5045,
-        'lng' => 110.2780,
-        'foto' => 'assets/images/potensi/wisata_tubing.jpg',
-        'desc' => 'Wahana wisata petualangan menyusuri sungai dengan ban karet didampingi tim Pokdarwis.',
-        'icon' => 'bi-tree-fill',
-        'color' => '#2e7d32'
-    ],
-    [
-        'id' => 4,
-        'nama' => 'Jathilan Krido Budoyo',
-        'kategori' => 'budaya',
-        'kategori_label' => 'Seni & Budaya',
-        'jarak' => '± 0,8 km dari Balai Desa',
-        'lokasi' => 'Dusun Krajan, Tampirkulon',
-        'lat' => -7.5025,
-        'lng' => 110.2768,
-        'foto' => 'assets/images/potensi/jathilan_krido_budoyo.jpg',
-        'desc' => 'Sanggar kesenian tradisional jathilan kuda lumping warisan budaya leluhur desa.',
-        'icon' => 'bi-mask',
-        'color' => '#7b1fa2'
-    ],
-    [
-        'id' => 5,
-        'nama' => 'Warung Kupat Tahu Mbah Kenuk',
-        'kategori' => 'kuliner',
-        'kategori_label' => 'Kuliner Lokal',
-        'jarak' => '± 1,1 km dari Balai Desa',
-        'lokasi' => 'Jl. Sudiro Km 4, Tampirkulon',
-        'lat' => -7.5060,
-        'lng' => 110.2748,
-        'foto' => 'assets/images/potensi/kuliner_kupat_tahu.jpg',
-        'desc' => 'Kuliner legendaris kupat tahu bumbu kacang gurih manis khas Magelang yang nikmat.',
-        'icon' => 'bi-cup-hot-fill',
-        'color' => '#e64a19'
-    ],
-    [
-        'id' => 6,
-        'nama' => 'Lahan Pertanian & Holtikultura',
-        'kategori' => 'pertanian',
-        'kategori_label' => 'Pertanian',
-        'jarak' => '± 0,6 km dari Balai Desa',
-        'lokasi' => 'Kawasan Persawahan Dusun',
-        'lat' => -7.4985,
-        'lng' => 110.2710,
-        'foto' => 'assets/images/potensi/pertanian_tampirkulon.jpg',
-        'desc' => 'Hamparan persawahan terasering hijau penghasil beras dan sayur segar.',
-        'icon' => 'fa-solid fa-wheat-awn',
-        'color' => '#f57c00'
-    ],
-    [
-        'id' => 7,
-        'nama' => 'Sentra Keripik Tempe Bu Tatik',
-        'kategori' => 'umkm',
-        'kategori_label' => 'UMKM',
-        'jarak' => '± 0,5 km dari Balai Desa',
-        'lokasi' => 'Dusun Tampir II, Tampirkulon',
-        'lat' => -7.5030,
-        'lng' => 110.2755,
-        'foto' => 'assets/images/potensi/umkm_tempe_kripik.jpg',
-        'desc' => 'Produksi keripik tempe renyah gurih berkualitas tinggi tanpa bahan pengawet.',
-        'icon' => 'bi-shop',
-        'color' => '#d32f2f'
-    ],
-    [
-        'id' => 8,
-        'nama' => 'Pojok Baca & PAUD Dusun',
-        'kategori' => 'pendidikan',
-        'kategori_label' => 'Pendidikan',
-        'jarak' => '± 0,2 km dari Balai Desa',
-        'lokasi' => 'Kompleks Balai Desa Tampirkulon',
-        'lat' => -7.5018,
-        'lng' => 110.2730,
-        'foto' => 'assets/images/program/potensi_pendidikan.jpg',
-        'desc' => 'Fasilitas pendidikan usia dini dan literasi ramah anak bagi warga.',
-        'icon' => 'bi-book-fill',
-        'color' => '#3949ab'
-    ]
-];
+// 2. Data Lokasi Populer untuk Peta Interaktif (REALTIME DATABASE)
+$petaLokasi = [];
+try {
+    $stmtLokasi = $pdo->query("SELECT * FROM lokasi_potensi ORDER BY urutan ASC, id ASC");
+    $petaLokasi = $stmtLokasi->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    $petaLokasi = [];
+}
+if (empty($petaLokasi)) {
+    $petaLokasi = [
+        [
+            'id' => 1,
+            'nama' => $spotPotensiJudul,
+            'kategori' => 'sumber-air',
+            'kategori_label' => 'Sumber Mata Air',
+            'jarak' => $spotPotensiJarak,
+            'lokasi' => $spotPotensiLokasi,
+            'lat' => -7.5015,
+            'lng' => 110.2735,
+            'foto' => $fotoSpotPotensi,
+            'deskripsi' => $spotPotensiDesc,
+            'icon' => 'bi-droplet-fill',
+            'color' => '#0288d1'
+        ]
+    ];
+}
 
-// 3. Data Galeri Potensi Desa
-$galeriPotensi = [
-    [
-        'id' => 1,
-        'nama' => 'Sumber Mata Air',
-        'jumlah_foto' => '8 foto',
-        'foto' => 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg',
-        'keterangan' => 'Keindahan dan kejernihan Kolam Ngudal Tuk Putri & Tuk Lanang.'
-    ],
-    [
-        'id' => 2,
-        'nama' => 'Wisata Tubing',
-        'jumlah_foto' => '12 foto',
-        'foto' => 'assets/images/potensi/wisata_tubing.jpg',
-        'keterangan' => 'Aktivitas seru wisatawan menyusuri jeram sungai Tampirkulon.'
-    ],
-    [
-        'id' => 3,
-        'nama' => 'Pertanian',
-        'jumlah_foto' => '10 foto',
-        'foto' => 'assets/images/potensi/pertanian_tampirkulon.jpg',
-        'keterangan' => 'Hamparan sawah terasering hijau dan panen hasil bumi petani.'
-    ],
-    [
-        'id' => 4,
-        'nama' => 'UMKM',
-        'jumlah_foto' => '14 foto',
-        'foto' => 'assets/images/potensi/umkm_tempe_kripik.jpg',
-        'keterangan' => 'Proses penggorengan dan pengemasan keripik tempe Bu Tatik.'
-    ],
-    [
-        'id' => 5,
-        'nama' => 'Seni & Budaya',
-        'jumlah_foto' => '9 foto',
-        'foto' => 'assets/images/potensi/jathilan_krido_budoyo.jpg',
-        'keterangan' => 'Pementasan atraktif Kesenian Jathilan Krido Budoyo Tampirkulon.'
-    ],
-    [
-        'id' => 6,
-        'nama' => 'Kuliner Lokal',
-        'jumlah_foto' => '11 foto',
-        'foto' => 'assets/images/potensi/kuliner_kupat_tahu.jpg',
-        'keterangan' => 'Sajian hangat Kupat Tahu Mbah Kenuk dengan bumbu kacang khas.'
-    ]
-];
+// 3. Data Galeri Potensi Desa (REALTIME DATABASE)
+$galeriPotensi = [];
+try {
+    $stmtGaleri = $pdo->query("SELECT * FROM galeri ORDER BY created_at DESC");
+    $galeriPotensi = $stmtGaleri->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    $galeriPotensi = [];
+}
+if (empty($galeriPotensi)) {
+    $galeriPotensi = [
+        [
+            'id' => 1,
+            'judul' => 'Sumber Mata Air',
+            'jumlah_foto' => '8 foto',
+            'foto' => 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg',
+            'deskripsi' => 'Keindahan dan kejernihan Kolam Ngudal Tuk Putri & Tuk Lanang.',
+            'kategori' => 'Sumber Air'
+        ]
+    ];
+}
 ?>
 
 <!-- Include Leaflet CSS & JS untuk Peta Interaktif -->
@@ -499,19 +385,19 @@ $galeriPotensi = [
         <div class="potensi-popular-box h-100">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <h6 class="fw-bold mb-0 text-dark">Daftar Lokasi Populer</h6>
-            <a href="javascript:void(0)" onclick="resetPeta()" class="text-success fw-bold text-decoration-none small">
+            <button type="button" class="btn btn-link text-success fw-bold text-decoration-none small p-0" data-bs-toggle="modal" data-bs-target="#modalSemuaLokasi" title="Lihat daftar seluruh lokasi potensi desa">
               Semua Lokasi &rarr;
-            </a>
+            </button>
           </div>
 
           <div class="d-flex flex-column gap-2 overflow-auto" style="max-height: 400px;">
-            <?php foreach (array_slice($petaLokasi, 0, 5) as $lok): ?>
-            <div class="potensi-popular-item border rounded-3 p-2" onclick="focusPeta(<?= $lok['id'] ?>)">
+            <?php foreach ($petaLokasi as $lok): ?>
+            <div class="potensi-popular-item border rounded-3 p-2" onclick="focusPeta(<?= $lok['id'] ?>)" role="button" title="Fokuskan <?= e($lok['nama']) ?> di peta">
               <img src="<?= e($lok['foto']) ?>" alt="<?= e($lok['nama']) ?>" class="potensi-popular-thumb">
               <div class="flex-grow-1 overflow-hidden">
                 <div class="potensi-popular-name text-truncate"><?= e($lok['nama']) ?></div>
                 <div class="potensi-popular-sub">
-                  <span class="badge bg-light text-secondary border px-2 py-0" style="font-size:0.68rem;"><?= e($lok['kategori_label']) ?></span>
+                  <span class="badge text-white px-2 py-0" style="background-color: <?= e($lok['color'] ?? '#0288d1') ?>; font-size:0.68rem;"><?= e($lok['kategori_label']) ?></span>
                   <span><i class="bi bi-geo-alt text-danger me-1"></i><?= e($lok['jarak']) ?></span>
                 </div>
               </div>
@@ -525,9 +411,9 @@ $galeriPotensi = [
 </section>
 
 <!-- ==========================================================================
-     SECTION 5: GALERI POTENSI DESA (6 KARTU ALBUM DOKUMENTASI)
+     SECTION 5: GALERI POTENSI DESA (REALTIME SLIDER ALBUM DOKUMENTASI)
      ========================================================================== -->
-<section class="py-5 bg-light-subtle">
+<section class="py-5 bg-light-subtle" id="galeriPotensiSection">
   <div class="container-custom">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
       <div>
@@ -540,24 +426,24 @@ $galeriPotensi = [
         </p>
       </div>
       <div class="mt-3 mt-md-0 d-flex align-items-center gap-2">
-        <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle p-2" style="width:36px;height:36px;" data-bs-target="#galeriCarousel" data-bs-slide="prev" aria-label="Sebelumnya">
+        <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle p-2 d-inline-flex align-items-center justify-content-center" style="width:36px;height:36px;" onclick="geserGaleri(-1)" aria-label="Sebelumnya" title="Geser ke kiri">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle p-2" style="width:36px;height:36px;" data-bs-target="#galeriCarousel" data-bs-slide="next" aria-label="Selanjutnya">
+        <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle p-2 d-inline-flex align-items-center justify-content-center" style="width:36px;height:36px;" onclick="geserGaleri(1)" aria-label="Selanjutnya" title="Geser ke kanan">
           <i class="bi bi-chevron-right"></i>
         </button>
       </div>
     </div>
 
-    <!-- Grid Galeri 6 Album -->
-    <div class="row g-3 g-lg-4">
+    <!-- Horizontal Smooth Slider Galeri -->
+    <div class="potensi-gallery-slider d-flex gap-3 overflow-x-auto pb-3 pt-1" id="galeriScrollContainer" style="scroll-behavior: smooth;">
       <?php foreach ($galeriPotensi as $g): ?>
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="potensi-gallery-card" data-bs-toggle="modal" data-bs-target="#modalLightbox<?= $g['id'] ?>">
-          <img src="<?= e($g['foto']) ?>" alt="<?= e($g['nama']) ?>" class="potensi-gallery-img">
+      <div class="potensi-gallery-item flex-shrink-0" style="width: 190px; min-width: 180px;">
+        <div class="potensi-gallery-card" data-bs-toggle="modal" data-bs-target="#modalLightbox<?= $g['id'] ?>" role="button" title="Buka <?= e($g['judul'] ?? $g['nama']) ?>">
+          <img src="<?= e($g['foto']) ?>" alt="<?= e($g['judul'] ?? $g['nama']) ?>" class="potensi-gallery-img">
           <div class="potensi-gallery-overlay">
-            <div class="potensi-gallery-name"><?= e($g['nama']) ?></div>
-            <div class="potensi-gallery-count"><i class="bi bi-images me-1"></i><?= e($g['jumlah_foto']) ?></div>
+            <div class="potensi-gallery-name text-truncate"><?= e($g['judul'] ?? $g['nama']) ?></div>
+            <div class="potensi-gallery-count"><i class="bi bi-images me-1"></i><?= e($g['jumlah_foto'] ?? ($g['kategori'] ?? '1 foto')) ?></div>
           </div>
         </div>
       </div>
@@ -726,6 +612,61 @@ $galeriPotensi = [
 </div>
 
 <!-- ==========================================================================
+     MODAL: SEMUA LOKASI POTENSI DESA
+     ========================================================================== -->
+<div class="modal fade" id="modalSemuaLokasi" tabindex="-1" aria-labelledby="modalSemuaLokasiLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+      <div class="modal-header bg-success text-white border-0 py-3 px-4">
+        <h5 class="modal-title fw-bold" id="modalSemuaLokasiLabel">
+          <i class="bi bi-geo-alt-fill me-2"></i>Semua Titik Lokasi Potensi Desa Tampirkulon
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body p-4 bg-light">
+        <p class="text-muted small mb-3">
+          Temukan dan jelajahi seluruh potensi alam, wisata, UMKM, pertanian, kuliner, dan budaya di Desa Tampirkulon. Klik <strong>Lihat di Peta</strong> untuk langsung memusatkan titik pada peta interaktif.
+        </p>
+        <div class="row g-3">
+          <?php foreach ($petaLokasi as $lok): ?>
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-3 p-3 h-100 bg-white d-flex flex-column">
+              <div class="d-flex gap-3 align-items-center mb-2">
+                <img src="<?= e($lok['foto']) ?>" alt="<?= e($lok['nama']) ?>" class="rounded-3 shadow-sm flex-shrink-0" style="width: 72px; height: 72px; object-fit: cover;">
+                <div class="overflow-hidden">
+                  <h6 class="fw-bold text-dark mb-1 text-truncate" title="<?= e($lok['nama']) ?>"><?= e($lok['nama']) ?></h6>
+                  <span class="badge text-white px-2 py-0" style="background-color: <?= e($lok['color'] ?? '#0288d1') ?>; font-size: 0.68rem;">
+                    <i class="<?= e($lok['icon']) ?> me-1"></i><?= e($lok['kategori_label']) ?>
+                  </span>
+                  <div class="small text-secondary mt-1">
+                    <i class="bi bi-geo-alt text-danger me-1"></i><?= e($lok['jarak']) ?>
+                  </div>
+                </div>
+              </div>
+              <p class="small text-muted mb-3 flex-grow-1" style="font-size: 0.8rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                <?= e($lok['deskripsi'] ?? $lok['desc'] ?? '-') ?>
+              </p>
+              <div class="d-flex gap-2 mt-auto pt-2 border-top">
+                <button type="button" class="btn btn-success btn-sm flex-grow-1 rounded-pill py-1 fw-semibold" style="font-size: 0.78rem;" onclick="pilihLokasiDariModal(<?= $lok['id'] ?>)">
+                  <i class="bi bi-pin-map-fill me-1"></i> Lihat di Peta
+                </button>
+                <a href="https://www.google.com/maps/search/?api=1&query=<?= $lok['lat'] ?>,<?= $lok['lng'] ?>" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-1" style="font-size: 0.78rem;">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> Maps
+                </a>
+              </div>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+      <div class="modal-footer bg-white border-0 py-2 px-4">
+        <button type="button" class="btn btn-secondary btn-sm rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================================================
      MODALS: LIGHTBOX ALBUM FOTO GALERI
      ========================================================================== -->
 <?php foreach ($galeriPotensi as $g): ?>
@@ -733,17 +674,17 @@ $galeriPotensi = [
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
       <div class="modal-header bg-dark text-white border-0 py-3 px-4">
-        <h6 class="modal-title fw-bold"><i class="bi bi-image me-2 text-warning"></i>Galeri <?= e($g['nama']) ?></h6>
+        <h6 class="modal-title fw-bold"><i class="bi bi-image me-2 text-warning"></i>Galeri <?= e($g['judul'] ?? $g['nama']) ?></h6>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-3 text-center bg-light">
-        <img src="<?= e($g['foto']) ?>" alt="<?= e($g['nama']) ?>" class="img-fluid rounded-3 shadow-sm mb-3" style="max-height: 440px; object-fit: cover; width: 100%;">
+        <img src="<?= e($g['foto']) ?>" alt="<?= e($g['judul'] ?? $g['nama']) ?>" class="img-fluid rounded-3 shadow-sm mb-3" style="max-height: 440px; object-fit: cover; width: 100%;">
         <div class="p-2 bg-white rounded-3 border">
-          <p class="text-dark small mb-0 fw-semibold"><?= e($g['keterangan']) ?></p>
+          <p class="text-dark small mb-0 fw-semibold"><?= e($g['deskripsi'] ?? $g['keterangan'] ?? '-') ?></p>
         </div>
       </div>
       <div class="modal-footer bg-white border-0 py-2 px-3 d-flex justify-content-between">
-        <span class="badge bg-success-subtle text-success border px-2 py-1 small"><?= e($g['jumlah_foto']) ?></span>
+        <span class="badge bg-success-subtle text-success border px-2 py-1 small"><?= e($g['jumlah_foto'] ?? ($g['kategori'] ?? '1 foto')) ?></span>
         <button type="button" class="btn btn-secondary btn-sm rounded-pill px-3" data-bs-dismiss="modal">Tutup</button>
       </div>
     </div>
@@ -756,7 +697,7 @@ $galeriPotensi = [
      ========================================================================== -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // 1. Data Lokasi dari PHP
+  // 1. Data Lokasi dari PHP (Realtime Database)
   const lokasiData = <?= json_encode($petaLokasi, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
 
   // 2. Inisialisasi Peta Leaflet (Pusat Tampirkulon, Candimulyo: -7.5020, 110.2740)
@@ -803,14 +744,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 3. Tambahkan Marker ke Peta
   lokasiData.forEach(function(item) {
-    const pin = createCustomPin(item.color, item.icon);
-    const marker = L.marker([item.lat, item.lng], { icon: pin }).addTo(map);
+    const pin = createCustomPin(item.color || '#0288d1', item.icon || 'bi-geo-alt-fill');
+    const marker = L.marker([parseFloat(item.lat), parseFloat(item.lng)], { icon: pin }).addTo(map);
 
     // Popup Konten
     const popupHtml = `
       <div class="potensi-map-popup">
         <img src="${item.foto}" alt="${item.nama}">
-        <span class="badge bg-success-subtle text-success border px-2 py-0 mb-1" style="font-size:0.65rem;">${item.kategori_label}</span>
+        <span class="badge text-white border px-2 py-0 mb-1" style="background-color:${item.color || '#2e7d32'}; font-size:0.65rem;">${item.kategori_label}</span>
         <h6>${item.nama}</h6>
         <p><i class="bi bi-geo-alt text-danger me-1"></i>${item.jarak}</p>
         <a href="https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-sm w-100 rounded-pill py-1" style="font-size:0.75rem;">
@@ -820,18 +761,19 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
 
     marker.bindPopup(popupHtml);
-    markers.push({ id: item.id, kategori: item.kategori, marker: marker, lat: item.lat, lng: item.lng });
+    markers.push({ id: parseInt(item.id), kategori: item.kategori, marker: marker, lat: parseFloat(item.lat), lng: parseFloat(item.lng) });
   });
 
   // 4. Global Functions untuk Interaksi Peta
   window.focusPeta = function(id) {
-    const target = markers.find(m => m.id === id);
+    const target = markers.find(m => m.id === parseInt(id));
     if (target) {
       map.setView([target.lat, target.lng], 16, { animate: true });
       target.marker.openPopup();
-      // Scroll ke peta jika di mobile
-      if (window.innerWidth < 992) {
-        document.getElementById('potensiMap').scrollIntoView({ behavior: 'smooth' });
+      // Scroll ke peta jika di layar kecil atau jika dipanggil dari modal
+      const mapEl = document.getElementById('potensiMap');
+      if (mapEl) {
+        mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
   };
@@ -840,12 +782,36 @@ document.addEventListener('DOMContentLoaded', function() {
     map.setView([-7.5020, 110.2740], 15, { animate: true });
     // Reset active class pada filter
     document.querySelectorAll('.potensi-filter-item').forEach(el => el.classList.remove('active'));
-    document.querySelector('.potensi-filter-item[data-filter="all"]').classList.add('active');
+    const allFilter = document.querySelector('.potensi-filter-item[data-filter="all"]');
+    if (allFilter) allFilter.classList.add('active');
     // Munculkan semua marker
     markers.forEach(m => map.addLayer(m.marker));
   };
 
-  // 5. Filter Interaktif Berdasarkan Kategori
+  window.pilihLokasiDariModal = function(id) {
+    const modalEl = document.getElementById('modalSemuaLokasi');
+    if (modalEl) {
+      const modalInstance = bootstrap.Modal.getInstance(modalEl) || bootstrap.Modal.getOrCreateInstance(modalEl);
+      if (modalInstance) {
+        modalInstance.hide();
+      }
+    }
+    setTimeout(function() {
+      resetPeta();
+      focusPeta(id);
+    }, 350);
+  };
+
+  // 5. Global Function untuk Slider Galeri
+  window.geserGaleri = function(direction) {
+    const container = document.getElementById('galeriScrollContainer');
+    if (container) {
+      const scrollStep = 240 * direction;
+      container.scrollBy({ left: scrollStep, behavior: 'smooth' });
+    }
+  };
+
+  // 6. Filter Interaktif Berdasarkan Kategori
   document.querySelectorAll('.potensi-filter-item').forEach(function(item) {
     item.addEventListener('click', function() {
       document.querySelectorAll('.potensi-filter-item').forEach(el => el.classList.remove('active'));

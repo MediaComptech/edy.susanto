@@ -102,6 +102,11 @@ $adminCurrentPage = basename($_SERVER['PHP_SELF']);
         </a>
       </li>
       <li class="nav-item">
+        <a href="data_lokasi.php" class="nav-link <?= ($adminCurrentPage === 'data_lokasi.php') ? 'active' : '' ?>">
+          <i class="bi bi-geo-alt-fill me-2"></i> Peta &amp; Lokasi Potensi
+        </a>
+      </li>
+      <li class="nav-item">
         <a href="pengaturan.php" class="nav-link <?= ($adminCurrentPage === 'pengaturan.php') ? 'active' : '' ?>">
           <i class="bi bi-sliders me-2"></i> Pengaturan &amp; Foto Hero
         </a>

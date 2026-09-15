@@ -67,6 +67,25 @@ CREATE TABLE IF NOT EXISTS `galeri` (
   `deskripsi` TEXT DEFAULT NULL,
   `foto` VARCHAR(255) NOT NULL,
   `kategori` VARCHAR(60) DEFAULT 'Dokumentasi',
+  `jumlah_foto` VARCHAR(50) DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 5b. Tabel Titik Lokasi Peta Potensi Desa
+CREATE TABLE IF NOT EXISTS `lokasi_potensi` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `nama` VARCHAR(150) NOT NULL,
+  `kategori` VARCHAR(50) NOT NULL DEFAULT 'sumber-air',
+  `kategori_label` VARCHAR(60) NOT NULL DEFAULT 'Sumber Mata Air',
+  `jarak` VARCHAR(100) NOT NULL DEFAULT '± 0,3 km dari Balai Desa',
+  `lokasi` VARCHAR(150) NOT NULL DEFAULT 'Tampirkulon, Candimulyo',
+  `lat` DECIMAL(10, 7) NOT NULL DEFAULT -7.5020000,
+  `lng` DECIMAL(10, 7) NOT NULL DEFAULT 110.2740000,
+  `foto` VARCHAR(255) NOT NULL DEFAULT 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg',
+  `deskripsi` TEXT DEFAULT NULL,
+  `icon` VARCHAR(60) NOT NULL DEFAULT 'bi-geo-alt-fill',
+  `color` VARCHAR(30) NOT NULL DEFAULT '#0288d1',
+  `urutan` INT NOT NULL DEFAULT 0,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
