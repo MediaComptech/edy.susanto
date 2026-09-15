@@ -24,6 +24,7 @@ $sloganQuote = get_pengaturan($pdo, 'slogan_quote', SLOGAN_QUOTE);
 if (trim($sloganQuote) === '' || trim($sloganQuote) === '-') {
     $sloganQuote = SLOGAN_QUOTE;
 }
+$fotoSapaWarga = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_warga.jpg');
 ?>
 
 <!-- 1. Hero Section — Flayer Card (Bounded in Container, Tidak Panjang Sampai Pinggir) -->
@@ -55,7 +56,7 @@ if (trim($sloganQuote) === '' || trim($sloganQuote) === '-') {
           <!-- 3 Pillars -->
           <div class="hero-pillars mb-3">
             <div class="pillar-badge">
-              <span class="pillar-icon-circle pillar-icon-asri"><i class="bi bi-leaf-fill"></i></span>
+              <span class="pillar-icon-circle pillar-icon-asri"><i class="fa-solid fa-leaf"></i></span>
               <span>Asri</span>
             </div>
             <div class="pillar-badge">
@@ -181,7 +182,7 @@ if (trim($sloganQuote) === '' || trim($sloganQuote) === '-') {
       <div class="col-lg-3 col-md-6">
         <div class="card-pillar-feature">
           <div class="circle-pillar-large pillar-icon-asri">
-            <i class="bi bi-leaf-fill"></i>
+            <i class="fa-solid fa-leaf"></i>
           </div>
           <h4 class="fw-bold mb-2">Asri</h4>
           <p class="text-muted small mb-0">Lingkungan desa yang bersih, sehat dan nyaman untuk seluruh keluarga.</p>
@@ -251,7 +252,7 @@ if (trim($sloganQuote) === '' || trim($sloganQuote) === '-') {
       <div class="col">
         <div class="program-card" data-search-content="<?= e($prog['judul'] . ' ' . $prog['deskripsi_singkat']) ?>" data-search-title="<?= e($prog['judul']) ?>" data-search-url="index.php?page=program">
           <div class="program-card-icon" style="background-color: <?= e($prog['badge_color']) ?>;">
-            <i class="bi <?= e($prog['icon']) ?>"></i>
+            <i class="<?= (strpos($prog['icon'], 'fa-') !== false) ? e($prog['icon']) : 'bi ' . e($prog['icon']) ?>"></i>
           </div>
           <h5 class="program-card-title"><?= e($prog['judul']) ?></h5>
           <p class="program-card-desc mb-3"><?= e($prog['deskripsi_singkat']) ?></p>
@@ -292,9 +293,9 @@ if (trim($sloganQuote) === '' || trim($sloganQuote) === '-') {
           </div>
         </div>
 
-        <!-- Community Dialog Image -->
+        <!-- Community Dialog Image: Dinamis dari Pengaturan Website -->
         <div class="col-lg-6">
-          <img src="assets/images/banner/dialog_warga.jpg" alt="Dialog Silaturahmi Edy Susanto Bersama Warga" class="w-100 h-100 object-fit-cover" style="min-height: 280px;">
+          <img src="<?= e($fotoSapaWarga) ?>" alt="Dialog Silaturahmi Edy Susanto Bersama Warga" class="w-100 h-100 object-fit-cover" style="min-height: 280px;">
         </div>
       </div>
     </div>

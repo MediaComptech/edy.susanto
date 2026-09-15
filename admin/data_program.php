@@ -70,7 +70,7 @@ $programs = $pdo->query("SELECT * FROM program ORDER BY urutan ASC")->fetchAll()
           <td><span class="badge bg-secondary rounded-pill">#<?= $p['urutan'] ?></span></td>
           <td>
             <div class="rounded-3 d-flex align-items-center justify-content-center text-white" style="width: 38px; height: 38px; background-color: <?= e($p['badge_color']) ?>;">
-              <i class="bi <?= e($p['icon']) ?> fs-5"></i>
+              <i class="<?= (strpos($p['icon'], 'fa-') !== false) ? e($p['icon']) : 'bi ' . e($p['icon']) ?> fs-5"></i>
             </div>
           </td>
           <td>

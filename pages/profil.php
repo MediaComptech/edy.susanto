@@ -92,7 +92,7 @@ $komitmenPengabdian = get_pengaturan($pdo, 'profil_komitmen_pengabdian', 'Hadir 
       <div class="col-md-4">
         <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
           <div class="circle-pillar-large pillar-icon-asri mb-3">
-            <i class="bi bi-leaf-fill"></i>
+            <i class="fa-solid fa-leaf"></i>
           </div>
           <h4 class="fw-bold mb-2">1. Tampirkulon Asri</h4>
           <p class="text-muted small mb-0">

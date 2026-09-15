@@ -341,6 +341,16 @@ function self_heal_database($pdo) {
             $pdo->exec("ALTER TABLE `galeri` ADD COLUMN `jumlah_foto` VARCHAR(50) DEFAULT NULL AFTER `kategori`");
         }
 
+        // 3. Pastikan pengaturan foto_sapa_warga terdaftar
+        try {
+            $pdo->exec("INSERT INTO `pengaturan` (`kunci`, `nilai`, `keterangan`) VALUES ('foto_sapa_warga', 'assets/images/banner/dialog_warga.jpg', 'Foto dialog warga untuk banner Sapa Warga di beranda dan halaman program') ON DUPLICATE KEY UPDATE `kunci`=`kunci`");
+        } catch (Exception $e) {}
+
+        // 4. Pastikan icon program Pertanian konsisten
+        try {
+            $pdo->exec("UPDATE `program` SET `icon` = 'fa-solid fa-wheat-awn' WHERE `id` = 1 AND `icon` IN ('bi-flower2', 'bi-tree')");
+        } catch (Exception $e) {}
+
         // Cek jika tabel galeri belum memiliki album potensi desa
         $cntGal = (int)$pdo->query("SELECT COUNT(*) FROM `galeri`")->fetchColumn();
         if ($cntGal < 3) {

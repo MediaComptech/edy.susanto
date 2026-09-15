@@ -17,7 +17,7 @@ $programData = [
         'sub_desc' => 'Pertanian maju, petani sejahtera.',
         'kategori' => 'pertanian-wisata',
         'kategori_label' => 'Pertanian & Ketahanan Pangan',
-        'icon' => 'bi-tree',
+        'icon' => 'fa-solid fa-wheat-awn',
         'card_bg' => '#eef9ee',
         'border_color' => '#c8e6c9',
         'icon_color' => '#2e7d32',
@@ -350,7 +350,7 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
           <?php foreach ($programData as $p): ?>
             <li>
               <a class="dropdown-item py-2 small" href="#modalProgram<?= $p['id'] ?>" data-bs-toggle="modal">
-                <i class="bi <?= e($p['icon']) ?> me-2" style="color: <?= e($p['icon_color']) ?>;"></i>
+                <i class="<?= (strpos($p['icon'], 'fa-') !== false) ? e($p['icon']) : 'bi ' . e($p['icon']) ?> me-2" style="color: <?= e($p['icon_color']) ?>;"></i>
                 <?= e($p['bidang']) ?>
               </a>
             </li>
@@ -365,7 +365,7 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
       <div class="col-md-6 col-lg-3">
         <div class="card prog-card h-100" style="background-color: <?= e($p['card_bg']) ?>; border-color: <?= e($p['border_color']) ?>;">
           <div class="prog-card-icon-box mb-3" style="background-color: rgba(255,255,255,0.85); color: <?= e($p['icon_color']) ?>;">
-            <i class="bi <?= e($p['icon']) ?>"></i>
+            <i class="<?= (strpos($p['icon'], 'fa-') !== false) ? e($p['icon']) : 'bi ' . e($p['icon']) ?>"></i>
           </div>
           
           <h3 class="prog-card-title"><?= e($p['bidang']) ?></h3>
@@ -783,7 +783,7 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
       <div class="modal-header text-white border-0 py-3 px-4" style="background-color: <?= e($p['icon_color']) ?>;">
         <div class="d-flex align-items-center gap-3">
           <div class="prog-modal-icon-wrap bg-white text-dark d-flex align-items-center justify-content-center rounded-circle" style="width: 44px; height: 44px; color: <?= e($p['icon_color']) ?> !important;">
-            <i class="bi <?= e($p['icon']) ?> fs-5"></i>
+            <i class="<?= (strpos($p['icon'], 'fa-') !== false) ? e($p['icon']) : 'bi ' . e($p['icon']) ?> fs-5"></i>
           </div>
           <div>
             <span class="badge bg-white-subtle text-white rounded-pill px-2 py-0 small mb-1">
