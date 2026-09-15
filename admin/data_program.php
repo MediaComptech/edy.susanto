@@ -1,8 +1,11 @@
 <?php
-require_once __DIR__ . '/header_admin.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/functions.php';
 
-// Handle Add / Edit / Delete
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+require_admin_auth();
+
+// Handle Add / Edit / Delete (Diproses sebelum render HTML)
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
     if (verify_csrf()) {
         if ($_POST['action'] === 'simpan_program') {
             $id = !empty($_POST['id']) ? (int)$_POST['id'] : null;
@@ -25,20 +28,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $stmt->execute([$judul, $slug, $kategori, $deskripsiSingkat, $deskripsiLengkap, $icon, $badgeColor, $targetCapaian, $urutan]);
                 set_flash('success', 'Program kerja baru berhasil ditambahkan.');
             }
-            header("Location: data_program.php");
-            exit;
+            safe_redirect("data_program.php");
         } elseif ($_POST['action'] === 'hapus_program') {
             $id = (int)$_POST['id'];
             $stmt = $pdo->prepare("DELETE FROM program WHERE id = ?");
             $stmt->execute([$id]);
             set_flash('success', 'Program kerja berhasil dihapus.');
-            header("Location: data_program.php");
-            exit;
+            safe_redirect("data_program.php");
         }
     }
 }
 
 $programs = $pdo->query("SELECT * FROM program ORDER BY urutan ASC")->fetchAll();
+
+require_once __DIR__ . '/header_admin.php';
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">

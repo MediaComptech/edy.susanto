@@ -1,8 +1,11 @@
 <?php
-require_once __DIR__ . '/header_admin.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/functions.php';
+
+require_admin_auth();
 
 // Handle Broadcast Notifikasi PWA
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'broadcast_notif') {
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action']) && $_POST['action'] === 'broadcast_notif') {
     if (verify_csrf()) {
         $judul = sanitize($_POST['judul_notif'] ?? '');
         $pesan = sanitize($_POST['pesan_notif'] ?? '');
@@ -11,8 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         if (!empty($judul) && !empty($pesan)) {
             create_pwa_notification($pdo, $judul, $pesan, $url);
             set_flash('success', 'Notifikasi PWA berhasil disimpan & disiarkan ke pengguna website.');
-            header("Location: index.php");
-            exit;
+            safe_redirect("index.php");
         } else {
             set_flash('danger', 'Judul dan pesan notifikasi wajib diisi.');
         }
@@ -29,6 +31,8 @@ $cntGaleri = $pdo->query("SELECT COUNT(*) FROM galeri")->fetchColumn();
 
 // 5 Aspirasi Terkini
 $recentAspirasi = $pdo->query("SELECT * FROM aspirasi ORDER BY created_at DESC LIMIT 5")->fetchAll();
+
+require_once __DIR__ . '/header_admin.php';
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">

@@ -1,8 +1,11 @@
 <?php
-require_once __DIR__ . '/header_admin.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/functions.php';
 
-// Handle Add / Edit / Delete
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+require_admin_auth();
+
+// Handle Add / Edit / Delete (Diproses sebelum render HTML)
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
     if (verify_csrf()) {
         if ($_POST['action'] === 'simpan_berita') {
             $id = !empty($_POST['id']) ? (int)$_POST['id'] : null;
@@ -39,20 +42,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
                 set_flash('success', 'Berita berhasil diterbitkan.');
             }
-            header("Location: data_berita.php");
-            exit;
+            safe_redirect("data_berita.php");
         } elseif ($_POST['action'] === 'hapus_berita') {
             $id = (int)$_POST['id'];
             $stmt = $pdo->prepare("DELETE FROM berita WHERE id = ?");
             $stmt->execute([$id]);
             set_flash('success', 'Berita berhasil dihapus.');
-            header("Location: data_berita.php");
-            exit;
+            safe_redirect("data_berita.php");
         }
     }
 }
 
 $beritaList = $pdo->query("SELECT * FROM berita ORDER BY created_at DESC")->fetchAll();
+
+require_once __DIR__ . '/header_admin.php';
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">

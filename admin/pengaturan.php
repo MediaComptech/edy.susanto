@@ -1,8 +1,11 @@
 <?php
-require_once __DIR__ . '/header_admin.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/functions.php';
 
-// Handle POST updates
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+require_admin_auth();
+
+// Handle POST updates (Diproses sebelum render HTML)
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
     if (verify_csrf()) {
         if ($_POST['action'] === 'ganti_foto_hero') {
             if (!empty($_FILES['foto_hero_baru']['name'])) {
@@ -16,13 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             } else {
                 set_flash('warning', 'Pilih berkas foto terlebih dahulu.');
             }
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'reset_foto_hero') {
             set_pengaturan($pdo, 'foto_hero', 'assets/images/banner/edy_susanto_hero_clean.jpg', 'Foto bawaan kandidat');
             set_flash('success', 'Foto Hero berhasil dikembalikan ke foto bawaan (default).');
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'ganti_bg_hero') {
             if (!empty($_FILES['bg_hero_baru']['name'])) {
                 $upload = handle_file_upload($_FILES['bg_hero_baru'], 'uploads', 10);
@@ -35,13 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             } else {
                 set_flash('warning', 'Pilih berkas gambar background terlebih dahulu.');
             }
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'reset_bg_hero') {
             set_pengaturan($pdo, 'bg_hero', 'assets/images/banner/hero_bg_pure_landscape.jpg', 'Background landscape bawaan');
             set_flash('success', 'Background Hero dikembalikan ke landscape bawaan.');
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'simpan_teks_kampanye') {
             $nama = sanitize($_POST['nama_calon'] ?? 'EDY SUSANTO');
             $noUrut = sanitize($_POST['no_urut'] ?? '2');
@@ -54,8 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             set_pengaturan($pdo, 'slogan_quote', $quote);
 
             set_flash('success', 'Teks dan informasi kampanye berhasil disimpan.');
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'ganti_foto_profil') {
             if (!empty($_FILES['foto_profil_baru']['name'])) {
                 $upload = handle_file_upload($_FILES['foto_profil_baru'], 'uploads', 5);
@@ -68,13 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             } else {
                 set_flash('warning', 'Pilih berkas foto profil terlebih dahulu.');
             }
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'reset_foto_profil') {
             set_pengaturan($pdo, 'foto_profil', 'assets/images/banner/edy_susanto_hero.jpg', 'Foto profil bawaan');
             set_flash('success', 'Foto profil dikembalikan ke foto bawaan.');
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'simpan_konten_profil') {
             $asal     = sanitize($_POST['profil_asal'] ?? 'Asli Warga Desa Tampirkulon');
             $judul    = sanitize($_POST['profil_judul_dedikasi'] ?? 'Dedikasi Nyata untuk Kemajuan Desa Tampirkulon');
@@ -91,8 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             set_pengaturan($pdo, 'profil_komitmen_pengabdian', $komitmen);
 
             set_flash('success', 'Konten data diri & biodata Halaman Profil berhasil disimpan!');
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'ganti_foto_sapa_warga') {
             if (!empty($_FILES['foto_sapa_baru']['name'])) {
                 $upload = handle_file_upload($_FILES['foto_sapa_baru'], 'uploads', 5);
@@ -105,19 +100,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             } else {
                 set_flash('warning', 'Pilih berkas foto terlebih dahulu.');
             }
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'reset_foto_sapa_warga') {
             set_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_warga.jpg', 'Foto bawaan dialog warga');
             set_flash('success', 'Foto Sapa Warga dikembalikan ke foto bawaan.');
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'simpan_quote_sapa_warga') {
             $quote = sanitize($_POST['quote_sapa_warga'] ?? '');
             set_pengaturan($pdo, 'quote_sapa_warga', $quote, 'Teks kutipan di kartu hero Sapa Warga');
             set_flash('success', 'Kutipan Sapa Warga berhasil disimpan!');
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'simpan_dusun') {
             // Proses daftar dusun yang dikirim
             $dusunRaw = $_POST['dusun'] ?? [];
@@ -134,8 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 set_pengaturan($pdo, 'dusun_list', json_encode($dusunBersih, JSON_UNESCAPED_UNICODE), 'Daftar nama dusun resmi Tampirkulon');
                 set_flash('success', 'Daftar nama dusun berhasil diperbarui (' . count($dusunBersih) . ' dusun).');
             }
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'ganti_foto_hero_potensi') {
             if (!empty($_FILES['foto_hero_potensi_baru']['name'])) {
                 $upload = handle_file_upload($_FILES['foto_hero_potensi_baru'], 'uploads', 10);
@@ -148,13 +139,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             } else {
                 set_flash('warning', 'Pilih berkas foto terlebih dahulu.');
             }
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'reset_foto_hero_potensi') {
             set_pengaturan($pdo, 'foto_hero_potensi', 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg', 'Foto bawaan Kolam Ngudal Tuk Putri');
             set_flash('success', 'Foto Hero Potensi dikembalikan ke foto bawaan.');
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'ganti_foto_spot_potensi') {
             if (!empty($_FILES['foto_spot_potensi_baru']['name'])) {
                 $upload = handle_file_upload($_FILES['foto_spot_potensi_baru'], 'uploads', 10);
@@ -167,13 +156,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             } else {
                 set_flash('warning', 'Pilih berkas foto terlebih dahulu.');
             }
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'reset_foto_spot_potensi') {
             set_pengaturan($pdo, 'foto_spot_potensi', 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg', 'Foto bawaan Spot Tuk Putri');
             set_flash('success', 'Foto Spot Potensi dikembalikan ke foto bawaan.');
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'simpan_konten_potensi') {
             $judul    = sanitize($_POST['spot_potensi_judul'] ?? 'Kolam Ngudal Tuk Putri');
             $desc     = sanitize($_POST['spot_potensi_desc'] ?? '');
@@ -190,8 +177,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             set_pengaturan($pdo, 'hero_potensi_sub',    $heroSub,  'Subtitle Hero Halaman Potensi Desa');
 
             set_flash('success', 'Konten teks Halaman Potensi Desa berhasil disimpan!');
-            header("Location: pengaturan.php");
-            exit;
+            safe_redirect("pengaturan.php");
+        } elseif ($_POST['action'] === 'ganti_foto_potensi_beranda') {
+            if (!empty($_FILES['foto_potensi_beranda_baru']['name'])) {
+                $upload = handle_file_upload($_FILES['foto_potensi_beranda_baru'], 'uploads', 10);
+                if ($upload['status']) {
+                    set_pengaturan($pdo, 'foto_potensi_beranda', $upload['relative_path'], 'Foto kartu sorotan potensi di Beranda');
+                    set_flash('success', 'Foto kartu sorotan potensi di Beranda berhasil diperbarui!');
+                } else {
+                    set_flash('danger', $upload['error']);
+                }
+            } else {
+                set_flash('warning', 'Pilih berkas foto terlebih dahulu.');
+            }
+            safe_redirect("pengaturan.php");
+        } elseif ($_POST['action'] === 'sinkron_foto_potensi_beranda') {
+            $sumber = sanitize($_POST['sumber_foto'] ?? 'spot');
+            if ($sumber === 'hero') {
+                $fotoSumber = get_pengaturan($pdo, 'foto_hero_potensi', 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg');
+                set_pengaturan($pdo, 'foto_potensi_beranda', $fotoSumber, 'Foto kartu sorotan potensi di Beranda (diselaraskan dari Hero Potensi)');
+                set_flash('success', 'Foto kartu beranda berhasil diselaraskan dengan Foto Hero Halaman Potensi!');
+            } else {
+                $fotoSumber = get_pengaturan($pdo, 'foto_spot_potensi', 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg');
+                set_pengaturan($pdo, 'foto_potensi_beranda', $fotoSumber, 'Foto kartu sorotan potensi di Beranda (diselaraskan dari Spot Tuk Putri)');
+                set_flash('success', 'Foto kartu beranda berhasil diselaraskan dengan Foto Spot Tuk Putri Halaman Potensi!');
+            }
+            safe_redirect("pengaturan.php");
+        } elseif ($_POST['action'] === 'reset_foto_potensi_beranda') {
+            set_pengaturan($pdo, 'foto_potensi_beranda', 'assets/images/galeri/wisata_tubing.jpg', 'Foto bawaan kartu potensi beranda');
+            set_flash('success', 'Foto kartu potensi beranda dikembalikan ke foto bawaan (Wisata Tubing).');
+            safe_redirect("pengaturan.php");
+        } elseif ($_POST['action'] === 'simpan_teks_potensi_beranda') {
+            $judul = sanitize($_POST['judul_potensi_beranda'] ?? 'Wisata Tubing Tampirkulon');
+            $sub   = sanitize($_POST['sub_potensi_beranda'] ?? 'Salah satu potensi unggulan desa');
+            $link  = sanitize($_POST['link_potensi_beranda'] ?? 'index.php?page=potensi');
+
+            set_pengaturan($pdo, 'judul_potensi_beranda', $judul, 'Judul kartu sorotan potensi di Beranda');
+            set_pengaturan($pdo, 'sub_potensi_beranda',   $sub,   'Subtitle kartu sorotan potensi di Beranda');
+            set_pengaturan($pdo, 'link_potensi_beranda',  $link,  'Link kartu sorotan potensi di Beranda');
+
+            set_flash('success', 'Teks dan tautan kartu sorotan potensi di Beranda berhasil disimpan!');
+            safe_redirect("pengaturan.php");
         }
     } else {
         set_flash('danger', 'Validasi sesi CSRF gagal.');
@@ -237,6 +263,15 @@ $spotPotensiJudulAdmin = get_pengaturan($pdo, 'spot_potensi_judul', 'Kolam Nguda
 $spotPotensiDescAdmin  = get_pengaturan($pdo, 'spot_potensi_desc', 'Sumber mata air yang menjadi bagian dari potensi alam Desa Tampirkulon.');
 $spotPotensiJarakAdmin = get_pengaturan($pdo, 'spot_potensi_jarak', '± 0,34 km dari Balai Desa Tampirkulon');
 $spotPotensiLokasiAdmin= get_pengaturan($pdo, 'spot_potensi_lokasi', 'Tampirkulon, Candimulyo, Magelang');
+
+// Ambil data kartu sorotan potensi di Beranda (Kolom 4 "Tampirkulon yang Kita Kenal")
+$fotoPotensiBerandaAdmin  = get_pengaturan($pdo, 'foto_potensi_beranda', 'assets/images/galeri/wisata_tubing.jpg');
+$judulPotensiBerandaAdmin = get_pengaturan($pdo, 'judul_potensi_beranda', 'Wisata Tubing Tampirkulon');
+$subPotensiBerandaAdmin   = get_pengaturan($pdo, 'sub_potensi_beranda', 'Salah satu potensi unggulan desa');
+$linkPotensiBerandaAdmin  = get_pengaturan($pdo, 'link_potensi_beranda', 'index.php?page=potensi');
+
+// Render Template Admin Header & Navigasi
+require_once __DIR__ . '/header_admin.php';
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -760,6 +795,150 @@ $spotPotensiLokasiAdmin= get_pengaturan($pdo, 'spot_potensi_lokasi', 'Tampirkulo
   </div>
 </div>
 
+<!-- 2.9 KARTU SOROTAN POTENSI DI BERANDA (KOLOM 4 / WISATA TUBING) -->
+<div class="row g-4 mt-1">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+      <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+          <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; background-color: #ffebee;">
+            <i class="bi bi-card-image" style="color: #c62828; font-size: 1.1rem;"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-0">Kartu Sorotan Potensi di Beranda (Kolom Sorotan)</h5>
+            <small class="text-muted">Kelola foto dan teks kartu potensi yang tampil di section "Tampirkulon yang Kita Kenal" di Beranda</small>
+          </div>
+        </div>
+        <a href="../index.php#tampirkulon-kenal" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+          <i class="bi bi-box-arrow-up-right me-1"></i> Lihat di Beranda
+        </a>
+      </div>
+
+      <div class="row g-4">
+        <!-- Kolom Kiri: Pratinjau Kartu Beranda Aktif -->
+        <div class="col-md-5">
+          <div class="border rounded-3 p-3 text-center h-100 bg-light">
+            <h6 class="fw-bold mb-3 text-start"><i class="bi bi-eye-fill text-danger me-1"></i>Pratinjau Kartu di Beranda:</h6>
+            <div class="position-relative rounded-4 overflow-hidden shadow-sm mx-auto" style="max-width: 320px; aspect-ratio: 4/3; background: #000;">
+              <img id="currentPotensiBerandaPreview" src="../<?= e($fotoPotensiBerandaAdmin) ?>"
+                   alt="Kartu Potensi Beranda" class="w-100 h-100" style="object-fit: cover;">
+              <div class="position-absolute bottom-0 start-0 end-0 p-3 text-start text-white"
+                   style="background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.88) 100%);">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <h6 class="fw-bold mb-0 text-white" id="previewTextJudulBeranda"><?= e($judulPotensiBerandaAdmin) ?></h6>
+                    <small class="text-white-50" style="font-size: 0.75rem;" id="previewTextSubBeranda"><?= e($subPotensiBerandaAdmin) ?></small>
+                  </div>
+                  <div class="bg-white text-dark rounded-circle d-flex align-items-center justify-content-center" style="width: 28px; height: 28px; flex-shrink: 0;">
+                    <i class="bi bi-arrow-right" style="font-size: 0.8rem;"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <small class="d-block text-muted mt-2" style="font-size:0.75rem;">Berkas aktif: <code><?= e($fotoPotensiBerandaAdmin) ?></code></small>
+          </div>
+        </div>
+
+        <!-- Kolom Kanan: Pilihan Penggantian Foto -->
+        <div class="col-md-7">
+          <div class="border rounded-3 p-3 h-100">
+            <!-- 1. Upload Foto Sendiri -->
+            <h6 class="fw-bold mb-2"><i class="bi bi-upload text-primary me-1"></i>Opsi 1: Upload Foto Baru</h6>
+            <form action="pengaturan.php" method="POST" enctype="multipart/form-data" class="mb-3">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="ganti_foto_potensi_beranda">
+              <div id="potensiBerandaLivePreviewContainer" class="mb-2 text-center" style="display:none;">
+                <img id="imgPotensiBerandaLivePreview" src="" class="img-fluid rounded-3 shadow-sm mb-1" style="max-height:100px; object-fit:cover; width:100%;">
+                <small class="text-success small fw-semibold">Pratinjau Foto Baru</small>
+              </div>
+              <div class="input-group input-group-sm mb-2">
+                <input type="file" class="form-control rounded-3" id="inputFotoPotensiBeranda"
+                       name="foto_potensi_beranda_baru" accept="image/*" required>
+              </div>
+              <button type="submit" class="btn btn-primary btn-sm rounded-3 w-100 fw-semibold">
+                <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload &amp; Terapkan ke Beranda
+              </button>
+            </form>
+
+            <hr class="my-3">
+
+            <!-- 2. Seleraskan dengan Halaman Potensi -->
+            <h6 class="fw-bold mb-2"><i class="bi bi-arrow-repeat text-success me-1"></i>Opsi 2: Seleraskan dengan Halaman Potensi</h6>
+            <p class="text-muted small mb-2">Gunakan foto yang sudah ada di Halaman Potensi secara otomatis agar visual selaras:</p>
+            <form action="pengaturan.php" method="POST" class="mb-3">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="sinkron_foto_potensi_beranda">
+              <div class="d-flex gap-2 mb-2">
+                <div class="form-check flex-fill p-2 border rounded-3 bg-white">
+                  <input class="form-check-input ms-1" type="radio" name="sumber_foto" id="srcSpot" value="spot" checked>
+                  <label class="form-check-label small ms-1 fw-semibold" for="srcSpot">
+                    Spot Tuk Putri
+                    <small class="d-block text-muted" style="font-size:0.7rem;">(Foto Kolam Ngudal)</small>
+                  </label>
+                </div>
+                <div class="form-check flex-fill p-2 border rounded-3 bg-white">
+                  <input class="form-check-input ms-1" type="radio" name="sumber_foto" id="srcHero" value="hero">
+                  <label class="form-check-label small ms-1 fw-semibold" for="srcHero">
+                    Hero Potensi
+                    <small class="d-block text-muted" style="font-size:0.7rem;">(Foto Latar Halaman Potensi)</small>
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-success btn-sm rounded-3 w-100 fw-semibold">
+                <i class="bi bi-check2-circle me-1"></i> Gunakan Gambar Halaman Potensi
+              </button>
+            </form>
+
+            <hr class="my-3">
+
+            <!-- 3. Reset ke Bawaan -->
+            <form action="pengaturan.php" method="POST" onsubmit="return confirm('Kembalikan foto kartu potensi beranda ke bawaan (Wisata Tubing)?');">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="reset_foto_potensi_beranda">
+              <button type="submit" class="btn btn-outline-secondary btn-sm rounded-3 w-100">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Reset ke Foto Bawaan (Wisata Tubing)
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Teks & Link Kartu Sorotan Beranda -->
+      <div class="mt-4 border rounded-3 p-3">
+        <h6 class="fw-bold mb-3"><i class="bi bi-pencil-square text-danger me-1"></i>Edit Teks &amp; Tautan Kartu Sorotan Beranda</h6>
+        <form action="pengaturan.php" method="POST">
+          <?= csrf_field() ?>
+          <input type="hidden" name="action" value="simpan_teks_potensi_beranda">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Judul Kartu</label>
+              <input type="text" class="form-control form-control-sm rounded-3" id="inputJudulBeranda" name="judul_potensi_beranda"
+                     value="<?= e($judulPotensiBerandaAdmin) ?>" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Subtitle Kartu</label>
+              <input type="text" class="form-control form-control-sm rounded-3" id="inputSubBeranda" name="sub_potensi_beranda"
+                     value="<?= e($subPotensiBerandaAdmin) ?>" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-semibold">Tautan / Link Kartu</label>
+              <input type="text" class="form-control form-control-sm rounded-3" name="link_potensi_beranda"
+                     value="<?= e($linkPotensiBerandaAdmin) ?>" required>
+              <div class="form-text small text-muted">Secara default mengarah ke <code>index.php?page=potensi</code>.</div>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-danger rounded-3 fw-bold px-4 py-2 shadow-sm">
+                <i class="bi bi-save-fill me-1"></i> Simpan Teks Kartu Beranda
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- 3. KARTU EDIT DAFTAR DUSUN -->
 <div class="row g-4 mt-1">
   <div class="col-12">
@@ -1047,6 +1226,52 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         spotPotensiContainer.style.display = 'none';
       }
+    });
+  }
+
+  // ===== Live Preview Foto Kartu Potensi Beranda =====
+  const potensiBerandaInput = document.getElementById('inputFotoPotensiBeranda');
+  const potensiBerandaContainer = document.getElementById('potensiBerandaLivePreviewContainer');
+  const potensiBerandaImg = document.getElementById('imgPotensiBerandaLivePreview');
+  const potensiBerandaCurrentPreview = document.getElementById('currentPotensiBerandaPreview');
+
+  if (potensiBerandaInput && potensiBerandaContainer && potensiBerandaImg) {
+    potensiBerandaInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        if (file.size > 10 * 1024 * 1024) {
+          alert('Ukuran foto maksimal 10 MB!');
+          this.value = '';
+          potensiBerandaContainer.style.display = 'none';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          potensiBerandaImg.src = e.target.result;
+          potensiBerandaContainer.style.display = 'block';
+          if (potensiBerandaCurrentPreview) potensiBerandaCurrentPreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        potensiBerandaContainer.style.display = 'none';
+      }
+    });
+  }
+
+  // Live text update for Beranda Card Preview
+  const inJudulBeranda = document.getElementById('inputJudulBeranda');
+  const inSubBeranda = document.getElementById('inputSubBeranda');
+  const outJudulBeranda = document.getElementById('previewTextJudulBeranda');
+  const outSubBeranda = document.getElementById('previewTextSubBeranda');
+
+  if (inJudulBeranda && outJudulBeranda) {
+    inJudulBeranda.addEventListener('input', function() {
+      outJudulBeranda.textContent = this.value || 'Wisata Tubing Tampirkulon';
+    });
+  }
+  if (inSubBeranda && outSubBeranda) {
+    inSubBeranda.addEventListener('input', function() {
+      outSubBeranda.textContent = this.value || 'Salah satu potensi unggulan desa';
     });
   }
 });

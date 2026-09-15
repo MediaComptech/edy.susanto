@@ -25,6 +25,10 @@ if (trim($sloganQuote) === '' || trim($sloganQuote) === '-') {
     $sloganQuote = SLOGAN_QUOTE;
 }
 $fotoSapaWarga = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_warga.jpg');
+$fotoPotensiBeranda  = get_pengaturan($pdo, 'foto_potensi_beranda', 'assets/images/galeri/wisata_tubing.jpg');
+$judulPotensiBeranda = get_pengaturan($pdo, 'judul_potensi_beranda', 'Wisata Tubing Tampirkulon');
+$subPotensiBeranda   = get_pengaturan($pdo, 'sub_potensi_beranda', 'Salah satu potensi unggulan desa');
+$linkPotensiBeranda  = get_pengaturan($pdo, 'link_potensi_beranda', 'index.php?page=potensi');
 ?>
 
 <!-- 1. Hero Section — Flayer Card (Bounded in Container, Tidak Panjang Sampai Pinggir) -->
@@ -211,15 +215,15 @@ $fotoSapaWarga = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/d
         </div>
       </div>
 
-      <!-- Featured Card: Wisata Tubing Tampirkulon -->
+      <!-- Featured Card: Potensi Unggulan Desa (Dinamis dari Pengaturan Website) -->
       <div class="col-lg-3 col-md-6">
-        <a href="index.php?page=potensi" class="card-tubing-featured d-block text-decoration-none">
-          <img src="assets/images/galeri/wisata_tubing.jpg" alt="Wisata Tubing Tampirkulon">
+        <a href="<?= e($linkPotensiBeranda) ?>" class="card-tubing-featured d-block text-decoration-none">
+          <img src="<?= e($fotoPotensiBeranda) ?>" alt="<?= e($judulPotensiBeranda) ?>">
           <div class="card-tubing-overlay">
             <div class="d-flex align-items-center justify-content-between">
               <div>
-                <h5 class="fw-bold mb-0 text-white">Wisata Tubing Tampirkulon</h5>
-                <small class="text-white-50">Salah satu potensi unggulan desa</small>
+                <h5 class="fw-bold mb-0 text-white"><?= e($judulPotensiBeranda) ?></h5>
+                <small class="text-white-50"><?= e($subPotensiBeranda) ?></small>
               </div>
               <div class="bg-white text-dark rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;">
                 <i class="bi bi-arrow-right"></i>

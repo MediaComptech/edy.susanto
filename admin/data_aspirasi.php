@@ -1,8 +1,11 @@
 <?php
-require_once __DIR__ . '/header_admin.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/functions.php';
 
-// Handle Update Status & Tanggapan
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+require_admin_auth();
+
+// Handle Update Status & Tanggapan (Diproses sebelum render HTML)
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
     if (verify_csrf()) {
         if ($_POST['action'] === 'update_aspirasi') {
             $id = (int)$_POST['id'];
@@ -19,15 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             }
 
             set_flash('success', 'Status & tanggapan aspirasi berhasil diperbarui.');
-            header("Location: data_aspirasi.php");
-            exit;
+            safe_redirect("data_aspirasi.php");
         } elseif ($_POST['action'] === 'hapus_aspirasi') {
             $id = (int)$_POST['id'];
             $stmt = $pdo->prepare("DELETE FROM aspirasi WHERE id = ?");
             $stmt->execute([$id]);
             set_flash('success', 'Aspirasi berhasil dihapus.');
-            header("Location: data_aspirasi.php");
-            exit;
+            safe_redirect("data_aspirasi.php");
         }
     } else {
         set_flash('danger', 'Validasi sesi CSRF gagal.');
@@ -48,6 +49,8 @@ $query .= " ORDER BY created_at DESC";
 $stmt = $pdo->prepare($query);
 $stmt->execute($params);
 $aspirasiList = $stmt->fetchAll();
+
+require_once __DIR__ . '/header_admin.php';
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">

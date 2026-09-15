@@ -341,9 +341,17 @@ function self_heal_database($pdo) {
             $pdo->exec("ALTER TABLE `galeri` ADD COLUMN `jumlah_foto` VARCHAR(50) DEFAULT NULL AFTER `kategori`");
         }
 
-        // 3. Pastikan pengaturan foto_sapa_warga terdaftar
+        // 3. Pastikan pengaturan foto_sapa_warga & potensi terdaftar
         try {
             $pdo->exec("INSERT INTO `pengaturan` (`kunci`, `nilai`, `keterangan`) VALUES ('foto_sapa_warga', 'assets/images/banner/dialog_warga.jpg', 'Foto dialog warga untuk banner Sapa Warga di beranda dan halaman program') ON DUPLICATE KEY UPDATE `kunci`=`kunci`");
+            $pdo->exec("INSERT INTO `pengaturan` (`kunci`, `nilai`, `keterangan`) VALUES ('foto_potensi_beranda', 'assets/images/galeri/wisata_tubing.jpg', 'Foto kartu sorotan potensi di beranda') ON DUPLICATE KEY UPDATE `kunci`=`kunci`");
+            $pdo->exec("INSERT INTO `pengaturan` (`kunci`, `nilai`, `keterangan`) VALUES ('judul_potensi_beranda', 'Wisata Tubing Tampirkulon', 'Judul kartu sorotan potensi di beranda') ON DUPLICATE KEY UPDATE `kunci`=`kunci`");
+            $pdo->exec("INSERT INTO `pengaturan` (`kunci`, `nilai`, `keterangan`) VALUES ('sub_potensi_beranda', 'Salah satu potensi unggulan desa', 'Subtitle kartu sorotan potensi di beranda') ON DUPLICATE KEY UPDATE `kunci`=`kunci`");
+            $pdo->exec("INSERT INTO `pengaturan` (`kunci`, `nilai`, `keterangan`) VALUES ('link_potensi_beranda', 'index.php?page=potensi', 'Link tujuan kartu sorotan potensi di beranda') ON DUPLICATE KEY UPDATE `kunci`=`kunci`");
+            $pdo->exec("INSERT INTO `pengaturan` (`kunci`, `nilai`, `keterangan`) VALUES ('foto_hero_potensi', 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg', 'Foto background hero halaman potensi') ON DUPLICATE KEY UPDATE `kunci`=`kunci`");
+            $pdo->exec("INSERT INTO `pengaturan` (`kunci`, `nilai`, `keterangan`) VALUES ('foto_spot_potensi', 'assets/images/potensi/kolam_ngudal_tuk_putri.jpg', 'Foto spot unggulan halaman potensi') ON DUPLICATE KEY UPDATE `kunci`=`kunci`");
+            $pdo->exec("INSERT INTO `pengaturan` (`kunci`, `nilai`, `keterangan`) VALUES ('hero_potensi_judul', 'Kekayaan Desa,<br>Kekuatan Bersama', 'Judul hero halaman potensi') ON DUPLICATE KEY UPDATE `kunci`=`kunci`");
+            $pdo->exec("INSERT INTO `pengaturan` (`kunci`, `nilai`, `keterangan`) VALUES ('spot_potensi_judul', 'Kolam Ngudal Tuk Putri', 'Judul spot unggulan halaman potensi') ON DUPLICATE KEY UPDATE `kunci`=`kunci`");
         } catch (Exception $e) {}
 
         // 4. Pastikan icon program Pertanian konsisten
