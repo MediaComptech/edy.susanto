@@ -59,23 +59,27 @@ $pilar3Sub   = get_pengaturan($pdo, 'profil_pilar3_sub', 'Teruji dalam manajemen
     <!-- Foto & Identitas -->
     <div class="col-lg-5 text-center mb-4 mb-lg-0">
       <div class="profil-photo-container position-relative d-inline-block">
-        <img src="<?= e($fotoProfil) ?>" alt="<?= e($namaCalon) ?>" class="img-fluid rounded-4 shadow-lg profil-photo-img">
-        <div class="profil-identity-card">
-          <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
-            <h5 class="fw-bold text-dark mb-0 profil-card-name"><?= e($namaCalon) ?></h5>
-            <span class="profil-card-badge">
-              <i class="bi bi-check-circle-fill me-1"></i>No. Urut <?= e($noUrut) ?>
-            </span>
+        <img src="<?= e($fotoProfil) ?>" alt="<?= e($namaCalon) ?>" class="img-fluid profil-photo-img">
+        <div class="profil-identity-card d-flex align-items-stretch justify-content-between gap-2">
+          <!-- Sisi Kiri: Nama & Status/Asal -->
+          <div class="profil-card-left min-w-0 d-flex flex-column justify-content-center">
+            <h5 class="fw-bold text-dark mb-1 profil-card-name"><?= e($namaCalon) ?></h5>
+            <?php if (!empty($profilStatus)): ?>
+            <div class="profil-card-status text-danger small fw-bold d-flex align-items-center gap-1 mb-1">
+              <i class="bi bi-shield-fill-check"></i>
+              <span><?= e($profilStatus) ?></span>
+            </div>
+            <?php endif; ?>
+            <div class="profil-card-sub text-muted small d-flex align-items-center gap-1">
+              <i class="bi bi-geo-alt-fill text-danger"></i>
+              <span><?= e($profilAsal) ?></span>
+            </div>
           </div>
-          <?php if (!empty($profilStatus)): ?>
-          <div class="profil-card-status text-danger small fw-bold d-flex align-items-center gap-1 mb-1">
-            <i class="bi bi-shield-fill-check"></i>
-            <span><?= e($profilStatus) ?></span>
-          </div>
-          <?php endif; ?>
-          <div class="profil-card-sub text-muted small d-flex align-items-center gap-1">
-            <i class="bi bi-geo-alt-fill text-danger"></i>
-            <span><?= e($profilAsal) ?></span>
+
+          <!-- Sisi Kanan: Kotak Nomor Urut (Mengisi Penuh Sisi Kanan Sesuai Kotak Hijau) -->
+          <div class="profil-card-no-box flex-shrink-0 d-flex flex-column align-items-center justify-content-center">
+            <span class="profil-no-box-label">NO. URUT</span>
+            <span class="profil-no-box-digit"><?= e($noUrut) ?></span>
           </div>
         </div>
       </div>
