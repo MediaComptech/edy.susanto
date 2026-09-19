@@ -105,17 +105,17 @@ if (!defined('APP_NAME')) {
 
 <!-- PWA Install Banner Toast -->
 <div id="pwaInstallBanner" class="pwa-install-banner" role="alert" aria-live="polite">
-  <div class="d-flex align-items-center justify-content-between gap-3">
-    <div class="d-flex align-items-center gap-3">
-      <img src="assets/images/icons/icon-192.png" alt="Sapa Warga" width="44" height="44" class="rounded-3 shadow-sm">
-      <div>
-        <h6 class="mb-0 fw-bold fs-6">Pasang Aplikasi Sapa Warga</h6>
-        <small class="text-muted">Akses lebih cepat &amp; terima notifikasi desa</small>
+  <div class="pwa-banner-content">
+    <div class="pwa-banner-left">
+      <img src="assets/images/icons/icon-192.png" alt="Sapa Warga" class="pwa-banner-icon">
+      <div class="pwa-banner-text">
+        <h6 class="pwa-banner-title mb-0">Pasang Aplikasi Sapa Warga</h6>
+        <small class="pwa-banner-sub text-muted">Akses cepat &amp; info desa</small>
       </div>
     </div>
-    <div class="d-flex gap-2">
-      <button id="btnPwaInstall" class="btn btn-sm btn-danger fw-bold rounded-pill px-3">Pasang</button>
-      <button id="btnClosePwa" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Tutup"><i class="bi bi-x"></i></button>
+    <div class="pwa-banner-actions">
+      <button id="btnPwaInstall" class="btn btn-danger btn-sm pwa-btn-install">Pasang</button>
+      <button id="btnClosePwa" class="btn btn-outline-secondary pwa-btn-close" aria-label="Tutup"><i class="bi bi-x"></i></button>
     </div>
   </div>
 </div>

@@ -17,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Deteksi Lingkungan Host (Localhost vs Live Hosting edy.mediacomptech.com)
+// Deteksi Lingkungan Host (Localhost vs Live Hosting edysusanto.info)
 $httpHost = $_SERVER['HTTP_HOST'] ?? '';
 $hostName = explode(':', $httpHost)[0];
 $isLocalhost = in_array($hostName, ['localhost', '127.0.0.1']) || (php_sapi_name() === 'cli' && empty($httpHost));
@@ -30,7 +30,7 @@ if ($isLocalhost) {
     define('DB_PASS', '');
     define('DB_NAME', 'edy_susanto');
 } else {
-    // Pengaturan Database Live Hosting (cPanel / edy.mediacomptech.com)
+    // Pengaturan Database Live Hosting (cPanel / edysusanto.info)
     // Sesuaikan dengan data database yang dibuat di cPanel MySQL Databases
     define('DB_HOST', 'localhost');
     define('DB_PORT', '3306');
@@ -49,7 +49,7 @@ $baseDir = ($scriptDir === '/' || $scriptDir === '.') ? '' : rtrim($scriptDir, '
 if (substr($baseDir, -6) === '/admin') {
     $baseDir = substr($baseDir, 0, -6);
 }
-define('BASE_URL', $protocol . ($httpHost ?: 'edy.mediacomptech.com') . $baseDir);
+define('BASE_URL', $protocol . ($httpHost ?: 'edysusanto.info') . $baseDir);
 
 // Konstanta Aplikasi & Kampanye
 define('APP_NAME', 'EDY SUSANTO');
@@ -58,7 +58,7 @@ define('NO_URUT', '2');
 define('TAGLINE', 'Bersama Membangun Desa yang Asri, Maju & Rukun');
 define('SLOGAN_QUOTE', 'Desa kuat karena warganya.');
 define('WHATSAPP_NUMBER', '6281234567890');
-define('EMAIL_DESA', 'edysusanto@tampirkulon.id');
+define('EMAIL_DESA', 'mail@edysusanto.info');
 define('ALAMAT_DESA', 'Jl. Tampir II, Tampirkulon, Kec. Candimulyo, Kab. Magelang');
 
 // Daftar Dusun Resmi Tampirkulon

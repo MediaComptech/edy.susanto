@@ -52,7 +52,10 @@ $linkPotensiBeranda  = get_pengaturan($pdo, 'link_potensi_beranda', 'index.php?p
           <h1 class="hero-name"><?= e($namaCalon) ?></h1>
 
           <div class="mb-2">
-            <span class="badge-hero-no">No. Urut <?= e($noUrut) ?></span>
+            <span class="badge-hero-no">
+              <span class="badge-hero-label">No. Urut</span>
+              <span class="badge-hero-num"><?= e($noUrut) ?></span>
+            </span>
           </div>
 
           <p class="hero-quote-slogan mb-3"><?= e($tagline) ?></p>

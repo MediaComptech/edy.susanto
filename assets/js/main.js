@@ -111,8 +111,9 @@ function initPWA() {
     e.preventDefault();
     deferredPrompt = e;
     
-    // Jangan munculkan jika user sudah pernah menutup di sesi ini
-    if (!sessionStorage.getItem('pwa_banner_dismissed')) {
+    // Jangan munculkan jika user sudah pernah menutup
+    const isDismissed = sessionStorage.getItem('pwa_banner_dismissed') || localStorage.getItem('pwa_banner_dismissed');
+    if (!isDismissed) {
       const installBanner = document.getElementById('pwaInstallBanner');
       if (installBanner) {
         installBanner.style.display = 'block';
@@ -130,16 +131,19 @@ function initPWA() {
         deferredPrompt = null;
         const installBanner = document.getElementById('pwaInstallBanner');
         if (installBanner) installBanner.style.display = 'none';
+        sessionStorage.setItem('pwa_banner_dismissed', '1');
       }
     });
   }
 
   const btnClosePwa = document.getElementById('btnClosePwa');
   if (btnClosePwa) {
-    btnClosePwa.addEventListener('click', () => {
+    btnClosePwa.addEventListener('click', (e) => {
+      e.stopPropagation();
       const installBanner = document.getElementById('pwaInstallBanner');
       if (installBanner) installBanner.style.display = 'none';
       sessionStorage.setItem('pwa_banner_dismissed', '1');
+      localStorage.setItem('pwa_banner_dismissed', '1');
     });
   }
 
