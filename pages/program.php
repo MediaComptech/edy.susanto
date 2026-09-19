@@ -599,55 +599,55 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
     </div>
 
     <!-- 4 Cards Horisontal Sesuai Mockup -->
-    <div class="row g-3 g-md-4">
+    <div class="row g-2 g-sm-3 g-md-4">
       <!-- 1. 5 Program Persiapan (Hijau) -->
       <div class="col-6 col-md-3">
-        <div class="prog-stat-box p-3 rounded-4 d-flex align-items-center gap-3" style="background-color: #e8f5e9;">
+        <div class="prog-stat-box h-100 rounded-4 d-flex align-items-center" style="background-color: #e8f5e9;">
           <div class="prog-stat-box-icon bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
             <i class="bi bi-check-lg"></i>
           </div>
-          <div>
+          <div class="prog-stat-box-content">
             <div class="prog-stat-box-num text-dark fw-bold">5</div>
-            <div class="prog-stat-box-label text-muted small">Program Persiapan</div>
+            <div class="prog-stat-box-label text-muted">Program Persiapan</div>
           </div>
         </div>
       </div>
 
       <!-- 2. 3 Program Berjalan (Biru) -->
       <div class="col-6 col-md-3">
-        <div class="prog-stat-box p-3 rounded-4 d-flex align-items-center gap-3" style="background-color: #e3f2fd;">
+        <div class="prog-stat-box h-100 rounded-4 d-flex align-items-center" style="background-color: #e3f2fd;">
           <div class="prog-stat-box-icon bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
             <i class="bi bi-gear-fill"></i>
           </div>
-          <div>
+          <div class="prog-stat-box-content">
             <div class="prog-stat-box-num text-dark fw-bold">3</div>
-            <div class="prog-stat-box-label text-muted small">Program Berjalan</div>
+            <div class="prog-stat-box-label text-muted">Program Berjalan</div>
           </div>
         </div>
       </div>
 
       <!-- 3. 2 Program Direncanakan (Oranye) -->
       <div class="col-6 col-md-3">
-        <div class="prog-stat-box p-3 rounded-4 d-flex align-items-center gap-3" style="background-color: #fff3e0;">
+        <div class="prog-stat-box h-100 rounded-4 d-flex align-items-center" style="background-color: #fff3e0;">
           <div class="prog-stat-box-icon text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="background-color: #f57c00;">
             <i class="bi bi-clock-fill"></i>
           </div>
-          <div>
+          <div class="prog-stat-box-content">
             <div class="prog-stat-box-num text-dark fw-bold">2</div>
-            <div class="prog-stat-box-label text-muted small">Program Direncanakan</div>
+            <div class="prog-stat-box-label text-muted">Program Direncanakan</div>
           </div>
         </div>
       </div>
 
       <!-- 4. 12 Total Rencana Kegiatan (Ungu) -->
       <div class="col-6 col-md-3">
-        <div class="prog-stat-box p-3 rounded-4 d-flex align-items-center gap-3" style="background-color: #f3e5f5;">
+        <div class="prog-stat-box h-100 rounded-4 d-flex align-items-center" style="background-color: #f3e5f5;">
           <div class="prog-stat-box-icon text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="background-color: #7b1fa2;">
             <i class="bi bi-bar-chart-fill"></i>
           </div>
-          <div>
+          <div class="prog-stat-box-content">
             <div class="prog-stat-box-num text-dark fw-bold">12</div>
-            <div class="prog-stat-box-label text-muted small">Total Rencana Kegiatan</div>
+            <div class="prog-stat-box-label text-muted">Total Rencana Kegiatan</div>
           </div>
         </div>
       </div>
