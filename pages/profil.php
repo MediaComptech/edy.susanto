@@ -23,23 +23,36 @@ $komitmenPengabdian = get_pengaturan($pdo, 'profil_komitmen_pengabdian', 'Hadir 
 
 <div class="container-custom py-5">
   <!-- Header Profil -->
-  <div class="text-center max-w-700 mx-auto mb-5">
+  <div class="text-center max-w-700 mx-auto mb-4 mb-md-5">
     <span class="badge bg-danger-subtle text-danger fw-bold px-3 py-2 rounded-pill mb-2">
       <i class="bi bi-person-badge-fill me-1"></i> Mengenal Lebih Dekat
     </span>
-    <h1 class="fw-bold display-5 text-dark mb-2">Profil <?= e($namaCalon) ?></h1>
-    <p class="text-muted fs-5">Calon Kepala Desa Tampirkulon Masa Bakti 2026 - 2032 | <strong>Nomor Urut <?= e($noUrut) ?></strong></p>
+    <h1 class="fw-bold display-5 text-dark mb-2 profil-header-title">Profil <?= e($namaCalon) ?></h1>
+    <div class="profil-meta-bar d-flex flex-wrap align-items-center justify-content-center gap-2 mt-2">
+      <span class="text-muted profil-meta-sub">Calon Kepala Desa Tampirkulon Masa Bakti 2026 – 2032</span>
+      <span class="profil-badge-no">
+        <span class="badge-label">Nomor Urut</span>
+        <span class="badge-num"><?= e($noUrut) ?></span>
+      </span>
+    </div>
   </div>
 
   <div class="row g-5 align-items-center mb-5">
     <!-- Foto & Identitas -->
-    <div class="col-lg-5 text-center">
-      <div class="position-relative d-inline-block">
-        <img src="<?= e($fotoProfil) ?>" alt="<?= e($namaCalon) ?>" class="img-fluid rounded-4 shadow-lg" style="max-height: 480px; object-fit: cover;">
-        <div class="position-absolute bottom-0 start-50 translate-middle-x mb-3 w-75 bg-white p-3 rounded-3 shadow text-start border">
-          <div class="fw-bold text-dark fs-5"><?= e($namaCalon) ?></div>
-          <small class="text-danger fw-bold"><i class="bi bi-check-circle-fill me-1"></i> Calon Kades No. Urut <?= e($noUrut) ?></small>
-          <div class="text-muted small mt-1"><i class="bi bi-geo-alt me-1"></i> <?= e($profilAsal) ?></div>
+    <div class="col-lg-5 text-center mb-4 mb-lg-0">
+      <div class="profil-photo-container position-relative d-inline-block">
+        <img src="<?= e($fotoProfil) ?>" alt="<?= e($namaCalon) ?>" class="img-fluid rounded-4 shadow-lg profil-photo-img">
+        <div class="profil-identity-card">
+          <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
+            <h5 class="fw-bold text-dark mb-0 profil-card-name"><?= e($namaCalon) ?></h5>
+            <span class="profil-card-badge">
+              <i class="bi bi-check-circle-fill me-1"></i>No. Urut <?= e($noUrut) ?>
+            </span>
+          </div>
+          <div class="profil-card-sub text-muted small d-flex align-items-center gap-1">
+            <i class="bi bi-geo-alt-fill text-danger"></i>
+            <span><?= e($profilAsal) ?></span>
+          </div>
         </div>
       </div>
     </div>
