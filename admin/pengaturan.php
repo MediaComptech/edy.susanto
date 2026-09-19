@@ -72,7 +72,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
             set_flash('success', 'Foto profil dikembalikan ke foto bawaan.');
             safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'simpan_konten_profil') {
-            $asal     = sanitize($_POST['profil_asal'] ?? 'Purnawirawan TNI AD • Putra Asli Tampirkulon');
+            $status   = sanitize($_POST['profil_status'] ?? 'Purnawirawan TNI AD');
+            $asal     = sanitize($_POST['profil_asal'] ?? 'Putra Asli Tampirkulon');
             $judul    = sanitize($_POST['profil_judul_dedikasi'] ?? 'Integritas & Kedisiplinan Prajurit, Mengabdi Sepenuh Hati untuk Warga');
             $bio1     = sanitize($_POST['profil_biodata_1'] ?? '');
             $bio2     = sanitize($_POST['profil_biodata_2'] ?? '');
@@ -86,6 +87,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
             $pilar3Judul = sanitize($_POST['profil_pilar3_judul'] ?? 'Distribusi Kebutuhan Presisi');
             $pilar3Sub   = sanitize($_POST['profil_pilar3_sub'] ?? '');
 
+            set_pengaturan($pdo, 'profil_status', $status);
             set_pengaturan($pdo, 'profil_asal', $asal);
             set_pengaturan($pdo, 'profil_judul_dedikasi', $judul);
             set_pengaturan($pdo, 'profil_biodata_1', $bio1);
@@ -248,7 +250,15 @@ $sloganQuote = get_pengaturan($pdo, 'slogan_quote', SLOGAN_QUOTE);
 
 // Ambil data halaman profil calon
 $fotoProfil         = get_pengaturan($pdo, 'foto_profil', 'assets/images/banner/edy_susanto_hero.jpg');
-$profilAsal         = get_pengaturan($pdo, 'profil_asal', 'Purnawirawan TNI AD • Putra Asli Tampirkulon');
+$profilRawAsal      = get_pengaturan($pdo, 'profil_asal', 'Putra Asli Tampirkulon');
+if (strpos($profilRawAsal, '•') !== false) {
+    $parts = explode('•', $profilRawAsal, 2);
+    $profilStatus = trim($parts[0]);
+    $profilAsal   = trim($parts[1]);
+} else {
+    $profilStatus = get_pengaturan($pdo, 'profil_status', 'Purnawirawan TNI AD');
+    $profilAsal   = $profilRawAsal;
+}
 $judulDedikasi      = get_pengaturan($pdo, 'profil_judul_dedikasi', 'Integritas & Kedisiplinan Prajurit, Mengabdi Sepenuh Hati untuk Warga');
 $biodata1           = get_pengaturan($pdo, 'profil_biodata_1', 'Sebagai putra asli Tampirkulon dan Purnawirawan TNI AD, ' . $namaCalon . ' dibentuk oleh kedisiplinan tinggi, loyalitas tanpa pamrih kepada masyarakat, serta ketegasan sikap yang senantiasa mengayomi. Beliau memahami secara mendalam denyut kehidupan warga, potensi agraris yang melimpah, serta harapan besar pemuda dan keluarga di setiap dusun.');
 $biodata2           = get_pengaturan($pdo, 'profil_biodata_2', 'Berbekal pengalaman kepemimpinan kedinasan, keahlian tata kelola administrasi keuangan yang akuntabel, serta manajemen rantai pasok dan distribusi kebutuhan personil secara presisi, beliau hadir membawa tekad mengabdi seutuhnya demi terciptanya pemerintahan desa yang bersih, transparan, anti-bocor, dan melayani.');
@@ -544,14 +554,20 @@ require_once __DIR__ . '/header_admin.php';
 
             <div class="row g-3 mb-3">
               <div class="col-md-6">
-                <label class="form-label small fw-semibold">Keterangan Asal / Sub-Identitas</label>
-                <input type="text" class="form-control rounded-3" name="profil_asal" value="<?= e($profilAsal) ?>" required placeholder="Contoh: Asli Warga Desa Tampirkulon">
-                <div class="form-text small text-muted">Tampil di bawah nama pada kartu foto profil.</div>
+                <label class="form-label small fw-semibold"><i class="bi bi-shield-fill-check text-danger me-1"></i>Status / Kehormatan</label>
+                <input type="text" class="form-control rounded-3" name="profil_status" value="<?= e($profilStatus) ?>" required placeholder="Contoh: Purnawirawan TNI AD">
+                <div class="form-text small text-muted">Baris 1 di bawah nama pada kartu foto profil.</div>
               </div>
               <div class="col-md-6">
-                <label class="form-label small fw-semibold">Judul Narasi Dedikasi</label>
-                <input type="text" class="form-control rounded-3" name="profil_judul_dedikasi" value="<?= e($judulDedikasi) ?>" required placeholder="Judul besar di samping foto profil">
+                <label class="form-label small fw-semibold"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Asal / Domisili</label>
+                <input type="text" class="form-control rounded-3" name="profil_asal" value="<?= e($profilAsal) ?>" required placeholder="Contoh: Putra Asli Tampirkulon">
+                <div class="form-text small text-muted">Baris 2 di bawah nama pada kartu foto profil.</div>
               </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Judul Narasi Dedikasi</label>
+              <input type="text" class="form-control rounded-3" name="profil_judul_dedikasi" value="<?= e($judulDedikasi) ?>" required placeholder="Judul besar di samping foto profil">
             </div>
 
             <div class="mb-3">

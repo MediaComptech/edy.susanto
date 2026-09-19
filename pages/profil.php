@@ -13,7 +13,15 @@ if (!function_exists('get_pengaturan')) {
 $namaCalon         = get_pengaturan($pdo, 'nama_calon', APP_NAME);
 $noUrut            = get_pengaturan($pdo, 'no_urut', NO_URUT);
 $fotoProfil        = get_pengaturan($pdo, 'foto_profil', 'assets/images/banner/edy_susanto_hero.jpg');
-$profilAsal        = get_pengaturan($pdo, 'profil_asal', 'Purnawirawan TNI AD • Putra Asli Tampirkulon');
+$profilRawAsal     = get_pengaturan($pdo, 'profil_asal', 'Putra Asli Tampirkulon');
+if (strpos($profilRawAsal, '•') !== false) {
+    $parts = explode('•', $profilRawAsal, 2);
+    $profilStatus = trim($parts[0]);
+    $profilAsal   = trim($parts[1]);
+} else {
+    $profilStatus = get_pengaturan($pdo, 'profil_status', 'Purnawirawan TNI AD');
+    $profilAsal   = $profilRawAsal;
+}
 $judulDedikasi     = get_pengaturan($pdo, 'profil_judul_dedikasi', 'Integritas & Kedisiplinan Prajurit, Mengabdi Sepenuh Hati untuk Warga');
 $biodata1          = get_pengaturan($pdo, 'profil_biodata_1', 'Sebagai putra asli Tampirkulon dan Purnawirawan TNI AD, ' . $namaCalon . ' dibentuk oleh kedisiplinan tinggi, loyalitas tanpa pamrih kepada masyarakat, serta ketegasan sikap yang senantiasa mengayomi. Beliau memahami secara mendalam denyut kehidupan warga, potensi agraris yang melimpah, serta harapan besar pemuda dan keluarga di setiap dusun.');
 $biodata2          = get_pengaturan($pdo, 'profil_biodata_2', 'Berbekal pengalaman kepemimpinan kedinasan, keahlian tata kelola administrasi keuangan yang akuntabel, serta manajemen rantai pasok dan distribusi kebutuhan personil secara presisi, beliau hadir membawa tekad mengabdi seutuhnya demi terciptanya pemerintahan desa yang bersih, transparan, anti-bocor, dan melayani.');
@@ -59,6 +67,12 @@ $pilar3Sub   = get_pengaturan($pdo, 'profil_pilar3_sub', 'Teruji dalam manajemen
               <i class="bi bi-check-circle-fill me-1"></i>No. Urut <?= e($noUrut) ?>
             </span>
           </div>
+          <?php if (!empty($profilStatus)): ?>
+          <div class="profil-card-status text-danger small fw-bold d-flex align-items-center gap-1 mb-1">
+            <i class="bi bi-shield-fill-check"></i>
+            <span><?= e($profilStatus) ?></span>
+          </div>
+          <?php endif; ?>
           <div class="profil-card-sub text-muted small d-flex align-items-center gap-1">
             <i class="bi bi-geo-alt-fill text-danger"></i>
             <span><?= e($profilAsal) ?></span>
