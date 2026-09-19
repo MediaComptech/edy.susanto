@@ -34,7 +34,7 @@ $galeriList = $stmtGaleri->fetchAll();
         <div class="row g-0 h-100">
           <?php if (!empty($item['foto'])): ?>
           <div class="col-md-5">
-            <img src="<?= e($item['foto']) ?>" alt="<?= e($item['judul']) ?>" class="w-100 h-100 object-fit-cover" style="min-height: 200px;">
+            <img src="<?= e($item['foto']) ?>" alt="<?= e($item['judul']) ?>" class="w-100 h-100 object-fit-cover" style="min-height: 200px;" loading="lazy">
           </div>
           <?php endif; ?>
           <div class="<?= !empty($item['foto']) ? 'col-md-7' : 'col-12' ?> p-4 d-flex flex-column">
@@ -71,7 +71,7 @@ $galeriList = $stmtGaleri->fetchAll();
       <?php foreach ($galeriList as $g): ?>
       <div class="col-md-6 col-lg-4">
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 bg-white">
-          <img src="<?= e($g['foto']) ?>" alt="<?= e($g['judul']) ?>" class="card-img-top" style="height: 220px; object-fit: cover;">
+          <img src="<?= e($g['foto']) ?>" alt="<?= e($g['judul']) ?>" class="card-img-top" style="height: 220px; object-fit: cover;" loading="lazy">
           <div class="p-3">
             <h6 class="fw-bold text-dark mb-1"><?= e($g['judul']) ?></h6>
             <small class="text-muted"><?= e($g['deskripsi']) ?></small>

@@ -117,7 +117,7 @@ $namaCalon  = get_pengaturan($pdo, 'nama_calon', APP_NAME);
             <div class="text-secondary small fw-bold font-handwriting fs-6 text-end">- <?= e($namaCalon) ?></div>
           </div>
           <div class="flex-shrink-0">
-            <img src="<?= e($fotoSapa) ?>" alt="<?= e($namaCalon) ?> Bersama Warga" class="rounded-3 shadow-sm object-fit-cover" style="width: 130px; height: 90px;">
+            <img src="<?= e($fotoSapa) ?>" alt="<?= e($namaCalon) ?> Bersama Warga" class="rounded-3 shadow-sm object-fit-cover" style="width: 130px; height: 90px;" loading="lazy">
           </div>
         </div>
       </div>
@@ -350,7 +350,7 @@ $namaCalon  = get_pengaturan($pdo, 'nama_calon', APP_NAME);
 
                 <?php if (!empty($asp['foto'])): ?>
                 <div class="mb-2">
-                  <img src="<?= e($asp['foto']) ?>" alt="Foto Aspirasi" class="img-thumbnail rounded-3" style="max-height: 80px;">
+                  <img src="<?= e($asp['foto']) ?>" alt="Foto Aspirasi" class="img-thumbnail rounded-3" style="max-height: 80px;" loading="lazy">
                 </div>
                 <?php endif; ?>
 

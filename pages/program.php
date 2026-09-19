@@ -331,6 +331,30 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
 <!-- SECTION 3: 7 BIDANG PROGRAM PRIORITAS + KARTU QUOTE (8 CARDS) -->
 <section id="programPrioritas" class="prog-section-spacing-top pb-5 bg-light-subtle">
   <div class="container-custom">
+    <!-- Banner Landasan Eksekusi 4 TEPAT -->
+    <div class="prog-tepat-strip p-3 rounded-4 shadow-sm mb-4 d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
+      <div class="d-flex align-items-center gap-2">
+        <span class="prog-tepat-badge">
+          <i class="bi bi-patch-check-fill me-1"></i> Standar Kerja: 4 TEPAT
+        </span>
+        <span class="text-muted small d-none d-md-inline">Seluruh program prioritas dijalankan berlandaskan komitmen eksekusi nyata:</span>
+      </div>
+      <div class="d-flex flex-wrap align-items-center gap-2">
+        <a href="index.php?page=profil#empat-tepat" class="prog-tepat-pill-item text-decoration-none" title="Pembangunan sarana berkualitas tinggi & kokoh">
+          <i class="bi bi-patch-check-fill text-danger me-1"></i> 1. Tepat Mutu
+        </a>
+        <a href="index.php?page=profil#empat-tepat" class="prog-tepat-pill-item text-decoration-none" title="Disiplin prajurit & tuntas sesuai jadwal">
+          <i class="bi bi-clock-history text-danger me-1"></i> 2. Tepat Waktu
+        </a>
+        <a href="index.php?page=profil#empat-tepat" class="prog-tepat-pill-item text-decoration-none" title="Anggaran & bantuan 100% utuh tanpa potongan">
+          <i class="bi bi-box-seam-fill text-danger me-1"></i> 3. Tepat Jumlah
+        </a>
+        <a href="index.php?page=profil#empat-tepat" class="prog-tepat-pill-item text-decoration-none" title="Penyaluran adil & dinikmati warga yang berhak">
+          <i class="bi bi-bullseye text-danger me-1"></i> 4. Tepat Sasaran
+        </a>
+      </div>
+    </div>
+
     <!-- Header Section -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2">
       <div class="d-flex align-items-start gap-3">
@@ -422,7 +446,8 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
             <div class="prog-potensi-banner-wrap rounded-3 overflow-hidden shadow-sm position-relative">
               <img src="assets/images/banner/hero_bg_clean.jpg"
                    alt="Bentang Alam Tampirkulon"
-                   class="prog-potensi-banner-img">
+                   class="prog-potensi-banner-img"
+                   loading="lazy">
               <div class="prog-potensi-hero-overlay">
                 <span class="badge bg-success text-white px-2 py-1 rounded-pill" style="font-size:0.68rem;">
                   <i class="bi bi-geo-alt-fill me-1"></i>Tampirkulon
@@ -462,7 +487,8 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
                 <div class="prog-potensi-photo-ratio">
                   <img src="assets/images/program/<?= e($item['img']) ?>"
                        alt="<?= e($item['label']) ?>"
-                       class="prog-potensi-photo-img">
+                       class="prog-potensi-photo-img"
+                       loading="lazy">
                 </div>
                 <!-- Label dengan ikon warna -->
                 <div class="prog-potensi-photo-label">
@@ -681,7 +707,7 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
           <div class="card prog-news-card h-100">
             <div class="prog-news-img-wrap">
               <?php if (!empty($n['foto'])): ?>
-                <img src="<?= e($n['foto']) ?>" alt="<?= e($n['judul']) ?>" class="w-100 h-100 object-fit-cover">
+                <img src="<?= e($n['foto']) ?>" alt="<?= e($n['judul']) ?>" class="w-100 h-100 object-fit-cover" loading="lazy">
               <?php else: ?>
                 <div class="prog-news-placeholder d-flex align-items-center justify-content-center h-100 bg-secondary-subtle text-muted">
                   <i class="bi bi-newspaper fs-1"></i>
@@ -703,7 +729,7 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
         <div class="col-md-6 col-lg-3">
           <div class="card prog-news-card h-100">
             <div class="prog-news-img-wrap">
-              <img src="assets/images/program/potensi_pertanian.jpg" alt="Pembentukan Pokdarwis" class="w-100 h-100 object-fit-cover">
+              <img src="assets/images/program/potensi_pertanian.jpg" alt="Pembentukan Pokdarwis" class="w-100 h-100 object-fit-cover" loading="lazy">
             </div>
             <div class="prog-news-body d-flex flex-column">
               <small class="text-muted mb-1">12 Jul 2026</small>
@@ -715,7 +741,7 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
         <div class="col-md-6 col-lg-3">
           <div class="card prog-news-card h-100">
             <div class="prog-news-img-wrap">
-              <img src="assets/images/program/potensi_mata_air.jpg" alt="Kegiatan Bersih Sumber Air" class="w-100 h-100 object-fit-cover">
+              <img src="assets/images/program/potensi_mata_air.jpg" alt="Kegiatan Bersih Sumber Air" class="w-100 h-100 object-fit-cover" loading="lazy">
             </div>
             <div class="prog-news-body d-flex flex-column">
               <small class="text-muted mb-1">5 Jul 2026</small>
@@ -727,7 +753,7 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
         <div class="col-md-6 col-lg-3">
           <div class="card prog-news-card h-100">
             <div class="prog-news-img-wrap">
-              <img src="assets/images/program/potensi_umkm.jpg" alt="Pelatihan UMKM Lokal" class="w-100 h-100 object-fit-cover">
+              <img src="assets/images/program/potensi_umkm.jpg" alt="Pelatihan UMKM Lokal" class="w-100 h-100 object-fit-cover" loading="lazy">
             </div>
             <div class="prog-news-body d-flex flex-column">
               <small class="text-muted mb-1">28 Jun 2026</small>
@@ -739,7 +765,7 @@ $fotoCta = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_
         <div class="col-md-6 col-lg-3">
           <div class="card prog-news-card h-100">
             <div class="prog-news-img-wrap">
-              <img src="assets/images/program/potensi_tubing.jpg" alt="Turnamen Sepak Bola Desa" class="w-100 h-100 object-fit-cover">
+              <img src="assets/images/program/potensi_tubing.jpg" alt="Turnamen Sepak Bola Desa" class="w-100 h-100 object-fit-cover" loading="lazy">
             </div>
             <div class="prog-news-body d-flex flex-column">
               <small class="text-muted mb-1">20 Jun 2026</small>

@@ -37,6 +37,23 @@ $pilar2Sub   = get_pengaturan($pdo, 'profil_pilar2_sub', 'Berpengalaman mengelol
 
 $pilar3Judul = get_pengaturan($pdo, 'profil_pilar3_judul', 'Distribusi Kebutuhan Presisi');
 $pilar3Sub   = get_pengaturan($pdo, 'profil_pilar3_sub', 'Teruji dalam manajemen logistik dan penyaluran kebutuhan personil. Memastikan pupuk subsidi, bansos, dan sarana tani terdistribusi adil & tepat sasaran.');
+
+// Pengaturan 4 TEPAT (Tagline Prinsip Kerja Kandidat)
+$tepat1Judul = get_pengaturan($pdo, 'tepat1_judul', 'Tepat Mutu');
+$tepat1Sub   = get_pengaturan($pdo, 'tepat1_sub', 'Standar Kualitas Terbaik');
+$tepat1Desc  = get_pengaturan($pdo, 'tepat1_desc', 'Pembangunan sarana dan fasilitas desa dikerjakan dengan mutu kokoh, rapi, dan berdaya tahan jangka panjang.');
+
+$tepat2Judul = get_pengaturan($pdo, 'tepat2_judul', 'Tepat Waktu');
+$tepat2Sub   = get_pengaturan($pdo, 'tepat2_sub', 'Disiplin & Cepat Tanggap');
+$tepat2Desc  = get_pengaturan($pdo, 'tepat2_desc', 'Pelayanan birokrasi warga sigap dan seluruh tahapan program kerja dituntaskan sesuai jadwal tanpa berlarut-larut.');
+
+$tepat3Judul = get_pengaturan($pdo, 'tepat3_judul', 'Tepat Jumlah');
+$tepat3Sub   = get_pengaturan($pdo, 'tepat3_sub', 'Transparan & Anti-Bocor');
+$tepat3Desc  = get_pengaturan($pdo, 'tepat3_desc', 'Pengelolaan anggaran Dana Desa dan penyaluran bantuan 100% utuh tanpa potongan dengan pembukuan terbuka.');
+
+$tepat4Judul = get_pengaturan($pdo, 'tepat4_judul', 'Tepat Sasaran');
+$tepat4Sub   = get_pengaturan($pdo, 'tepat4_sub', 'Adil & Merata untuk Warga');
+$tepat4Desc  = get_pengaturan($pdo, 'tepat4_desc', 'Penyaluran pupuk bersubsidi, sarana tani, dan bantuan sosial terdistribusi presisi kepada warga yang berhak.');
 ?>
 
 <div class="container-custom py-5">
@@ -177,6 +194,73 @@ $pilar3Sub   = get_pengaturan($pdo, 'profil_pilar3_sub', 'Teruji dalam manajemen
             <?= nl2br(e($pilar3Sub)) ?>
           </p>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: Doktrin Prinsip Kerja 4 TEPAT -->
+  <div id="empat-tepat" class="mb-5 pt-3 border-top empat-tepat-section">
+    <div class="text-center max-w-700 mx-auto mb-4">
+      <span class="badge bg-danger-subtle text-danger fw-bold px-3 py-2 rounded-pill mb-2">
+        <i class="bi bi-stars me-1"></i> Prinsip Kerja & Tata Kelola
+      </span>
+      <h3 class="fw-bold text-dark mb-1 fs-3">4 TEPAT: Doktrin Kepemimpinan Desa</h3>
+      <p class="text-muted small mb-0">
+        Dilandasi disiplin prajurit, setiap kebijakan dan program dijalankan dengan standar: Tepat Mutu, Tepat Waktu, Tepat Jumlah, dan Tepat Sasaran.
+      </p>
+    </div>
+
+    <div class="empat-tepat-grid">
+      <!-- 1. Tepat Mutu -->
+      <div class="empat-tepat-card">
+        <div class="empat-tepat-badge-top">
+          <div class="empat-tepat-icon-box">
+            <i class="bi bi-patch-check-fill"></i>
+          </div>
+          <span class="empat-tepat-num">01</span>
+        </div>
+        <h4 class="empat-tepat-card-title"><?= e($tepat1Judul) ?></h4>
+        <div class="empat-tepat-card-sub"><?= e($tepat1Sub) ?></div>
+        <p class="empat-tepat-card-desc"><?= nl2br(e($tepat1Desc)) ?></p>
+      </div>
+
+      <!-- 2. Tepat Waktu -->
+      <div class="empat-tepat-card">
+        <div class="empat-tepat-badge-top">
+          <div class="empat-tepat-icon-box">
+            <i class="bi bi-clock-history"></i>
+          </div>
+          <span class="empat-tepat-num">02</span>
+        </div>
+        <h4 class="empat-tepat-card-title"><?= e($tepat2Judul) ?></h4>
+        <div class="empat-tepat-card-sub"><?= e($tepat2Sub) ?></div>
+        <p class="empat-tepat-card-desc"><?= nl2br(e($tepat2Desc)) ?></p>
+      </div>
+
+      <!-- 3. Tepat Jumlah -->
+      <div class="empat-tepat-card">
+        <div class="empat-tepat-badge-top">
+          <div class="empat-tepat-icon-box">
+            <i class="bi bi-box-seam-fill"></i>
+          </div>
+          <span class="empat-tepat-num">03</span>
+        </div>
+        <h4 class="empat-tepat-card-title"><?= e($tepat3Judul) ?></h4>
+        <div class="empat-tepat-card-sub"><?= e($tepat3Sub) ?></div>
+        <p class="empat-tepat-card-desc"><?= nl2br(e($tepat3Desc)) ?></p>
+      </div>
+
+      <!-- 4. Tepat Sasaran -->
+      <div class="empat-tepat-card">
+        <div class="empat-tepat-badge-top">
+          <div class="empat-tepat-icon-box">
+            <i class="bi bi-bullseye"></i>
+          </div>
+          <span class="empat-tepat-num">04</span>
+        </div>
+        <h4 class="empat-tepat-card-title"><?= e($tepat4Judul) ?></h4>
+        <div class="empat-tepat-card-sub"><?= e($tepat4Sub) ?></div>
+        <p class="empat-tepat-card-desc"><?= nl2br(e($tepat4Desc)) ?></p>
       </div>
     </div>
   </div>

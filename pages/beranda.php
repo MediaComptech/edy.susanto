@@ -29,6 +29,24 @@ $fotoPotensiBeranda  = get_pengaturan($pdo, 'foto_potensi_beranda', 'assets/imag
 $judulPotensiBeranda = get_pengaturan($pdo, 'judul_potensi_beranda', 'Wisata Tubing Tampirkulon');
 $subPotensiBeranda   = get_pengaturan($pdo, 'sub_potensi_beranda', 'Salah satu potensi unggulan desa');
 $linkPotensiBeranda  = get_pengaturan($pdo, 'link_potensi_beranda', 'index.php?page=potensi');
+
+// Ambil Pengaturan Tagline & Prinsip 4 TEPAT
+$tepatSlogan = get_pengaturan($pdo, 'tepat_slogan', 'Bersinergi • Berinovasi • Berprestasi');
+$tepat1Judul = get_pengaturan($pdo, 'tepat1_judul', 'Tepat Mutu');
+$tepat1Sub   = get_pengaturan($pdo, 'tepat1_sub', 'Standar Kualitas Terbaik');
+$tepat1Desc  = get_pengaturan($pdo, 'tepat1_desc', 'Pembangunan sarana dan fasilitas desa dikerjakan dengan mutu kokoh, rapi, dan berdaya tahan jangka panjang.');
+
+$tepat2Judul = get_pengaturan($pdo, 'tepat2_judul', 'Tepat Waktu');
+$tepat2Sub   = get_pengaturan($pdo, 'tepat2_sub', 'Disiplin & Cepat Tanggap');
+$tepat2Desc  = get_pengaturan($pdo, 'tepat2_desc', 'Pelayanan birokrasi warga sigap dan seluruh tahapan program kerja dituntaskan sesuai jadwal tanpa berlarut-larut.');
+
+$tepat3Judul = get_pengaturan($pdo, 'tepat3_judul', 'Tepat Jumlah');
+$tepat3Sub   = get_pengaturan($pdo, 'tepat3_sub', 'Transparan & Anti-Bocor');
+$tepat3Desc  = get_pengaturan($pdo, 'tepat3_desc', 'Pengelolaan anggaran Dana Desa dan penyaluran bantuan 100% utuh tanpa potongan dengan pembukuan terbuka.');
+
+$tepat4Judul = get_pengaturan($pdo, 'tepat4_judul', 'Tepat Sasaran');
+$tepat4Sub   = get_pengaturan($pdo, 'tepat4_sub', 'Adil & Merata untuk Warga');
+$tepat4Desc  = get_pengaturan($pdo, 'tepat4_desc', 'Penyaluran pupuk bersubsidi, sarana tani, dan bantuan sosial terdistribusi presisi kepada warga yang berhak.');
 ?>
 
 <!-- 1. Hero Section — Flayer Card (Bounded in Container, Tidak Panjang Sampai Pinggir) -->
@@ -103,6 +121,7 @@ $linkPotensiBeranda  = get_pengaturan($pdo, 'link_potensi_beranda', 'index.php?p
             alt="<?= e($namaCalon) ?> - Calon Kepala Desa Tampirkulon No. Urut <?= e($noUrut) ?>"
             class="hero-candidate-img"
             id="heroPhotoImg"
+            fetchpriority="high"
           >
 
           <!-- [4] SAPA WARGA PILL BAR: Floating Capsule Pill -->
@@ -221,7 +240,7 @@ $linkPotensiBeranda  = get_pengaturan($pdo, 'link_potensi_beranda', 'index.php?p
       <!-- Featured Card: Potensi Unggulan Desa (Dinamis dari Pengaturan Website) -->
       <div class="col-lg-3 col-md-6">
         <a href="<?= e($linkPotensiBeranda) ?>" class="card-tubing-featured d-block text-decoration-none">
-          <img src="<?= e($fotoPotensiBeranda) ?>" alt="<?= e($judulPotensiBeranda) ?>">
+          <img src="<?= e($fotoPotensiBeranda) ?>" alt="<?= e($judulPotensiBeranda) ?>" loading="lazy">
           <div class="card-tubing-overlay">
             <div class="d-flex align-items-center justify-content-between">
               <div>
@@ -234,6 +253,81 @@ $linkPotensiBeranda  = get_pengaturan($pdo, 'link_potensi_beranda', 'index.php?p
             </div>
           </div>
         </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3.5 Section: Prinsip Kerja & Tata Kelola 4 TEPAT -->
+<section class="py-5 empat-tepat-section bg-light-subtle border-top border-bottom">
+  <div class="container-custom">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-end mb-4">
+      <div>
+        <div class="empat-tepat-slogan-pill mb-2">
+          <i class="bi bi-stars"></i>
+          <span><?= e($tepatSlogan) ?></span>
+        </div>
+        <h2 class="fw-bold mb-1 text-dark">Prinsip Kerja 4 TEPAT</h2>
+        <p class="text-muted mb-0">Landasan disiplin dan tata kelola akuntabel untuk mewujudkan Tampirkulon yang Asri, Maju, dan Rukun.</p>
+      </div>
+      <a href="index.php?page=profil#empat-tepat" class="text-danger fw-bold text-decoration-none mt-2 mt-md-0 d-inline-flex align-items-center gap-1">
+        <span>Profil &amp; Dedikasi Calon</span>
+        <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    <!-- Grid 4 Kartu Responsif Anti-Bertumpuk -->
+    <div class="empat-tepat-grid">
+      <!-- 1. Tepat Mutu -->
+      <div class="empat-tepat-card">
+        <div class="empat-tepat-badge-top">
+          <div class="empat-tepat-icon-box">
+            <i class="bi bi-patch-check-fill"></i>
+          </div>
+          <span class="empat-tepat-num">01</span>
+        </div>
+        <h4 class="empat-tepat-card-title"><?= e($tepat1Judul) ?></h4>
+        <div class="empat-tepat-card-sub"><?= e($tepat1Sub) ?></div>
+        <p class="empat-tepat-card-desc"><?= nl2br(e($tepat1Desc)) ?></p>
+      </div>
+
+      <!-- 2. Tepat Waktu -->
+      <div class="empat-tepat-card">
+        <div class="empat-tepat-badge-top">
+          <div class="empat-tepat-icon-box">
+            <i class="bi bi-clock-history"></i>
+          </div>
+          <span class="empat-tepat-num">02</span>
+        </div>
+        <h4 class="empat-tepat-card-title"><?= e($tepat2Judul) ?></h4>
+        <div class="empat-tepat-card-sub"><?= e($tepat2Sub) ?></div>
+        <p class="empat-tepat-card-desc"><?= nl2br(e($tepat2Desc)) ?></p>
+      </div>
+
+      <!-- 3. Tepat Jumlah -->
+      <div class="empat-tepat-card">
+        <div class="empat-tepat-badge-top">
+          <div class="empat-tepat-icon-box">
+            <i class="bi bi-box-seam-fill"></i>
+          </div>
+          <span class="empat-tepat-num">03</span>
+        </div>
+        <h4 class="empat-tepat-card-title"><?= e($tepat3Judul) ?></h4>
+        <div class="empat-tepat-card-sub"><?= e($tepat3Sub) ?></div>
+        <p class="empat-tepat-card-desc"><?= nl2br(e($tepat3Desc)) ?></p>
+      </div>
+
+      <!-- 4. Tepat Sasaran -->
+      <div class="empat-tepat-card">
+        <div class="empat-tepat-badge-top">
+          <div class="empat-tepat-icon-box">
+            <i class="bi bi-bullseye"></i>
+          </div>
+          <span class="empat-tepat-num">04</span>
+        </div>
+        <h4 class="empat-tepat-card-title"><?= e($tepat4Judul) ?></h4>
+        <div class="empat-tepat-card-sub"><?= e($tepat4Sub) ?></div>
+        <p class="empat-tepat-card-desc"><?= nl2br(e($tepat4Desc)) ?></p>
       </div>
     </div>
   </div>
@@ -302,7 +396,7 @@ $linkPotensiBeranda  = get_pengaturan($pdo, 'link_potensi_beranda', 'index.php?p
 
         <!-- Community Dialog Image: Dinamis dari Pengaturan Website -->
         <div class="col-lg-6">
-          <img src="<?= e($fotoSapaWarga) ?>" alt="Dialog Silaturahmi Edy Susanto Bersama Warga" class="w-100 h-100 object-fit-cover" style="min-height: 280px;">
+          <img src="<?= e($fotoSapaWarga) ?>" alt="Dialog Silaturahmi Edy Susanto Bersama Warga" class="w-100 h-100 object-fit-cover" style="min-height: 280px;" loading="lazy">
         </div>
       </div>
     </div>

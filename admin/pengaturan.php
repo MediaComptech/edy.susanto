@@ -104,6 +104,43 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
 
             set_flash('success', 'Konten data diri, biodata & 3 pilar keahlian Halaman Profil berhasil disimpan!');
             safe_redirect("pengaturan.php");
+        } elseif ($_POST['action'] === 'simpan_empat_tepat') {
+            $slogan = sanitize($_POST['tepat_slogan'] ?? 'Bersinergi • Berinovasi • Berprestasi');
+            $t1j = sanitize($_POST['tepat1_judul'] ?? 'Tepat Mutu');
+            $t1s = sanitize($_POST['tepat1_sub'] ?? 'Standar Kualitas Terbaik');
+            $t1d = sanitize($_POST['tepat1_desc'] ?? '');
+
+            $t2j = sanitize($_POST['tepat2_judul'] ?? 'Tepat Waktu');
+            $t2s = sanitize($_POST['tepat2_sub'] ?? 'Disiplin & Cepat Tanggap');
+            $t2d = sanitize($_POST['tepat2_desc'] ?? '');
+
+            $t3j = sanitize($_POST['tepat3_judul'] ?? 'Tepat Jumlah');
+            $t3s = sanitize($_POST['tepat3_sub'] ?? 'Transparan & Anti-Bocor');
+            $t3d = sanitize($_POST['tepat3_desc'] ?? '');
+
+            $t4j = sanitize($_POST['tepat4_judul'] ?? 'Tepat Sasaran');
+            $t4s = sanitize($_POST['tepat4_sub'] ?? 'Adil & Merata untuk Warga');
+            $t4d = sanitize($_POST['tepat4_desc'] ?? '');
+
+            set_pengaturan($pdo, 'tepat_slogan', $slogan, 'Sub-tagline prinsip kerja kandidat');
+            set_pengaturan($pdo, 'tepat1_judul', $t1j, 'Judul Tepat 1');
+            set_pengaturan($pdo, 'tepat1_sub',   $t1s, 'Subjudul Tepat 1');
+            set_pengaturan($pdo, 'tepat1_desc',  $t1d, 'Deskripsi Tepat 1');
+
+            set_pengaturan($pdo, 'tepat2_judul', $t2j, 'Judul Tepat 2');
+            set_pengaturan($pdo, 'tepat2_sub',   $t2s, 'Subjudul Tepat 2');
+            set_pengaturan($pdo, 'tepat2_desc',  $t2d, 'Deskripsi Tepat 2');
+
+            set_pengaturan($pdo, 'tepat3_judul', $t3j, 'Judul Tepat 3');
+            set_pengaturan($pdo, 'tepat3_sub',   $t3s, 'Subjudul Tepat 3');
+            set_pengaturan($pdo, 'tepat3_desc',  $t3d, 'Deskripsi Tepat 3');
+
+            set_pengaturan($pdo, 'tepat4_judul', $t4j, 'Judul Tepat 4');
+            set_pengaturan($pdo, 'tepat4_sub',   $t4s, 'Subjudul Tepat 4');
+            set_pengaturan($pdo, 'tepat4_desc',  $t4d, 'Deskripsi Tepat 4');
+
+            set_flash('success', 'Pengaturan Tagline Doktrin & Prinsip Kerja 4 TEPAT berhasil disimpan!');
+            safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'ganti_foto_sapa_warga') {
             if (!empty($_FILES['foto_sapa_baru']['name'])) {
                 $upload = handle_file_upload($_FILES['foto_sapa_baru'], 'uploads', 5);
@@ -274,6 +311,24 @@ $pilar2Sub   = get_pengaturan($pdo, 'profil_pilar2_sub', 'Berpengalaman mengelol
 
 $pilar3Judul = get_pengaturan($pdo, 'profil_pilar3_judul', 'Distribusi Kebutuhan Presisi');
 $pilar3Sub   = get_pengaturan($pdo, 'profil_pilar3_sub', 'Teruji dalam manajemen logistik dan penyaluran kebutuhan personil. Memastikan pupuk subsidi, bansos, dan sarana tani terdistribusi adil & tepat sasaran.');
+
+// Pengaturan 4 TEPAT (Tagline Prinsip Kerja Kandidat)
+$tepatSlogan = get_pengaturan($pdo, 'tepat_slogan', 'Bersinergi • Berinovasi • Berprestasi');
+$tepat1Judul = get_pengaturan($pdo, 'tepat1_judul', 'Tepat Mutu');
+$tepat1Sub   = get_pengaturan($pdo, 'tepat1_sub', 'Standar Kualitas Terbaik');
+$tepat1Desc  = get_pengaturan($pdo, 'tepat1_desc', 'Pembangunan sarana dan fasilitas desa dikerjakan dengan mutu kokoh, rapi, dan berdaya tahan jangka panjang.');
+
+$tepat2Judul = get_pengaturan($pdo, 'tepat2_judul', 'Tepat Waktu');
+$tepat2Sub   = get_pengaturan($pdo, 'tepat2_sub', 'Disiplin & Cepat Tanggap');
+$tepat2Desc  = get_pengaturan($pdo, 'tepat2_desc', 'Pelayanan birokrasi warga sigap dan seluruh tahapan program kerja dituntaskan sesuai jadwal tanpa berlarut-larut.');
+
+$tepat3Judul = get_pengaturan($pdo, 'tepat3_judul', 'Tepat Jumlah');
+$tepat3Sub   = get_pengaturan($pdo, 'tepat3_sub', 'Transparan & Anti-Bocor');
+$tepat3Desc  = get_pengaturan($pdo, 'tepat3_desc', 'Pengelolaan anggaran Dana Desa dan penyaluran bantuan 100% utuh tanpa potongan dengan pembukuan terbuka.');
+
+$tepat4Judul = get_pengaturan($pdo, 'tepat4_judul', 'Tepat Sasaran');
+$tepat4Sub   = get_pengaturan($pdo, 'tepat4_sub', 'Adil & Merata untuk Warga');
+$tepat4Desc  = get_pengaturan($pdo, 'tepat4_desc', 'Penyaluran pupuk bersubsidi, sarana tani, dan bantuan sosial terdistribusi presisi kepada warga yang berhak.');
 
 // Ambil data hero Sapa Warga
 $fotoSapaWarga  = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_warga.jpg');
@@ -624,6 +679,111 @@ require_once __DIR__ . '/header_admin.php';
           </form>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2.6 KARTU KELOLA PRINSIP KERJA 4 TEPAT -->
+<div class="row g-4 mt-1">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex align-items-center gap-2">
+          <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; background-color: #fee2e2;">
+            <i class="bi bi-stars" style="color: #b71c1c; font-size: 1.1rem;"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-0">Pengaturan Tagline Doktrin &amp; Prinsip Kerja 4 TEPAT</h5>
+            <small class="text-muted">Kelola teks 4 pilar kerja (Tepat Mutu, Tepat Waktu, Tepat Jumlah, Tepat Sasaran) yang tampil di Beranda, Profil, dan Program Kerja</small>
+          </div>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="../index.php?page=beranda#empat-tepat" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+            <i class="bi bi-box-arrow-up-right me-1"></i> Lihat di Beranda
+          </a>
+        </div>
+      </div>
+
+      <form action="pengaturan.php" method="POST">
+        <?= csrf_field() ?>
+        <input type="hidden" name="action" value="simpan_empat_tepat">
+
+        <div class="mb-4">
+          <label class="form-label small fw-semibold"><i class="bi bi-tag-fill text-danger me-1"></i>Sub-Tagline Pendukung (Tampil di atas judul 4 TEPAT)</label>
+          <input type="text" class="form-control rounded-3" name="tepat_slogan" value="<?= e($tepatSlogan) ?>" required placeholder="Contoh: Bersinergi • Berinovasi • Berprestasi">
+          <div class="form-text small text-muted">Ditampilkan dalam kapsul gradasi merah di Beranda dan banner promosi.</div>
+        </div>
+
+        <div class="row g-3 mb-4">
+          <!-- 1. Tepat Mutu -->
+          <div class="col-md-6 col-xl-3">
+            <div class="p-3 border rounded-3 bg-light h-100">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="badge bg-danger text-white rounded-pill px-2 py-1">01</span>
+                <i class="bi bi-patch-check-fill text-danger fs-5"></i>
+              </div>
+              <label class="form-label small fw-bold text-dark mb-1">Judul Pilar 1</label>
+              <input type="text" class="form-control rounded-3 mb-2" name="tepat1_judul" value="<?= e($tepat1Judul) ?>" required>
+              <label class="form-label small fw-semibold text-muted mb-1">Subjudul</label>
+              <input type="text" class="form-control rounded-3 mb-2" name="tepat1_sub" value="<?= e($tepat1Sub) ?>" required>
+              <label class="form-label small fw-semibold text-muted mb-1">Deskripsi / Komitmen</label>
+              <textarea class="form-control rounded-3 small" name="tepat1_desc" rows="3" required><?= e($tepat1Desc) ?></textarea>
+            </div>
+          </div>
+
+          <!-- 2. Tepat Waktu -->
+          <div class="col-md-6 col-xl-3">
+            <div class="p-3 border rounded-3 bg-light h-100">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="badge bg-danger text-white rounded-pill px-2 py-1">02</span>
+                <i class="bi bi-clock-history text-danger fs-5"></i>
+              </div>
+              <label class="form-label small fw-bold text-dark mb-1">Judul Pilar 2</label>
+              <input type="text" class="form-control rounded-3 mb-2" name="tepat2_judul" value="<?= e($tepat2Judul) ?>" required>
+              <label class="form-label small fw-semibold text-muted mb-1">Subjudul</label>
+              <input type="text" class="form-control rounded-3 mb-2" name="tepat2_sub" value="<?= e($tepat2Sub) ?>" required>
+              <label class="form-label small fw-semibold text-muted mb-1">Deskripsi / Komitmen</label>
+              <textarea class="form-control rounded-3 small" name="tepat2_desc" rows="3" required><?= e($tepat2Desc) ?></textarea>
+            </div>
+          </div>
+
+          <!-- 3. Tepat Jumlah -->
+          <div class="col-md-6 col-xl-3">
+            <div class="p-3 border rounded-3 bg-light h-100">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="badge bg-danger text-white rounded-pill px-2 py-1">03</span>
+                <i class="bi bi-box-seam-fill text-danger fs-5"></i>
+              </div>
+              <label class="form-label small fw-bold text-dark mb-1">Judul Pilar 3</label>
+              <input type="text" class="form-control rounded-3 mb-2" name="tepat3_judul" value="<?= e($tepat3Judul) ?>" required>
+              <label class="form-label small fw-semibold text-muted mb-1">Subjudul</label>
+              <input type="text" class="form-control rounded-3 mb-2" name="tepat3_sub" value="<?= e($tepat3Sub) ?>" required>
+              <label class="form-label small fw-semibold text-muted mb-1">Deskripsi / Komitmen</label>
+              <textarea class="form-control rounded-3 small" name="tepat3_desc" rows="3" required><?= e($tepat3Desc) ?></textarea>
+            </div>
+          </div>
+
+          <!-- 4. Tepat Sasaran -->
+          <div class="col-md-6 col-xl-3">
+            <div class="p-3 border rounded-3 bg-light h-100">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="badge bg-danger text-white rounded-pill px-2 py-1">04</span>
+                <i class="bi bi-bullseye text-danger fs-5"></i>
+              </div>
+              <label class="form-label small fw-bold text-dark mb-1">Judul Pilar 4</label>
+              <input type="text" class="form-control rounded-3 mb-2" name="tepat4_judul" value="<?= e($tepat4Judul) ?>" required>
+              <label class="form-label small fw-semibold text-muted mb-1">Subjudul</label>
+              <input type="text" class="form-control rounded-3 mb-2" name="tepat4_sub" value="<?= e($tepat4Sub) ?>" required>
+              <label class="form-label small fw-semibold text-muted mb-1">Deskripsi / Komitmen</label>
+              <textarea class="form-control rounded-3 small" name="tepat4_desc" rows="3" required><?= e($tepat4Desc) ?></textarea>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-danger rounded-3 fw-bold px-4 py-2 shadow-sm">
+          <i class="bi bi-save-fill me-1"></i> Simpan Pengaturan 4 TEPAT
+        </button>
+      </form>
     </div>
   </div>
 </div>

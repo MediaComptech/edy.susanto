@@ -107,7 +107,7 @@ if (!defined('APP_NAME')) {
 <div id="pwaInstallBanner" class="pwa-install-banner" role="alert" aria-live="polite">
   <div class="pwa-banner-content">
     <div class="pwa-banner-left">
-      <img src="assets/images/icons/icon-192.png" alt="Sapa Warga" class="pwa-banner-icon">
+      <img src="assets/images/icons/icon-192.png" alt="Sapa Warga" class="pwa-banner-icon" loading="lazy">
       <div class="pwa-banner-text">
         <h6 class="pwa-banner-title mb-0">Pasang Aplikasi Sapa Warga</h6>
         <small class="pwa-banner-sub text-muted">Akses cepat &amp; info desa</small>

@@ -3000,3 +3000,177 @@ body {
     height: 42px;
   }
 }
+
+/* ==========================================================================
+   Komponen Prinsip Kerja & Tata Kelola 4 TEPAT
+   (Tepat Mutu, Tepat Waktu, Tepat Jumlah, Tepat Sasaran)
+   ========================================================================== */
+.empat-tepat-section {
+  position: relative;
+}
+
+.empat-tepat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.empat-tepat-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  padding: 1.5rem 1.25rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+}
+
+.empat-tepat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(183, 28, 28, 0.12);
+  border-color: #fca5a5;
+}
+
+.empat-tepat-badge-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.empat-tepat-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  color: #c62828;
+  background: #fee2e2;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.empat-tepat-card:hover .empat-tepat-icon-box {
+  transform: scale(1.08);
+  background: #b71c1c;
+  color: #ffffff;
+}
+
+.empat-tepat-num {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #b71c1c;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  padding: 0.22rem 0.6rem;
+  border-radius: 20px;
+  line-height: 1;
+}
+
+.empat-tepat-card-title {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.2px;
+}
+
+.empat-tepat-card-sub {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #b71c1c;
+  margin-bottom: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.empat-tepat-card-desc {
+  font-size: 0.86rem;
+  color: #64748b;
+  line-height: 1.55;
+  margin-bottom: 0;
+}
+
+.empat-tepat-slogan-pill {
+  background: linear-gradient(135deg, #b71c1c 0%, #c62828 60%, #e53935 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.4px;
+  border-radius: 50px;
+  padding: 0.35rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(183, 28, 28, 0.22);
+}
+
+/* Compact strip banner di Halaman Program */
+.prog-tepat-strip {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+
+.prog-tepat-badge {
+  background: #fee2e2;
+  color: #b71c1c;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid #fca5a5;
+  padding: 0.35rem 0.75rem;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+
+.prog-tepat-pill-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.prog-tepat-pill-item:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #b71c1c;
+}
+
+/* Penataan Responsif Anti-Bertumpuk */
+@media (max-width: 991.98px) {
+  .empat-tepat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .empat-tepat-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+  .empat-tepat-card {
+    padding: 1.15rem 1rem;
+  }
+  .empat-tepat-card-title {
+    font-size: 1.05rem;
+  }
+  .empat-tepat-card-desc {
+    font-size: 0.82rem;
+  }
+  .empat-tepat-slogan-pill {
+    font-size: 0.76rem;
+    padding: 0.3rem 0.8rem;
+  }
+}
+

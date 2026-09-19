@@ -281,7 +281,7 @@ if (empty($galeriPotensi)) {
         <!-- Kolom Kiri: Foto Besar Kolam Ngudal Tuk Putri -->
         <div class="col-lg-6">
           <div class="potensi-spot-img-wrap">
-            <img src="<?= e($fotoSpotPotensi) ?>" alt="<?= e($spotPotensiJudul) ?>" class="potensi-spot-img">
+            <img src="<?= e($fotoSpotPotensi) ?>" alt="<?= e($spotPotensiJudul) ?>" class="potensi-spot-img" loading="lazy">
             <div class="potensi-video-badge" data-bs-toggle="modal" data-bs-target="#modalVideoTukPutri">
               <i class="bi bi-play-circle-fill text-danger fs-5"></i>
               <span>Lihat Video / Info</span>
@@ -393,7 +393,7 @@ if (empty($galeriPotensi)) {
           <div class="d-flex flex-column gap-2 overflow-auto" style="max-height: 400px;">
             <?php foreach ($petaLokasi as $lok): ?>
             <div class="potensi-popular-item border rounded-3 p-2" onclick="focusPeta(<?= $lok['id'] ?>)" role="button" title="Fokuskan <?= e($lok['nama']) ?> di peta">
-              <img src="<?= e($lok['foto']) ?>" alt="<?= e($lok['nama']) ?>" class="potensi-popular-thumb">
+              <img src="<?= e($lok['foto']) ?>" alt="<?= e($lok['nama']) ?>" class="potensi-popular-thumb" loading="lazy">
               <div class="flex-grow-1 overflow-hidden">
                 <div class="potensi-popular-name text-truncate"><?= e($lok['nama']) ?></div>
                 <div class="potensi-popular-sub">
@@ -440,7 +440,7 @@ if (empty($galeriPotensi)) {
       <?php foreach ($galeriPotensi as $g): ?>
       <div class="potensi-gallery-item flex-shrink-0" style="width: 190px; min-width: 180px;">
         <div class="potensi-gallery-card" data-bs-toggle="modal" data-bs-target="#modalLightbox<?= $g['id'] ?>" role="button" title="Buka <?= e($g['judul'] ?? $g['nama']) ?>">
-          <img src="<?= e($g['foto']) ?>" alt="<?= e($g['judul'] ?? $g['nama']) ?>" class="potensi-gallery-img">
+          <img src="<?= e($g['foto']) ?>" alt="<?= e($g['judul'] ?? $g['nama']) ?>" class="potensi-gallery-img" loading="lazy">
           <div class="potensi-gallery-overlay">
             <div class="potensi-gallery-name text-truncate"><?= e($g['judul'] ?? $g['nama']) ?></div>
             <div class="potensi-gallery-count"><i class="bi bi-images me-1"></i><?= e($g['jumlah_foto'] ?? ($g['kategori'] ?? '1 foto')) ?></div>
@@ -575,7 +575,7 @@ if (empty($galeriPotensi)) {
       </div>
       <div class="modal-body p-0 bg-black">
         <div class="ratio ratio-16x9">
-          <img src="<?= e($fotoSpotPotensi) ?>" alt="<?= e($spotPotensiJudul) ?>" class="w-100 h-100 object-fit-cover">
+          <img src="<?= e($fotoSpotPotensi) ?>" alt="<?= e($spotPotensiJudul) ?>" class="w-100 h-100 object-fit-cover" loading="lazy">
         </div>
       </div>
       <div class="modal-footer bg-light border-0 p-3">
@@ -599,7 +599,7 @@ if (empty($galeriPotensi)) {
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-4 text-center">
-        <img src="<?= e($fotoSpotPotensi) ?>" alt="<?= e($spotPotensiJudul) ?>" class="img-fluid rounded-3 shadow-sm mb-3" style="max-height: 420px; object-fit: cover;">
+        <img src="<?= e($fotoSpotPotensi) ?>" alt="<?= e($spotPotensiJudul) ?>" class="img-fluid rounded-3 shadow-sm mb-3" style="max-height: 420px; object-fit: cover;" loading="lazy">
         <p class="text-muted small mb-0">
           <?= e($spotPotensiDesc) ?>
         </p>
@@ -632,7 +632,7 @@ if (empty($galeriPotensi)) {
           <div class="col-md-6">
             <div class="card border-0 shadow-sm rounded-3 p-3 h-100 bg-white d-flex flex-column">
               <div class="d-flex gap-3 align-items-center mb-2">
-                <img src="<?= e($lok['foto']) ?>" alt="<?= e($lok['nama']) ?>" class="rounded-3 shadow-sm flex-shrink-0" style="width: 72px; height: 72px; object-fit: cover;">
+                <img src="<?= e($lok['foto']) ?>" alt="<?= e($lok['nama']) ?>" class="rounded-3 shadow-sm flex-shrink-0" style="width: 72px; height: 72px; object-fit: cover;" loading="lazy">
                 <div class="overflow-hidden">
                   <h6 class="fw-bold text-dark mb-1 text-truncate" title="<?= e($lok['nama']) ?>"><?= e($lok['nama']) ?></h6>
                   <span class="badge text-white px-2 py-0" style="background-color: <?= e($lok['color'] ?? '#0288d1') ?>; font-size: 0.68rem;">
@@ -678,7 +678,7 @@ if (empty($galeriPotensi)) {
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-3 text-center bg-light">
-        <img src="<?= e($g['foto']) ?>" alt="<?= e($g['judul'] ?? $g['nama']) ?>" class="img-fluid rounded-3 shadow-sm mb-3" style="max-height: 440px; object-fit: cover; width: 100%;">
+        <img src="<?= e($g['foto']) ?>" alt="<?= e($g['judul'] ?? $g['nama']) ?>" class="img-fluid rounded-3 shadow-sm mb-3" style="max-height: 440px; object-fit: cover; width: 100%;" loading="lazy">
         <div class="p-2 bg-white rounded-3 border">
           <p class="text-dark small mb-0 fw-semibold"><?= e($g['deskripsi'] ?? $g['keterangan'] ?? '-') ?></p>
         </div>

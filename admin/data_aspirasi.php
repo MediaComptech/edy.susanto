@@ -16,7 +16,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
             $stmt->execute([$status, $tanggapan, $id]);
 
             // Broadcast PWA jika diberi tanggapan
-            $asp = $pdo->query("SELECT kode_tiket, dusun FROM aspirasi WHERE id = $id")->fetch();
+            $stmtAsp = $pdo->prepare("SELECT kode_tiket, dusun FROM aspirasi WHERE id = ?");
+            $stmtAsp->execute([$id]);
+            $asp = $stmtAsp->fetch();
             if ($asp) {
                 create_pwa_notification($pdo, "Update Aspirasi {$asp['kode_tiket']}", "Status di {$asp['dusun']} kini: $status", "index.php?page=sapa-warga#feedAspirasi");
             }
