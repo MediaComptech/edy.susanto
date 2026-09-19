@@ -2913,5 +2913,32 @@ body {
   }
 }
 
+/* Card 3 Pilar Keunggulan Kompetensi */
+.profil-keunggulan-card {
+  border: 1px solid #e2e8f0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
 
+.profil-keunggulan-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08) !important;
+  border-color: #cbd5e1;
+}
 
+.profil-keunggulan-icon {
+  width: 48px;
+  height: 48px;
+}
+
+@media (max-width: 767.98px) {
+  .profil-keunggulan-card {
+    padding: 1.25rem 1.1rem !important;
+  }
+
+  .profil-keunggulan-icon {
+    width: 42px;
+    height: 42px;
+  }
+}

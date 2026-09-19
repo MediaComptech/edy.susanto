@@ -13,12 +13,22 @@ if (!function_exists('get_pengaturan')) {
 $namaCalon         = get_pengaturan($pdo, 'nama_calon', APP_NAME);
 $noUrut            = get_pengaturan($pdo, 'no_urut', NO_URUT);
 $fotoProfil        = get_pengaturan($pdo, 'foto_profil', 'assets/images/banner/edy_susanto_hero.jpg');
-$profilAsal        = get_pengaturan($pdo, 'profil_asal', 'Asli Warga Desa Tampirkulon');
-$judulDedikasi     = get_pengaturan($pdo, 'profil_judul_dedikasi', 'Dedikasi Nyata untuk Kemajuan Desa Tampirkulon');
-$biodata1          = get_pengaturan($pdo, 'profil_biodata_1', 'Lahir dan tumbuh bersama masyarakat Desa Tampirkulon, ' . $namaCalon . ' memahami secara mendalam detak kehidupan warga, potensi agraris yang melimpah, serta harapan besar pemuda dan keluarga di setiap dusun.');
-$biodata2          = get_pengaturan($pdo, 'profil_biodata_2', 'Dengan bekal pengalaman kepemimpinan sosial, dedikasi kemasyarakatan yang kuat, serta jejaring kolaborasi yang luas, beliau hadir membawa tekad mengabdi secara tulus tanpa sekat demi terciptanya pemerintahan desa yang bersih, transparan, dan melayani.');
-$nilaiKepemimpinan = get_pengaturan($pdo, 'profil_nilai_kepemimpinan', 'Amanah, mendengarkan rakyat, transparan dalam pengelolaan dana desa, dan responsif terhadap keluhan warga.');
-$komitmenPengabdian = get_pengaturan($pdo, 'profil_komitmen_pengabdian', 'Hadir di tengah warga, membuka pintu komunikasi 24/7 melalui inovasi Sapa Warga dan rembug dusun rutin.');
+$profilAsal        = get_pengaturan($pdo, 'profil_asal', 'Purnawirawan TNI AD • Putra Asli Tampirkulon');
+$judulDedikasi     = get_pengaturan($pdo, 'profil_judul_dedikasi', 'Integritas & Kedisiplinan Prajurit, Mengabdi Sepenuh Hati untuk Warga');
+$biodata1          = get_pengaturan($pdo, 'profil_biodata_1', 'Sebagai putra asli Tampirkulon dan Purnawirawan TNI AD, ' . $namaCalon . ' dibentuk oleh kedisiplinan tinggi, loyalitas tanpa pamrih kepada masyarakat, serta ketegasan sikap yang senantiasa mengayomi. Beliau memahami secara mendalam denyut kehidupan warga, potensi agraris yang melimpah, serta harapan besar pemuda dan keluarga di setiap dusun.');
+$biodata2          = get_pengaturan($pdo, 'profil_biodata_2', 'Berbekal pengalaman kepemimpinan kedinasan, keahlian tata kelola administrasi keuangan yang akuntabel, serta manajemen rantai pasok dan distribusi kebutuhan personil secara presisi, beliau hadir membawa tekad mengabdi seutuhnya demi terciptanya pemerintahan desa yang bersih, transparan, anti-bocor, dan melayani.');
+$nilaiKepemimpinan = get_pengaturan($pdo, 'profil_nilai_kepemimpinan', 'Disiplin prajurit yang humanis, transparansi anggaran 100% tanpa celah kebocoran, dan keteladanan nyata melayani seluruh warga.');
+$komitmenPengabdian = get_pengaturan($pdo, 'profil_komitmen_pengabdian', 'Distribusi bantuan dan sarana tani tepat sasaran, pelayanan kantor desa cepat & bebas pungli, serta siap hadir 24/7 untuk masyarakat.');
+
+// Pengaturan 3 Pilar Keunggulan Kompetensi
+$pilar1Judul = get_pengaturan($pdo, 'profil_pilar1_judul', 'Disiplin Tinggi & Integritas');
+$pilar1Sub   = get_pengaturan($pdo, 'profil_pilar1_sub', 'Etos kerja tepat waktu, konsisten, dan kepemimpinan teladan yang mengayomi seluruh lapisan masyarakat tanpa membeda-bedakan.');
+
+$pilar2Judul = get_pengaturan($pdo, 'profil_pilar2_judul', 'Tata Kelola Keuangan Akuntabel');
+$pilar2Sub   = get_pengaturan($pdo, 'profil_pilar2_sub', 'Berpengalaman mengelola anggaran kedinasan secara tertib dan ketat. Menjamin Dana Desa (APBDes) dikelola transparan dan bebas kebocoran.');
+
+$pilar3Judul = get_pengaturan($pdo, 'profil_pilar3_judul', 'Distribusi Kebutuhan Presisi');
+$pilar3Sub   = get_pengaturan($pdo, 'profil_pilar3_sub', 'Teruji dalam manajemen logistik dan penyaluran kebutuhan personil. Memastikan pupuk subsidi, bansos, dan sarana tani terdistribusi adil & tepat sasaran.');
 ?>
 
 <div class="container-custom py-5">
@@ -79,6 +89,75 @@ $komitmenPengabdian = get_pengaturan($pdo, 'profil_komitmen_pengabdian', 'Hadir 
             <h6 class="fw-bold text-danger mb-1"><i class="bi bi-heart-fill me-1"></i> Komitmen Pengabdian</h6>
             <p class="small text-muted mb-0"><?= nl2br(e($komitmenPengabdian)) ?></p>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: 3 Pilar Keunggulan Rekam Jejak Purnawirawan TNI AD -->
+  <div class="mb-5 pt-2">
+    <div class="text-center max-w-700 mx-auto mb-4">
+      <span class="badge bg-danger-subtle text-danger fw-bold px-3 py-2 rounded-pill mb-2">
+        <i class="bi bi-shield-check me-1"></i> Rekam Jejak &amp; Kapabilitas
+      </span>
+      <h3 class="fw-bold text-dark mb-1 fs-3">Keahlian Strategis untuk Memajukan Desa</h3>
+      <p class="text-muted small mb-0">
+        Kombinasi kedisiplinan prajurit, ketertiban anggaran, dan kemahiran logistik yang didedikasikan seutuhnya bagi kemakmuran Tampirkulon.
+      </p>
+    </div>
+
+    <div class="row g-3 g-md-4">
+      <!-- 1. Disiplin & Integritas -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 rounded-4 shadow-sm p-4 bg-white profil-keunggulan-card">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="profil-keunggulan-icon bg-danger-subtle text-danger rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
+              <i class="bi bi-shield-shaded fs-4"></i>
+            </div>
+            <div>
+              <span class="badge bg-light text-secondary border small fw-semibold">Karakter Prajurit</span>
+              <h5 class="fw-bold text-dark mb-0 mt-1 fs-6"><?= e($pilar1Judul) ?></h5>
+            </div>
+          </div>
+          <p class="text-muted small mb-0 leading-relaxed">
+            <?= nl2br(e($pilar1Sub)) ?>
+          </p>
+        </div>
+      </div>
+
+      <!-- 2. Pengelolaan Keuangan Akuntabel -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 rounded-4 shadow-sm p-4 bg-white profil-keunggulan-card">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="profil-keunggulan-icon bg-success-subtle text-success rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
+              <i class="bi bi-cash-stack fs-4"></i>
+            </div>
+            <div>
+              <span class="badge bg-light text-secondary border small fw-semibold">Anti-Kebocoran</span>
+              <h5 class="fw-bold text-dark mb-0 mt-1 fs-6"><?= e($pilar2Judul) ?></h5>
+            </div>
+          </div>
+          <p class="text-muted small mb-0 leading-relaxed">
+            <?= nl2br(e($pilar2Sub)) ?>
+          </p>
+        </div>
+      </div>
+
+      <!-- 3. Distribusi Logistik Presisi -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 rounded-4 shadow-sm p-4 bg-white profil-keunggulan-card">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="profil-keunggulan-icon bg-primary-subtle text-primary rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
+              <i class="bi bi-boxes fs-4"></i>
+            </div>
+            <div>
+              <span class="badge bg-light text-secondary border small fw-semibold">Penyaluran Tepat Sasaran</span>
+              <h5 class="fw-bold text-dark mb-0 mt-1 fs-6"><?= e($pilar3Judul) ?></h5>
+            </div>
+          </div>
+          <p class="text-muted small mb-0 leading-relaxed">
+            <?= nl2br(e($pilar3Sub)) ?>
+          </p>
         </div>
       </div>
     </div>

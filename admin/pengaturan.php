@@ -72,12 +72,19 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
             set_flash('success', 'Foto profil dikembalikan ke foto bawaan.');
             safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'simpan_konten_profil') {
-            $asal     = sanitize($_POST['profil_asal'] ?? 'Asli Warga Desa Tampirkulon');
-            $judul    = sanitize($_POST['profil_judul_dedikasi'] ?? 'Dedikasi Nyata untuk Kemajuan Desa Tampirkulon');
+            $asal     = sanitize($_POST['profil_asal'] ?? 'Purnawirawan TNI AD • Putra Asli Tampirkulon');
+            $judul    = sanitize($_POST['profil_judul_dedikasi'] ?? 'Integritas & Kedisiplinan Prajurit, Mengabdi Sepenuh Hati untuk Warga');
             $bio1     = sanitize($_POST['profil_biodata_1'] ?? '');
             $bio2     = sanitize($_POST['profil_biodata_2'] ?? '');
             $nilai    = sanitize($_POST['profil_nilai_kepemimpinan'] ?? '');
             $komitmen = sanitize($_POST['profil_komitmen_pengabdian'] ?? '');
+
+            $pilar1Judul = sanitize($_POST['profil_pilar1_judul'] ?? 'Disiplin Tinggi & Integritas');
+            $pilar1Sub   = sanitize($_POST['profil_pilar1_sub'] ?? '');
+            $pilar2Judul = sanitize($_POST['profil_pilar2_judul'] ?? 'Tata Kelola Keuangan Akuntabel');
+            $pilar2Sub   = sanitize($_POST['profil_pilar2_sub'] ?? '');
+            $pilar3Judul = sanitize($_POST['profil_pilar3_judul'] ?? 'Distribusi Kebutuhan Presisi');
+            $pilar3Sub   = sanitize($_POST['profil_pilar3_sub'] ?? '');
 
             set_pengaturan($pdo, 'profil_asal', $asal);
             set_pengaturan($pdo, 'profil_judul_dedikasi', $judul);
@@ -86,7 +93,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action'])) {
             set_pengaturan($pdo, 'profil_nilai_kepemimpinan', $nilai);
             set_pengaturan($pdo, 'profil_komitmen_pengabdian', $komitmen);
 
-            set_flash('success', 'Konten data diri & biodata Halaman Profil berhasil disimpan!');
+            set_pengaturan($pdo, 'profil_pilar1_judul', $pilar1Judul);
+            set_pengaturan($pdo, 'profil_pilar1_sub', $pilar1Sub);
+            set_pengaturan($pdo, 'profil_pilar2_judul', $pilar2Judul);
+            set_pengaturan($pdo, 'profil_pilar2_sub', $pilar2Sub);
+            set_pengaturan($pdo, 'profil_pilar3_judul', $pilar3Judul);
+            set_pengaturan($pdo, 'profil_pilar3_sub', $pilar3Sub);
+
+            set_flash('success', 'Konten data diri, biodata & 3 pilar keahlian Halaman Profil berhasil disimpan!');
             safe_redirect("pengaturan.php");
         } elseif ($_POST['action'] === 'ganti_foto_sapa_warga') {
             if (!empty($_FILES['foto_sapa_baru']['name'])) {
@@ -234,12 +248,22 @@ $sloganQuote = get_pengaturan($pdo, 'slogan_quote', SLOGAN_QUOTE);
 
 // Ambil data halaman profil calon
 $fotoProfil         = get_pengaturan($pdo, 'foto_profil', 'assets/images/banner/edy_susanto_hero.jpg');
-$profilAsal         = get_pengaturan($pdo, 'profil_asal', 'Asli Warga Desa Tampirkulon');
-$judulDedikasi      = get_pengaturan($pdo, 'profil_judul_dedikasi', 'Dedikasi Nyata untuk Kemajuan Desa Tampirkulon');
-$biodata1           = get_pengaturan($pdo, 'profil_biodata_1', 'Lahir dan tumbuh bersama masyarakat Desa Tampirkulon, ' . $namaCalon . ' memahami secara mendalam detak kehidupan warga, potensi agraris yang melimpah, serta harapan besar pemuda dan keluarga di setiap dusun.');
-$biodata2           = get_pengaturan($pdo, 'profil_biodata_2', 'Dengan bekal pengalaman kepemimpinan sosial, dedikasi kemasyarakatan yang kuat, serta jejaring kolaborasi yang luas, beliau hadir membawa tekad mengabdi secara tulus tanpa sekat demi terciptanya pemerintahan desa yang bersih, transparan, dan melayani.');
-$nilaiKepemimpinan  = get_pengaturan($pdo, 'profil_nilai_kepemimpinan', 'Amanah, mendengarkan rakyat, transparan dalam pengelolaan dana desa, dan responsif terhadap keluhan warga.');
-$komitmenPengabdian = get_pengaturan($pdo, 'profil_komitmen_pengabdian', 'Hadir di tengah warga, membuka pintu komunikasi 24/7 melalui inovasi Sapa Warga dan rembug dusun rutin.');
+$profilAsal         = get_pengaturan($pdo, 'profil_asal', 'Purnawirawan TNI AD • Putra Asli Tampirkulon');
+$judulDedikasi      = get_pengaturan($pdo, 'profil_judul_dedikasi', 'Integritas & Kedisiplinan Prajurit, Mengabdi Sepenuh Hati untuk Warga');
+$biodata1           = get_pengaturan($pdo, 'profil_biodata_1', 'Sebagai putra asli Tampirkulon dan Purnawirawan TNI AD, ' . $namaCalon . ' dibentuk oleh kedisiplinan tinggi, loyalitas tanpa pamrih kepada masyarakat, serta ketegasan sikap yang senantiasa mengayomi. Beliau memahami secara mendalam denyut kehidupan warga, potensi agraris yang melimpah, serta harapan besar pemuda dan keluarga di setiap dusun.');
+$biodata2           = get_pengaturan($pdo, 'profil_biodata_2', 'Berbekal pengalaman kepemimpinan kedinasan, keahlian tata kelola administrasi keuangan yang akuntabel, serta manajemen rantai pasok dan distribusi kebutuhan personil secara presisi, beliau hadir membawa tekad mengabdi seutuhnya demi terciptanya pemerintahan desa yang bersih, transparan, anti-bocor, dan melayani.');
+$nilaiKepemimpinan  = get_pengaturan($pdo, 'profil_nilai_kepemimpinan', 'Disiplin prajurit yang humanis, transparansi anggaran 100% tanpa celah kebocoran, dan keteladanan nyata melayani seluruh warga.');
+$komitmenPengabdian = get_pengaturan($pdo, 'profil_komitmen_pengabdian', 'Distribusi bantuan dan sarana tani tepat sasaran, pelayanan kantor desa cepat & bebas pungli, serta siap hadir 24/7 untuk masyarakat.');
+
+// Pengaturan 3 Pilar Keunggulan Kompetensi
+$pilar1Judul = get_pengaturan($pdo, 'profil_pilar1_judul', 'Disiplin Tinggi & Integritas');
+$pilar1Sub   = get_pengaturan($pdo, 'profil_pilar1_sub', 'Etos kerja tepat waktu, konsisten, dan kepemimpinan teladan yang mengayomi seluruh lapisan masyarakat tanpa membeda-bedakan.');
+
+$pilar2Judul = get_pengaturan($pdo, 'profil_pilar2_judul', 'Tata Kelola Keuangan Akuntabel');
+$pilar2Sub   = get_pengaturan($pdo, 'profil_pilar2_sub', 'Berpengalaman mengelola anggaran kedinasan secara tertib dan ketat. Menjamin Dana Desa (APBDes) dikelola transparan dan bebas kebocoran.');
+
+$pilar3Judul = get_pengaturan($pdo, 'profil_pilar3_judul', 'Distribusi Kebutuhan Presisi');
+$pilar3Sub   = get_pengaturan($pdo, 'profil_pilar3_sub', 'Teruji dalam manajemen logistik dan penyaluran kebutuhan personil. Memastikan pupuk subsidi, bansos, dan sarana tani terdistribusi adil & tepat sasaran.');
 
 // Ambil data hero Sapa Warga
 $fotoSapaWarga  = get_pengaturan($pdo, 'foto_sapa_warga', 'assets/images/banner/dialog_warga.jpg');
@@ -551,8 +575,35 @@ require_once __DIR__ . '/header_admin.php';
               </div>
             </div>
 
+            <hr class="my-4">
+            <h6 class="fw-bold text-dark mb-3"><i class="bi bi-shield-check text-danger me-1"></i> 3 Pilar Keunggulan Kompetensi (Rekam Jejak Purnawirawan TNI AD)</h6>
+            
+            <div class="row g-3 mb-4">
+              <div class="col-md-4">
+                <div class="p-3 border rounded-3 bg-light h-100">
+                  <label class="form-label small fw-bold text-danger"><i class="bi bi-shield-shaded me-1"></i> Pilar 1: Karakter Prajurit</label>
+                  <input type="text" class="form-control rounded-3 mb-2" name="profil_pilar1_judul" value="<?= e($pilar1Judul) ?>" required placeholder="Judul Pilar 1">
+                  <textarea class="form-control rounded-3 small" name="profil_pilar1_sub" rows="3" required placeholder="Deskripsi Pilar 1"><?= e($pilar1Sub) ?></textarea>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="p-3 border rounded-3 bg-light h-100">
+                  <label class="form-label small fw-bold text-success"><i class="bi bi-cash-stack me-1"></i> Pilar 2: Pengelolaan Keuangan</label>
+                  <input type="text" class="form-control rounded-3 mb-2" name="profil_pilar2_judul" value="<?= e($pilar2Judul) ?>" required placeholder="Judul Pilar 2">
+                  <textarea class="form-control rounded-3 small" name="profil_pilar2_sub" rows="3" required placeholder="Deskripsi Pilar 2"><?= e($pilar2Sub) ?></textarea>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="p-3 border rounded-3 bg-light h-100">
+                  <label class="form-label small fw-bold text-primary"><i class="bi bi-boxes me-1"></i> Pilar 3: Distribusi Logistik</label>
+                  <input type="text" class="form-control rounded-3 mb-2" name="profil_pilar3_judul" value="<?= e($pilar3Judul) ?>" required placeholder="Judul Pilar 3">
+                  <textarea class="form-control rounded-3 small" name="profil_pilar3_sub" rows="3" required placeholder="Deskripsi Pilar 3"><?= e($pilar3Sub) ?></textarea>
+                </div>
+              </div>
+            </div>
+
             <button type="submit" class="btn btn-primary rounded-3 fw-bold px-4 py-2 shadow-sm">
-              <i class="bi bi-save-fill me-1"></i> Simpan Konten Data Diri Profil
+              <i class="bi bi-save-fill me-1"></i> Simpan Konten Data Diri &amp; Keahlian Profil
             </button>
           </form>
         </div>
