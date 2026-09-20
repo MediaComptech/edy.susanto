@@ -1,6 +1,6 @@
 // Service Worker untuk PWA Sapa Warga Tampirkulon (Edy Susanto No. 2)
 // Strategi: ONLINE FIRST (Network-First dengan Offline Cache Fallback)
-const CACHE_NAME = 'sapa-warga-v5';
+const CACHE_NAME = 'sapa-warga-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.php?page=beranda',
@@ -114,6 +114,24 @@ self.addEventListener('push', (event) => {
 
   event.waitUntil(
     self.registration.showNotification(data.title, options)
+  );
+});
+
+// Message Event - Terima pesan dari halaman (misal: SHOW_NOTIFICATION)
+self.addEventListener('message', (event) => {
+  if (!event.data || event.data.type !== 'SHOW_NOTIFICATION') return;
+
+  const title = event.data.title || 'Sapa Warga - Tampirkulon';
+  const body  = event.data.body  || 'Ada pembaruan dari Edy Susanto.';
+
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body: body,
+      icon: 'assets/images/icons/icon-192.png',
+      badge: 'assets/images/icons/icon-192.png',
+      vibrate: [100, 50, 100],
+      data: { url: 'index.php?page=sapa-warga' }
+    })
   );
 });
 

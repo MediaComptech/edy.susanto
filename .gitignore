@@ -1,6 +1,10 @@
 scratch/
-implementation_plan_Modul Inspeksi Kantor (Flooring).md
-implementation_plan_eror500.md
-implementation_plan_update_purchase.md
-walkthrough_Implementasi Modul Inspeksi Kantor (Flooring).md
-walkthrough_sync_purchaseitsm.md
+uploads/
+*.log
+
+# File rencana & dokumentasi internal (bukan bagian kode produksi)
+implementation_plan*.md
+walkthrough_*.md
+plan1_*.md
+update_potensi.md
+update_program.md
