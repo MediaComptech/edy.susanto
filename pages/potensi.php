@@ -188,9 +188,19 @@ if (empty($galeriPotensi)) {
 }
 ?>
 
-<!-- Include Leaflet CSS & JS untuk Peta Interaktif -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<?php
+// Leaflet CSS sudah dimuat di header.php secara conditional untuk page=potensi
+?>
+<!-- Include Leaflet JS untuk Peta Interaktif -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+  /* Pastikan wrapper divIcon tidak memotong pin bulat */
+  .potensi-leaflet-pin { background: transparent !important; border: none !important; }
+  .leaflet-popup-content-wrapper { border-radius: 12px !important; box-shadow: 0 4px 20px rgba(0,0,0,.18) !important; }
+  .potensi-map-popup img { width: 100%; height: 90px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+  .potensi-map-popup h6 { font-size: 0.85rem; font-weight: 700; margin: 4px 0 2px; }
+  .potensi-map-popup p { font-size: 0.75rem; margin-bottom: 8px; color: #666; }
+</style>
 
 <!-- ==========================================================================
      SECTION 1: HERO BANNER ("Kekayaan Desa, Kekuatan Bersama")
@@ -716,29 +726,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Helper untuk membuat ikon pin warna
   function createCustomPin(color, iconClass) {
+    // Deteksi ikon: FA (fa-solid, fa-regular, dll) vs Bootstrap Icons
+    const isFa = iconClass && (iconClass.startsWith('fa-solid') || iconClass.startsWith('fa-regular') || iconClass.startsWith('fa-brands') || iconClass.startsWith('fa '));
+    const iconHtml = isFa
+      ? `<i class="${iconClass}"></i>`
+      : `<i class="bi ${iconClass}"></i>`;
+
     return L.divIcon({
       className: 'potensi-leaflet-pin',
-      html: `
-        <div style="
-          width: 34px;
-          height: 34px;
-          background: ${color};
+      html: `<div style="
+          width: 36px;
+          height: 36px;
+          background: ${color || '#2e7d32'};
           border: 2.5px solid #ffffff;
           border-radius: 50%;
-          box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+          box-shadow: 0 3px 8px rgba(0,0,0,0.35);
           display: flex;
           align-items: center;
           justify-content: center;
           color: #ffffff;
           font-size: 15px;
           cursor: pointer;
-          transform: translate(-50%, -50%);
-        ">
-          <i class="${iconClass.startsWith('fa-') ? iconClass : 'bi ' + iconClass}"></i>
-        </div>
-      `,
-      iconSize: [34, 34],
-      iconAnchor: [17, 17]
+        ">${iconHtml}</div>`,
+      iconSize: [36, 36],
+      iconAnchor: [18, 18],
+      popupAnchor: [0, -20]
     });
   }
 

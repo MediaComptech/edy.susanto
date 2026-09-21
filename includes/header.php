@@ -54,5 +54,10 @@ $metaDesc = 'Website Resmi Edy Susanto (No. Urut 2) Calon Kepala Desa Tampirkulo
   
   <!-- Custom CSS with Auto Cache-Busting -->
   <link rel="stylesheet" href="assets/css/style.css?v=<?= file_exists(__DIR__ . '/../assets/css/style.css') ? filemtime(__DIR__ . '/../assets/css/style.css') : '20260914' ?>">
+
+  <?php if ($currentPage === 'potensi'): ?>
+  <!-- Leaflet CSS untuk Peta Interaktif Potensi Desa -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <?php endif; ?>
 </head>
 <body>
