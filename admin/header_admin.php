@@ -114,6 +114,11 @@ $adminCurrentPage = basename($_SERVER['PHP_SELF']);
           <i class="bi bi-sliders me-2"></i> Pengaturan &amp; Foto Hero
         </a>
       </li>
+      <li class="nav-item">
+        <a href="ganti_password.php" class="nav-link <?= ($adminCurrentPage === 'ganti_password.php') ? 'active' : '' ?>">
+          <i class="bi bi-key-fill me-2"></i> Ganti Password
+        </a>
+      </li>
     </ul>
 
     <hr class="border-secondary border-opacity-25 my-3">
