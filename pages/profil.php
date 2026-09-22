@@ -267,57 +267,92 @@ $tepat4Desc  = get_pengaturan($pdo, 'tepat4_desc', 'Penyaluran pupuk bersubsidi,
 
   <!-- Section Gagasan: Visi & Misi -->
   <div id="visi-misi" class="pt-5 border-top">
-    <div class="text-center mb-5">
-      <span class="badge bg-danger text-white fw-bold px-3 py-2 rounded-pill mb-2">Arah Kebijakan</span>
-      <h2 class="fw-bold display-6">Visi &amp; Misi Bersama</h2>
-      <p class="text-muted">Fondasi kokoh mewujudkan Tampirkulon sebagai desa percontohan di Kabupaten Magelang.</p>
-    </div>
 
-    <!-- Visi Card -->
-    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-5 text-center bg-primary-soft border-start border-5 border-danger">
-      <h5 class="text-danger fw-bold text-uppercase tracking-wider mb-2">Visi Utama</h5>
-      <p class="display-6 fw-bold text-dark mb-0 font-handwriting">
-        "Terwujudnya Desa Tampirkulon yang Asri, Maju, Rukun, dan Sejahtera Berlandaskan Gotong Royong serta Pelayanan yang Transparan."
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+      <span class="badge bg-danger text-white fw-bold px-3 py-2 rounded-pill mb-2">
+        <i class="bi bi-bullseye me-1"></i> Visi &amp; Misi Edy Susanto
+      </span>
+      <h2 class="fw-bold display-6 text-dark mb-2">Visi &amp; Misi Kepemimpinan</h2>
+      <p class="text-muted mx-auto" style="max-width: 600px;">
+        Edy Susanto (No. Urut 2) hadir dengan arah kebijakan yang jelas dan terukur untuk membawa
+        Tampirkulon menjadi desa percontohan terbaik di Kabupaten Magelang.
       </p>
     </div>
 
-    <!-- 3 Misi Pilar -->
+    <!-- ======================== VISI ======================== -->
+    <div class="card border-0 shadow rounded-4 p-4 p-md-5 mb-5 text-center bg-primary-soft border-start border-5 border-danger">
+      <div class="mb-3">
+        <span class="badge text-danger border border-danger px-3 py-1 rounded-pill fw-bold small" style="background:rgba(183,28,28,.08); letter-spacing:.06em;">
+          VISI KEPALA DESA TAMPIRKULON 2026 – 2032
+        </span>
+      </div>
+      <h3 class="text-danger fw-bold mb-3" style="font-size:1.15rem; letter-spacing:.01em;">
+        Visi Edy Susanto
+      </h3>
+      <p class="display-6 fw-bold text-dark mb-0 font-handwriting lh-sm" style="font-size: clamp(1.3rem, 3vw, 1.75rem);">
+        "Terwujudnya Desa Tampirkulon yang Asri, Maju, Rukun, dan Sejahtera
+        Berlandaskan Gotong Royong serta Pelayanan yang Transparan."
+      </p>
+    </div>
+
+    <!-- ======================== MISI ======================== -->
+    <div class="text-center mb-4">
+      <span class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill fw-bold small" style="letter-spacing:.06em;">
+        MISI KEPEMIMPINAN
+      </span>
+      <h3 class="fw-bold text-dark mt-2 mb-1" style="font-size:1.4rem;">3 Pilar Misi Bersama</h3>
+      <p class="text-muted small mx-auto mb-0" style="max-width: 520px;">
+        Tiga fokus utama yang menjadi landasan program kerja nyata selama masa bakti 2026 – 2032.
+      </p>
+    </div>
+
     <div class="row g-4">
+      <!-- Misi 1: Tampirkulon Asri -->
       <div class="col-md-4">
-        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white position-relative overflow-hidden">
+          <span class="badge bg-success text-white rounded-pill px-2 py-1 mb-3 fw-bold" style="font-size:.7rem; width:fit-content;">Misi 1</span>
           <div class="circle-pillar-large pillar-icon-asri mb-3">
             <i class="fa-solid fa-leaf"></i>
           </div>
-          <h4 class="fw-bold mb-2">1. Tampirkulon Asri</h4>
+          <h4 class="fw-bold mb-2 text-dark">Tampirkulon Asri</h4>
           <p class="text-muted small mb-0">
-            Menjaga kelestarian lingkungan hidup, kebersihan aliran sungai, penataan sanitasi, dan pengelolaan sampah modern berbasis partisipasi warga.
+            Menjaga kelestarian lingkungan hidup, kebersihan aliran sungai, penataan sanitasi,
+            dan pengelolaan sampah modern berbasis partisipasi warga.
           </p>
         </div>
       </div>
 
+      <!-- Misi 2: Tampirkulon Maju -->
       <div class="col-md-4">
-        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white position-relative overflow-hidden">
+          <span class="badge bg-primary text-white rounded-pill px-2 py-1 mb-3 fw-bold" style="font-size:.7rem; width:fit-content;">Misi 2</span>
           <div class="circle-pillar-large pillar-icon-maju mb-3">
             <i class="bi bi-bar-chart-fill"></i>
           </div>
-          <h4 class="fw-bold mb-2">2. Tampirkulon Maju</h4>
+          <h4 class="fw-bold mb-2 text-dark">Tampirkulon Maju</h4>
           <p class="text-muted small mb-0">
-            Mengakselerasi perekonomian petani dan UMKM lokal, memajukan Wisata Tubing Tampirkulon, serta mendigitalisasi birokrasi pelayanan desa agar cepat dan akuntabel.
+            Mengakselerasi perekonomian petani dan UMKM lokal, memajukan Wisata Tubing Tampirkulon,
+            serta mendigitalisasi birokrasi pelayanan desa agar cepat dan akuntabel.
           </p>
         </div>
       </div>
 
+      <!-- Misi 3: Tampirkulon Rukun -->
       <div class="col-md-4">
-        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white position-relative overflow-hidden">
+          <span class="badge bg-warning text-dark rounded-pill px-2 py-1 mb-3 fw-bold" style="font-size:.7rem; width:fit-content;">Misi 3</span>
           <div class="circle-pillar-large pillar-icon-rukun mb-3">
             <i class="bi bi-people-fill"></i>
           </div>
-          <h4 class="fw-bold mb-2">3. Tampirkulon Rukun</h4>
+          <h4 class="fw-bold mb-2 text-dark">Tampirkulon Rukun</h4>
           <p class="text-muted small mb-0">
-            Merajut keharmonisan antar-dusun, memberdayakan pemuda dan karang taruna, serta menghidupkan kembali tradisi gotong royong dan silaturahmi tanpa sekat.
+            Merajut keharmonisan antar-dusun, memberdayakan pemuda dan karang taruna,
+            serta menghidupkan kembali tradisi gotong royong dan silaturahmi tanpa sekat.
           </p>
         </div>
       </div>
     </div>
+
   </div>
 </div>
