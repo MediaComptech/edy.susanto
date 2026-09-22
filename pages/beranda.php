@@ -108,12 +108,6 @@ $tepat4Desc  = get_pengaturan($pdo, 'tepat4_desc', 'Penyaluran pupuk bersubsidi,
 
         <!-- [2] FOTO KANDIDAT: Tunggal, Proporsional, Responsif -->
         <div class="hero-candidate-wrapper">
-          <!-- [3] Quote Box (Desktop) -->
-          <div class="hero-quote-box d-none d-lg-block" aria-hidden="true">
-            <span class="hero-quote-mark">"</span>
-            <p class="hero-quote-text font-handwriting"><?= nl2br(e($sloganQuote)) ?></p>
-            <p class="hero-quote-author">— <?= e($namaCalon) ?></p>
-          </div>
 
           <!-- Single Candidate Image -->
           <img
