@@ -704,148 +704,181 @@ if (empty($galeriPotensi)) {
 
 <!-- ==========================================================================
      JAVASCRIPT: INITIALIZATION LEAFLET MAP & FILTER
+     Strategi: Gunakan window.load (bukan DOMContentLoaded) agar Leaflet JS
+     pasti sudah tersedia. Tambah invalidateSize() + fitBounds() agar marker
+     tampil konsisten sejak first load tanpa perlu interaksi user dulu.
      ========================================================================== -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // 1. Data Lokasi dari PHP (Realtime Database)
-  const lokasiData = <?= json_encode($petaLokasi, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+(function () {
+  'use strict';
 
-  // 2. Inisialisasi Peta Leaflet (Pusat Tampirkulon, Candimulyo: -7.5020, 110.2740)
-  const map = L.map('potensiMap', {
-    scrollWheelZoom: false
-  }).setView([-7.5020, 110.2740], 15);
+  // Data lokasi dari PHP
+  var lokasiData = <?= json_encode($petaLokasi, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
 
-  // Tile Layer OpenStreetMap
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
+  var mapInstance = null;
+  var markerList  = [];
 
-  // Simpan marker dalam array untuk filter dan interaksi
-  const markers = [];
-
-  // Helper untuk membuat ikon pin warna
-  function createCustomPin(color, iconClass) {
-    // Deteksi ikon: FA (fa-solid, fa-regular, dll) vs Bootstrap Icons
-    const isFa = iconClass && (iconClass.startsWith('fa-solid') || iconClass.startsWith('fa-regular') || iconClass.startsWith('fa-brands') || iconClass.startsWith('fa '));
-    const iconHtml = isFa
-      ? `<i class="${iconClass}"></i>`
-      : `<i class="bi ${iconClass}"></i>`;
+  /* ---- Helper: buat pin bulat berwarna ---- */
+  function createPin(color, iconClass) {
+    var isFa = iconClass && (
+      iconClass.indexOf('fa-solid') === 0 ||
+      iconClass.indexOf('fa-regular') === 0 ||
+      iconClass.indexOf('fa-brands') === 0 ||
+      iconClass.indexOf('fa ') === 0
+    );
+    var ico = isFa
+      ? '<i class="' + iconClass + '"></i>'
+      : '<i class="bi ' + iconClass + '"></i>';
 
     return L.divIcon({
       className: 'potensi-leaflet-pin',
-      html: `<div style="
-          width: 36px;
-          height: 36px;
-          background: ${color || '#2e7d32'};
-          border: 2.5px solid #ffffff;
-          border-radius: 50%;
-          box-shadow: 0 3px 8px rgba(0,0,0,0.35);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #ffffff;
-          font-size: 15px;
-          cursor: pointer;
-        ">${iconHtml}</div>`,
-      iconSize: [36, 36],
-      iconAnchor: [18, 18],
-      popupAnchor: [0, -20]
+      html: '<div style="'
+        + 'width:36px;height:36px;'
+        + 'background:' + (color || '#2e7d32') + ';'
+        + 'border:2.5px solid #fff;border-radius:50%;'
+        + 'box-shadow:0 3px 10px rgba(0,0,0,.4);'
+        + 'display:flex;align-items:center;justify-content:center;'
+        + 'color:#fff;font-size:15px;cursor:pointer;'
+        + '">' + ico + '</div>',
+      iconSize:    [36, 36],
+      iconAnchor:  [18, 18],
+      popupAnchor: [0, -22]
     });
   }
 
-  // 3. Tambahkan Marker ke Peta
-  lokasiData.forEach(function(item) {
-    const pin = createCustomPin(item.color || '#0288d1', item.icon || 'bi-geo-alt-fill');
-    const marker = L.marker([parseFloat(item.lat), parseFloat(item.lng)], { icon: pin }).addTo(map);
+  /* ---- Inisialisasi peta ---- */
+  function initMap() {
+    /* Guard: Leaflet harus sudah dimuat */
+    if (typeof L === 'undefined') {
+      setTimeout(initMap, 300);
+      return;
+    }
+    var el = document.getElementById('potensiMap');
+    if (!el) return;
 
-    // Popup Konten
-    const popupHtml = `
-      <div class="potensi-map-popup">
-        <img src="${item.foto}" alt="${item.nama}">
-        <span class="badge text-white border px-2 py-0 mb-1" style="background-color:${item.color || '#2e7d32'}; font-size:0.65rem;">${item.kategori_label}</span>
-        <h6>${item.nama}</h6>
-        <p><i class="bi bi-geo-alt text-danger me-1"></i>${item.jarak}</p>
-        <a href="https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-sm w-100 rounded-pill py-1" style="font-size:0.75rem;">
-          <i class="bi bi-map me-1"></i> Buka Petunjuk Arah
-        </a>
-      </div>
-    `;
+    /* Guard: container harus punya dimensi */
+    if (el.offsetWidth === 0 || el.offsetHeight === 0) {
+      setTimeout(initMap, 200);
+      return;
+    }
 
-    marker.bindPopup(popupHtml);
-    markers.push({ id: parseInt(item.id), kategori: item.kategori, marker: marker, lat: parseFloat(item.lat), lng: parseFloat(item.lng) });
-  });
+    /* Buat peta */
+    mapInstance = L.map('potensiMap', { scrollWheelZoom: false })
+                   .setView([-7.5020, 110.2740], 15);
 
-  // 4. Global Functions untuk Interaksi Peta
-  window.focusPeta = function(id) {
-    const target = markers.find(m => m.id === parseInt(id));
-    if (target) {
-      map.setView([target.lat, target.lng], 16, { animate: true });
-      target.marker.openPopup();
-      // Scroll ke peta jika di layar kecil atau jika dipanggil dari modal
-      const mapEl = document.getElementById('potensiMap');
-      if (mapEl) {
-        mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(mapInstance);
+
+    /* Tambahkan semua marker */
+    lokasiData.forEach(function (item) {
+      var lat = parseFloat(item.lat);
+      var lng = parseFloat(item.lng);
+      if (isNaN(lat) || isNaN(lng)) return;
+
+      var pin    = createPin(item.color || '#0288d1', item.icon || 'bi-geo-alt-fill');
+      var marker = L.marker([lat, lng], { icon: pin }).addTo(mapInstance);
+
+      var popup = '<div class="potensi-map-popup">'
+        + '<img src="' + item.foto + '" alt="' + item.nama + '" loading="lazy">'
+        + '<span class="badge text-white px-2 py-0 mb-1" style="background:' + (item.color || '#2e7d32') + ';font-size:.65rem;">'
+        + item.kategori_label + '</span>'
+        + '<h6>' + item.nama + '</h6>'
+        + '<p><i class="bi bi-geo-alt text-danger me-1"></i>' + item.jarak + '</p>'
+        + '<a href="https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lng + '" '
+        + 'target="_blank" rel="noopener noreferrer" '
+        + 'class="btn btn-success btn-sm w-100 rounded-pill py-1" style="font-size:.75rem;">'
+        + '<i class="bi bi-map me-1"></i> Buka Petunjuk Arah</a></div>';
+
+      marker.bindPopup(popup, { maxWidth: 230 });
+      markerList.push({ id: parseInt(item.id), kategori: item.kategori, marker: marker, lat: lat, lng: lng });
+    });
+
+    /* === KUNCI UTAMA ===
+       invalidateSize  : pastikan Leaflet tahu ukuran container yang sesungguhnya
+       fitBounds       : paksa layer marker di-render ke layar sejak pertama kali
+       Delay 250ms memberi waktu browser selesai layout sebelum kalkulasi.      */
+    setTimeout(function () {
+      mapInstance.invalidateSize(true);
+      if (markerList.length > 0) {
+        var group = L.featureGroup(markerList.map(function (m) { return m.marker; }));
+        try { mapInstance.fitBounds(group.getBounds().pad(0.18)); }
+        catch (e) { mapInstance.setView([-7.5020, 110.2740], 15); }
       }
-    }
-  };
+    }, 250);
 
-  window.resetPeta = function() {
-    map.setView([-7.5020, 110.2740], 15, { animate: true });
-    // Reset active class pada filter
-    document.querySelectorAll('.potensi-filter-item').forEach(el => el.classList.remove('active'));
-    const allFilter = document.querySelector('.potensi-filter-item[data-filter="all"]');
-    if (allFilter) allFilter.classList.add('active');
-    // Munculkan semua marker
-    markers.forEach(m => map.addLayer(m.marker));
-  };
+    /* Filter interaktif berdasarkan kategori */
+    document.querySelectorAll('.potensi-filter-item').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.potensi-filter-item').forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-filter');
 
-  window.pilihLokasiDariModal = function(id) {
-    const modalEl = document.getElementById('modalSemuaLokasi');
-    if (modalEl) {
-      const modalInstance = bootstrap.Modal.getInstance(modalEl) || bootstrap.Modal.getOrCreateInstance(modalEl);
-      if (modalInstance) {
-        modalInstance.hide();
-      }
-    }
-    setTimeout(function() {
-      resetPeta();
-      focusPeta(id);
-    }, 350);
-  };
+        markerList.forEach(function (m) {
+          var show = (cat === 'all' || m.kategori === cat);
+          if (show  && !mapInstance.hasLayer(m.marker)) mapInstance.addLayer(m.marker);
+          if (!show &&  mapInstance.hasLayer(m.marker)) mapInstance.removeLayer(m.marker);
+        });
 
-  // 5. Global Function untuk Slider Galeri
-  window.geserGaleri = function(direction) {
-    const container = document.getElementById('galeriScrollContainer');
-    if (container) {
-      const scrollStep = 240 * direction;
-      container.scrollBy({ left: scrollStep, behavior: 'smooth' });
-    }
-  };
-
-  // 6. Filter Interaktif Berdasarkan Kategori
-  document.querySelectorAll('.potensi-filter-item').forEach(function(item) {
-    item.addEventListener('click', function() {
-      document.querySelectorAll('.potensi-filter-item').forEach(el => el.classList.remove('active'));
-      this.classList.add('active');
-
-      const selectedCategory = this.getAttribute('data-filter');
-
-      markers.forEach(function(m) {
-        if (selectedCategory === 'all' || m.kategori === selectedCategory) {
-          map.addLayer(m.marker);
-        } else {
-          map.removeLayer(m.marker);
+        var vis = markerList.filter(function (m) { return cat === 'all' || m.kategori === cat; });
+        if (vis.length > 0) {
+          var g = L.featureGroup(vis.map(function (m) { return m.marker; }));
+          try { mapInstance.fitBounds(g.getBounds().pad(0.2)); } catch (e) {}
         }
       });
-
-      // Fit bounds jika ada marker yang tampil
-      const activeMarkers = markers.filter(m => selectedCategory === 'all' || m.kategori === selectedCategory);
-      if (activeMarkers.length > 0) {
-        const group = new L.featureGroup(activeMarkers.map(m => m.marker));
-        map.fitBounds(group.getBounds().pad(0.2));
-      }
     });
-  });
-});
+  } /* end initMap */
+
+  /* ---- Global helpers (dipanggil dari HTML inline onclick) ---- */
+  window.focusPeta = function (id) {
+    if (!mapInstance) return;
+    for (var i = 0; i < markerList.length; i++) {
+      if (markerList[i].id === parseInt(id)) {
+        var t = markerList[i];
+        mapInstance.invalidateSize();
+        mapInstance.setView([t.lat, t.lng], 16, { animate: true });
+        t.marker.openPopup();
+        var el = document.getElementById('potensiMap');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        break;
+      }
+    }
+  };
+
+  window.resetPeta = function () {
+    if (!mapInstance) return;
+    mapInstance.invalidateSize();
+    mapInstance.setView([-7.5020, 110.2740], 15, { animate: true });
+    document.querySelectorAll('.potensi-filter-item').forEach(function (el) { el.classList.remove('active'); });
+    var allBtn = document.querySelector('.potensi-filter-item[data-filter="all"]');
+    if (allBtn) allBtn.classList.add('active');
+    markerList.forEach(function (m) { if (!mapInstance.hasLayer(m.marker)) mapInstance.addLayer(m.marker); });
+  };
+
+  window.pilihLokasiDariModal = function (id) {
+    var mel = document.getElementById('modalSemuaLokasi');
+    if (mel) {
+      try {
+        var mi = bootstrap.Modal.getInstance(mel) || bootstrap.Modal.getOrCreateInstance(mel);
+        if (mi) mi.hide();
+      } catch (e) {}
+    }
+    setTimeout(function () { window.resetPeta(); window.focusPeta(id); }, 350);
+  };
+
+  window.geserGaleri = function (dir) {
+    var c = document.getElementById('galeriScrollContainer');
+    if (c) c.scrollBy({ left: 240 * dir, behavior: 'smooth' });
+  };
+
+  /* ---- Jalankan setelah SEMUA resource halaman selesai dimuat ---- */
+  if (document.readyState === 'complete') {
+    initMap();                        // halaman sudah siap (cache hit)
+  } else {
+    window.addEventListener('load', initMap); // tunggu sampai benar-benar selesai
+  }
+}());
 </script>
+
+
