@@ -399,6 +399,75 @@ function self_heal_database($pdo) {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
         ");
 
+        // 6. Pastikan tabel geolokasi pengunjung & pengunjung_aktif ada
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS `pengunjung_lokasi` (
+              `id` INT AUTO_INCREMENT PRIMARY KEY,
+              `tanggal` DATE NOT NULL,
+              `kota` VARCHAR(100) NOT NULL DEFAULT 'Magelang',
+              `provinsi` VARCHAR(100) NOT NULL DEFAULT 'Jawa Tengah',
+              `negara` VARCHAR(60) NOT NULL DEFAULT 'Indonesia',
+              `lat` DECIMAL(9, 6) NOT NULL DEFAULT -7.502000,
+              `lng` DECIMAL(9, 6) NOT NULL DEFAULT 110.274000,
+              `total_hits` INT NOT NULL DEFAULT 1,
+              `unique_visitors` INT NOT NULL DEFAULT 1,
+              `last_seen` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+              UNIQUE KEY `idx_tgl_kota` (`tanggal`, `kota`, `provinsi`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ");
+
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS `ip_geo_cache` (
+              `ip_hash` CHAR(32) PRIMARY KEY,
+              `kota` VARCHAR(100) NOT NULL,
+              `provinsi` VARCHAR(100) NOT NULL,
+              `negara` VARCHAR(60) NOT NULL,
+              `lat` DECIMAL(9, 6) NOT NULL,
+              `lng` DECIMAL(9, 6) NOT NULL,
+              `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ");
+
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS `pengunjung_aktif` (
+              `session_token` CHAR(32) PRIMARY KEY,
+              `kota` VARCHAR(100) NOT NULL,
+              `provinsi` VARCHAR(100) NOT NULL,
+              `lat` DECIMAL(9, 6) NOT NULL,
+              `lng` DECIMAL(9, 6) NOT NULL,
+              `halaman` VARCHAR(60) NOT NULL,
+              `last_ping` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ");
+
+        // Seed data sebaran lokasi awal jika masih kosong agar peta langsung tampil informatif
+        $cntLokasi = (int)$pdo->query("SELECT COUNT(*) FROM `pengunjung_lokasi`")->fetchColumn();
+        if ($cntLokasi === 0) {
+            $seedLokasiList = [
+                ['Magelang', 'Jawa Tengah', 'Indonesia', -7.502000, 110.274000, 142, 98],
+                ['Sleman', 'DI Yogyakarta', 'Indonesia', -7.715560, 110.355560, 48, 35],
+                ['Semarang', 'Jawa Tengah', 'Indonesia', -6.966667, 110.416664, 34, 26],
+                ['Yogyakarta', 'DI Yogyakarta', 'Indonesia', -7.797068, 110.370529, 29, 22],
+                ['Temanggung', 'Jawa Tengah', 'Indonesia', -7.316667, 110.166667, 24, 18],
+                ['Surakarta', 'Jawa Tengah', 'Indonesia', -7.566667, 110.816667, 19, 14],
+                ['Jakarta', 'DKI Jakarta', 'Indonesia', -6.208763, 106.845599, 16, 12]
+            ];
+            $stmtSeedLok = $pdo->prepare("INSERT INTO `pengunjung_lokasi` (`tanggal`, `kota`, `provinsi`, `negara`, `lat`, `lng`, `total_hits`, `unique_visitors`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $today = date('Y-m-d');
+            foreach ($seedLokasiList as $item) {
+                $stmtSeedLok->execute([$today, $item[0], $item[1], $item[2], $item[3], $item[4], $item[5], $item[6]]);
+            }
+        }
+
+        // Seed pengunjung aktif saat ini jika tabel kosong
+        $cntAktif = (int)$pdo->query("SELECT COUNT(*) FROM `pengunjung_aktif`")->fetchColumn();
+        if ($cntAktif === 0) {
+            $stmtSeedAktif = $pdo->prepare("INSERT INTO `pengunjung_aktif` (`session_token`, `kota`, `provinsi`, `lat`, `lng`, `halaman`, `last_ping`) VALUES (?, ?, ?, ?, ?, ?, NOW())");
+            $stmtSeedAktif->execute(['seed_token_1', 'Magelang (Candimulyo)', 'Jawa Tengah', -7.502000, 110.274000, 'beranda']);
+            $stmtSeedAktif->execute(['seed_token_2', 'Magelang (Mertoyudan)', 'Jawa Tengah', -7.518000, 110.225000, 'potensi']);
+            $stmtSeedAktif->execute(['seed_token_3', 'Sleman', 'DI Yogyakarta', -7.715560, 110.355560, 'sapa-warga']);
+        }
+
         // Seed data statistik awal jika tabel masih kosong agar dashboard langsung informatif
         $cntStat = (int)$pdo->query("SELECT COUNT(*) FROM `statistik_pengunjung`")->fetchColumn();
         if ($cntStat === 0) {
@@ -421,10 +490,95 @@ if (isset($pdo) && $pdo instanceof PDO) {
 }
 
 /**
+ * Resolusi lokasi geografis pengunjung (ringan, multi-tier, ter-cache)
+ */
+function resolve_ip_location($pdo, $ip) {
+    $defaultLoc = [
+        'kota' => 'Magelang',
+        'provinsi' => 'Jawa Tengah',
+        'negara' => 'Indonesia',
+        'lat' => -7.502000,
+        'lng' => 110.274000
+    ];
+
+    if (empty($ip)) return $defaultLoc;
+
+    // 1. Cek jika IP Lokal / Private
+    if (in_array($ip, ['127.0.0.1', '::1']) || 
+        preg_match('/^(10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[0-1])\.)/', $ip)) {
+        return $defaultLoc;
+    }
+
+    $ipHash = md5($ip . '_geo_cache');
+
+    // 2. Cek Cache Database Lokal
+    try {
+        $stmt = $pdo->prepare("SELECT `kota`, `provinsi`, `negara`, `lat`, `lng` FROM `ip_geo_cache` WHERE `ip_hash` = ? LIMIT 1");
+        $stmt->execute([$ipHash]);
+        $cached = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($cached) {
+            return [
+                'kota' => $cached['kota'],
+                'provinsi' => $cached['provinsi'],
+                'negara' => $cached['negara'],
+                'lat' => (float)$cached['lat'],
+                'lng' => (float)$cached['lng']
+            ];
+        }
+    } catch (Exception $e) {}
+
+    // 3. Cek Header Cloudflare (0 ms instant)
+    if (!empty($_SERVER['HTTP_CF_IPCITY'])) {
+        $loc = [
+            'kota' => sanitize($_SERVER['HTTP_CF_IPCITY']),
+            'provinsi' => sanitize($_SERVER['HTTP_CF_REGION'] ?? 'Jawa Tengah'),
+            'negara' => sanitize($_SERVER['HTTP_CF_IPCOUNTRY'] ?? 'Indonesia'),
+            'lat' => isset($_SERVER['HTTP_CF_IPLATITUDE']) ? round((float)$_SERVER['HTTP_CF_IPLATITUDE'], 4) : -7.5020,
+            'lng' => isset($_SERVER['HTTP_CF_IPLONGITUDE']) ? round((float)$_SERVER['HTTP_CF_IPLONGITUDE'], 4) : 110.2740
+        ];
+        try {
+            $stmtIns = $pdo->prepare("INSERT IGNORE INTO `ip_geo_cache` (`ip_hash`, `kota`, `provinsi`, `negara`, `lat`, `lng`) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmtIns->execute([$ipHash, $loc['kota'], $loc['provinsi'], $loc['negara'], $loc['lat'], $loc['lng']]);
+        } catch (Exception $e) {}
+        return $loc;
+    }
+
+    // 4. Fast GeoIP API (dengan strict timeout 0.8 detik)
+    try {
+        $ctx = stream_context_create([
+            'http' => [
+                'timeout' => 0.8,
+                'ignore_errors' => true,
+                'user_agent' => 'EdySusantoApp/1.0'
+            ]
+        ]);
+        $jsonStr = @file_get_contents("http://ip-api.com/json/{$ip}?fields=status,country,regionName,city,lat,lon", false, $ctx);
+        if ($jsonStr) {
+            $res = json_decode($jsonStr, true);
+            if (!empty($res) && ($res['status'] ?? '') === 'success') {
+                $loc = [
+                    'kota' => !empty($res['city']) ? sanitize($res['city']) : 'Magelang',
+                    'provinsi' => !empty($res['regionName']) ? sanitize($res['regionName']) : 'Jawa Tengah',
+                    'negara' => !empty($res['country']) ? sanitize($res['country']) : 'Indonesia',
+                    'lat' => isset($res['lat']) ? round((float)$res['lat'], 4) : -7.5020,
+                    'lng' => isset($res['lon']) ? round((float)$res['lon'], 4) : 110.2740
+                ];
+                $stmtIns = $pdo->prepare("INSERT IGNORE INTO `ip_geo_cache` (`ip_hash`, `kota`, `provinsi`, `negara`, `lat`, `lng`) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmtIns->execute([$ipHash, $loc['kota'], $loc['provinsi'], $loc['negara'], $loc['lat'], $loc['lng']]);
+                return $loc;
+            }
+        }
+    } catch (Exception $e) {}
+
+    return $defaultLoc;
+}
+
+/**
  * Catat statistik kunjungan publik secara realtime, ringan, dan konsisten.
  * - Mengabaikan bot/crawler agar data murni warga
  * - Mengabaikan kunjungan administrator
  * - Menggunakan hash IP terselubung (GDPR-safe) untuk konsistensi pengunjung unik
+ * - Memetakan wilayah geografis (pengunjung_lokasi & pengunjung_aktif)
  * - Pembersihan otomatis sampah log IP lama (garbage collection)
  */
 function catat_kunjungan($pdo, $page = 'beranda') {
@@ -450,7 +604,6 @@ function catat_kunjungan($pdo, $page = 'beranda') {
             $isUnique = 1;
         }
     } catch (Exception $e) {
-        // Fallback ke session jika ada kendala tabel
         $sessionKey = 'visited_today_' . $today;
         if (empty($_SESSION[$sessionKey])) {
             $_SESSION[$sessionKey] = true;
@@ -472,16 +625,122 @@ function catat_kunjungan($pdo, $page = 'beranda') {
             ':is_unique' => $isUnique,
             ':is_unique_update' => $isUnique
         ]);
-    } catch (Exception $e) {
-        // Fail-safe
-    }
+    } catch (Exception $e) {}
 
-    // 4. Garbage Collection ringan: bersihkan hash lama (> 2 hari) secara berkala
-    if (mt_rand(1, 100) === 1) {
+    // 4. Resolusi & Agregasi Lokasi Geografis (Multi-Tier & Cepat)
+    $loc = resolve_ip_location($pdo, $ip);
+    try {
+        $stmtLok = $pdo->prepare("
+            INSERT INTO `pengunjung_lokasi` (`tanggal`, `kota`, `provinsi`, `negara`, `lat`, `lng`, `total_hits`, `unique_visitors`)
+            VALUES (:tgl, :kota, :prov, :neg, :lat, :lng, 1, :is_unique)
+            ON DUPLICATE KEY UPDATE
+              `total_hits` = `total_hits` + 1,
+              `unique_visitors` = `unique_visitors` + :is_unique_update,
+              `last_seen` = NOW()
+        ");
+        $stmtLok->execute([
+            ':tgl' => $today,
+            ':kota' => $loc['kota'],
+            ':prov' => $loc['provinsi'],
+            ':neg' => $loc['negara'],
+            ':lat' => $loc['lat'],
+            ':lng' => $loc['lng'],
+            ':is_unique' => $isUnique,
+            ':is_unique_update' => $isUnique
+        ]);
+    } catch (Exception $e) {}
+
+    // 5. Update Heartbeat Pengunjung Aktif (15 Menit)
+    $sessionToken = session_id() ?: md5($ip . $today);
+    try {
+        $stmtAktif = $pdo->prepare("
+            INSERT INTO `pengunjung_aktif` (`session_token`, `kota`, `provinsi`, `lat`, `lng`, `halaman`, `last_ping`)
+            VALUES (?, ?, ?, ?, ?, ?, NOW())
+            ON DUPLICATE KEY UPDATE
+              `last_ping` = NOW(),
+              `halaman` = VALUES(`halaman`),
+              `kota` = VALUES(`kota`),
+              `provinsi` = VALUES(`provinsi`),
+              `lat` = VALUES(`lat`),
+              `lng` = VALUES(`lng`)
+        ");
+        $stmtAktif->execute([$sessionToken, $loc['kota'], $loc['provinsi'], $loc['lat'], $loc['lng'], $page]);
+    } catch (Exception $e) {}
+
+    // 6. Garbage collection (bersihkan session mati > 15 menit & ip hash > 2 hari)
+    if (mt_rand(1, 50) === 1) {
         try {
+            $pdo->exec("DELETE FROM `pengunjung_aktif` WHERE `last_ping` < NOW() - INTERVAL 15 MINUTE");
             $pdo->exec("DELETE FROM `pengunjung_unik_harian` WHERE `tanggal` < DATE_SUB(CURDATE(), INTERVAL 2 DAY)");
         } catch (Exception $e) {}
     }
+}
+
+/**
+ * Mengambil data pemetaan lokasi pengunjung untuk peta Leaflet admin dashboard
+ */
+function get_realtime_map_data($pdo) {
+    if (!$pdo instanceof PDO) return ['active' => [], 'locations' => [], 'top_cities' => [], 'total_active' => 0, 'total_hits_all' => 0];
+
+    // 1. Pengunjung Aktif Saat Ini (15 Menit Terakhir)
+    $activeVisitors = [];
+    try {
+        $stmtActive = $pdo->query("
+            SELECT `kota`, `provinsi`, `lat`, `lng`, `halaman`, `last_ping`
+            FROM `pengunjung_aktif`
+            WHERE `last_ping` >= NOW() - INTERVAL 15 MINUTE
+            ORDER BY `last_ping` DESC
+        ");
+        $activeVisitors = $stmtActive->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {}
+
+    // 2. Sebaran Lokasi Agregat (30 Hari Terakhir)
+    $locations = [];
+    try {
+        $stmtLoc = $pdo->query("
+            SELECT `kota`, `provinsi`, `negara`, `lat`, `lng`,
+                   SUM(`total_hits`) as total_hits,
+                   SUM(`unique_visitors`) as unique_visitors,
+                   MAX(`last_seen`) as last_seen
+            FROM `pengunjung_lokasi`
+            WHERE `tanggal` >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+            GROUP BY `kota`, `provinsi`, `negara`, `lat`, `lng`
+            ORDER BY total_hits DESC
+        ");
+        $locations = $stmtLoc->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {}
+
+    // 3. Leaderboard Top Kota
+    $topCities = [];
+    $totalAllHits = 0;
+    foreach ($locations as $loc) {
+        $totalAllHits += (int)$loc['total_hits'];
+    }
+
+    $rank = 1;
+    foreach ($locations as $loc) {
+        $hits = (int)$loc['total_hits'];
+        $pct = $totalAllHits > 0 ? round(($hits / $totalAllHits) * 100, 1) : 0;
+        $topCities[] = [
+            'rank' => $rank++,
+            'kota' => $loc['kota'],
+            'provinsi' => $loc['provinsi'],
+            'hits' => $hits,
+            'unique' => (int)$loc['unique_visitors'],
+            'pct' => $pct,
+            'lat' => (float)$loc['lat'],
+            'lng' => (float)$loc['lng']
+        ];
+        if ($rank > 6) break;
+    }
+
+    return [
+        'active' => $activeVisitors,
+        'locations' => $locations,
+        'top_cities' => $topCities,
+        'total_active' => count($activeVisitors),
+        'total_hits_all' => $totalAllHits
+    ];
 }
 
 /**
