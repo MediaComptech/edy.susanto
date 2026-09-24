@@ -23,6 +23,9 @@ if (!array_key_exists($page, $allowedPages)) {
     $page = 'beranda';
 }
 
+// Catat statistik pengunjung publik (ringan & otomatis)
+catat_kunjungan($pdo, $page);
+
 $pageFile = __DIR__ . '/' . $allowedPages[$page];
 
 // Render Komponen Terintegrasi
