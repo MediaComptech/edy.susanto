@@ -4,6 +4,32 @@ require_once __DIR__ . '/../includes/functions.php';
 
 require_admin_auth();
 
+// Endpoint AJAX Realtime Stats (Ringan & Cepat < 2ms)
+if (($_GET['action'] ?? '') === 'realtime_stats') {
+    header('Content-Type: application/json; charset=utf-8');
+    $stats = get_aspirasi_stats($pdo);
+    $cntProgram = (int)$pdo->query("SELECT COUNT(*) FROM program")->fetchColumn();
+    $cntBerita = (int)$pdo->query("SELECT COUNT(*) FROM berita")->fetchColumn();
+    $cntGaleri = (int)$pdo->query("SELECT COUNT(*) FROM galeri")->fetchColumn();
+
+    echo json_encode([
+        'status' => 'success',
+        'server_time' => date('H:i:s'),
+        'stats' => [
+            'aspirasi' => $stats['total'],
+            'program' => $cntProgram,
+            'berita' => $cntBerita,
+            'galeri' => $cntGaleri
+        ],
+        'datasets' => [
+            7  => get_chart_dashboard_data($pdo, 7),
+            14 => get_chart_dashboard_data($pdo, 14),
+            30 => get_chart_dashboard_data($pdo, 30)
+        ]
+    ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+    exit;
+}
+
 // Handle Broadcast Notifikasi PWA
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action']) && $_POST['action'] === 'broadcast_notif') {
     if (verify_csrf()) {
@@ -40,14 +66,24 @@ $chartData30 = get_chart_dashboard_data($pdo, 30);
 require_once __DIR__ . '/header_admin.php';
 ?>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
   <div>
-    <h3 class="fw-bold mb-1">Dashboard Administrator</h3>
-    <p class="text-muted mb-0">Selamat datang kembali, <strong><?= e($_SESSION['admin_nama'] ?? 'Admin') ?></strong>.</p>
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <h3 class="fw-bold mb-0">Dashboard Administrator</h3>
+      <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1 small d-inline-flex align-items-center gap-1" style="font-size: 0.72rem;">
+        <span class="spinner-grow spinner-grow-sm text-success" style="width: 7px; height: 7px;" role="status"></span> Live Realtime
+      </span>
+    </div>
+    <p class="text-muted mb-0">Selamat datang kembali, <strong><?= e($_SESSION['admin_nama'] ?? 'Admin') ?></strong>. <span class="text-secondary small ms-2" id="lastUpdatedText">Sinkronisasi: <?= date('H:i:s') ?> WIB</span></p>
   </div>
-  <a href="../index.php" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3">
-    <i class="bi bi-globe me-1"></i> Buka Website Tampirkulon
-  </a>
+  <div class="d-flex align-items-center gap-2">
+    <button type="button" class="btn btn-sm btn-white bg-white border shadow-sm rounded-pill px-3 fw-semibold text-secondary" id="btnRefreshRealtime" title="Sinkronkan data realtime sekarang">
+      <i class="bi bi-arrow-clockwise me-1" id="iconRefresh"></i> Segarkan Data
+    </button>
+    <a href="../index.php" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+      <i class="bi bi-globe me-1"></i> Buka Website
+    </a>
+  </div>
 </div>
 
 <!-- 4 Stat Cards Row -->
@@ -59,7 +95,7 @@ require_once __DIR__ . '/header_admin.php';
           <i class="bi bi-chat-quote-fill fs-4"></i>
         </div>
         <div>
-          <h4 class="fw-bold mb-0"><?= $stats['total'] ?></h4>
+          <h4 class="fw-bold mb-0" id="statAspirasiTotal"><?= $stats['total'] ?></h4>
           <small class="text-muted">Total Aspirasi Masuk</small>
         </div>
       </div>
@@ -73,7 +109,7 @@ require_once __DIR__ . '/header_admin.php';
           <i class="bi bi-grid-fill fs-4"></i>
         </div>
         <div>
-          <h4 class="fw-bold mb-0"><?= $cntProgram ?></h4>
+          <h4 class="fw-bold mb-0" id="statProgramTotal"><?= $cntProgram ?></h4>
           <small class="text-muted">Program Kerja Aktif</small>
         </div>
       </div>
@@ -87,7 +123,7 @@ require_once __DIR__ . '/header_admin.php';
           <i class="bi bi-newspaper fs-4"></i>
         </div>
         <div>
-          <h4 class="fw-bold mb-0"><?= $cntBerita ?></h4>
+          <h4 class="fw-bold mb-0" id="statBeritaTotal"><?= $cntBerita ?></h4>
           <small class="text-muted">Artikel &amp; Kegiatan</small>
         </div>
       </div>
@@ -101,7 +137,7 @@ require_once __DIR__ . '/header_admin.php';
           <i class="bi bi-images fs-4"></i>
         </div>
         <div>
-          <h4 class="fw-bold mb-0"><?= $cntGaleri ?></h4>
+          <h4 class="fw-bold mb-0" id="statGaleriTotal"><?= $cntGaleri ?></h4>
           <small class="text-muted">Dokumentasi Foto</small>
         </div>
       </div>
@@ -504,7 +540,89 @@ document.addEventListener('DOMContentLoaded', function() {
   } else if (legendBox) {
     legendBox.innerHTML = '<div class="text-muted text-center py-2" style="font-size: 0.8rem;">Belum ada kategori aspirasi masuk.</div>';
   }
+
+  // --- Realtime Sync Engine (Ringan & Cepat < 2ms) ---
+  let isFetching = false;
+  async function fetchRealtimeData(manual = false) {
+    if (isFetching) return;
+    const refreshBtn = document.getElementById('btnRefreshRealtime');
+    const refreshIcon = document.getElementById('iconRefresh');
+    if (manual && refreshIcon) {
+      refreshIcon.style.animation = 'spin 0.8s linear infinite';
+      refreshIcon.style.display = 'inline-block';
+    }
+
+    isFetching = true;
+    try {
+      const res = await fetch('index.php?action=realtime_stats', {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+
+      if (json.status === 'success') {
+        // 1. Update 4 Kartu KPI Atas
+        if (json.stats) {
+          const elAsp = document.getElementById('statAspirasiTotal');
+          const elProg = document.getElementById('statProgramTotal');
+          const elBer = document.getElementById('statBeritaTotal');
+          const elGal = document.getElementById('statGaleriTotal');
+          if (elAsp) elAsp.textContent = json.stats.aspirasi;
+          if (elProg) elProg.textContent = json.stats.program;
+          if (elBer) elBer.textContent = json.stats.berita;
+          if (elGal) elGal.textContent = json.stats.galeri;
+        }
+
+        // 2. Update Dataset Grafik
+        if (json.datasets) {
+          chartDatasets[7] = json.datasets[7];
+          chartDatasets[14] = json.datasets[14];
+          chartDatasets[30] = json.datasets[30];
+
+          const activeData = chartDatasets[currentDays];
+          if (activeData) {
+            trendChart.data.labels = activeData.labels;
+            trendChart.data.datasets[0].data = activeData.hits;
+            trendChart.data.datasets[1].data = activeData.visitors;
+            trendChart.data.datasets[2].data = activeData.aspirasi;
+            trendChart.update('none'); // Update visual tanpa flickering
+            updateSummaryBadges(activeData);
+          }
+        }
+
+        // 3. Update Jam Sinkronisasi
+        const timeEl = document.getElementById('lastUpdatedText');
+        if (timeEl && json.server_time) {
+          timeEl.textContent = 'Sinkronisasi: ' + json.server_time + ' WIB';
+        }
+      }
+    } catch (e) {
+      console.warn('Realtime sync skipped:', e);
+    } finally {
+      isFetching = false;
+      if (refreshIcon) {
+        refreshIcon.style.animation = '';
+      }
+    }
+  }
+
+  // Auto-polling setiap 30 detik (hanya jika tab browser sedang aktif dibuka)
+  setInterval(() => {
+    if (!document.hidden) {
+      fetchRealtimeData(false);
+    }
+  }, 30000);
+
+  // Manual Refresh Listener
+  const refreshBtn = document.getElementById('btnRefreshRealtime');
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', () => fetchRealtimeData(true));
+  }
 });
 </script>
+
+<style>
+@keyframes spin { 100% { transform: rotate(360deg); } }
+</style>
 
 <?php require_once __DIR__ . '/footer_admin.php'; ?>

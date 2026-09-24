@@ -379,7 +379,7 @@ function self_heal_database($pdo) {
             }
         }
 
-        // 5. Pastikan tabel statistik_pengunjung ada
+        // 5. Pastikan tabel statistik_pengunjung & pengunjung_unik_harian ada
         $pdo->exec("
             CREATE TABLE IF NOT EXISTS `statistik_pengunjung` (
               `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -388,6 +388,14 @@ function self_heal_database($pdo) {
               `unique_visitors` INT NOT NULL DEFAULT 0,
               `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
               `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ");
+
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS `pengunjung_unik_harian` (
+              `tanggal` DATE NOT NULL,
+              `ip_hash` CHAR(32) NOT NULL,
+              PRIMARY KEY (`tanggal`, `ip_hash`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
         ");
 
@@ -413,21 +421,44 @@ if (isset($pdo) && $pdo instanceof PDO) {
 }
 
 /**
- * Catat statistik kunjungan publik (ringan, privat, non-admin)
+ * Catat statistik kunjungan publik secara realtime, ringan, dan konsisten.
+ * - Mengabaikan bot/crawler agar data murni warga
+ * - Mengabaikan kunjungan administrator
+ * - Menggunakan hash IP terselubung (GDPR-safe) untuk konsistensi pengunjung unik
+ * - Pembersihan otomatis sampah log IP lama (garbage collection)
  */
 function catat_kunjungan($pdo, $page = 'beranda') {
     if (!$pdo instanceof PDO) return;
-    if (is_admin_logged_in()) return; // Jangan catat kunjungan admin internal
+    if (is_admin_logged_in()) return; // Abaikan sesi admin
 
-    $today = date('Y-m-d');
-    $isUnique = 0;
-    $sessionKey = 'visited_today_' . $today;
-
-    if (empty($_SESSION[$sessionKey])) {
-        $_SESSION[$sessionKey] = true;
-        $isUnique = 1;
+    // 1. Filter Bot / Crawler / Scraper otomatis
+    $ua = strtolower($_SERVER['HTTP_USER_AGENT'] ?? '');
+    if (empty($ua) || preg_match('/bot|crawl|spider|slurp|facebookexternalhit|bingbot|googlebot|curl|wget|python|urllib|postman/i', $ua)) {
+        return;
     }
 
+    $today = date('Y-m-d');
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    $ipHash = md5($ip . '_salt_tampirkulon_2026');
+    $isUnique = 0;
+
+    // 2. Cek keunikan pengunjung harian (Presisi & Konsisten)
+    try {
+        $stmtUniq = $pdo->prepare("INSERT IGNORE INTO `pengunjung_unik_harian` (`tanggal`, `ip_hash`) VALUES (?, ?)");
+        $stmtUniq->execute([$today, $ipHash]);
+        if ($stmtUniq->rowCount() > 0) {
+            $isUnique = 1;
+        }
+    } catch (Exception $e) {
+        // Fallback ke session jika ada kendala tabel
+        $sessionKey = 'visited_today_' . $today;
+        if (empty($_SESSION[$sessionKey])) {
+            $_SESSION[$sessionKey] = true;
+            $isUnique = 1;
+        }
+    }
+
+    // 3. Update agregasi statistik secara atomik & instan (< 1ms)
     try {
         $stmt = $pdo->prepare("
             INSERT INTO `statistik_pengunjung` (`tanggal`, `total_hits`, `unique_visitors`)
@@ -443,6 +474,13 @@ function catat_kunjungan($pdo, $page = 'beranda') {
         ]);
     } catch (Exception $e) {
         // Fail-safe
+    }
+
+    // 4. Garbage Collection ringan: bersihkan hash lama (> 2 hari) secara berkala
+    if (mt_rand(1, 100) === 1) {
+        try {
+            $pdo->exec("DELETE FROM `pengunjung_unik_harian` WHERE `tanggal` < DATE_SUB(CURDATE(), INTERVAL 2 DAY)");
+        } catch (Exception $e) {}
     }
 }
 

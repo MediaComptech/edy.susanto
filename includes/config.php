@@ -9,6 +9,9 @@ if (ob_get_level() === 0) {
     ob_start();
 }
 
+// Set Zona Waktu Resmi Indonesia Barat (WIB)
+date_default_timezone_set('Asia/Jakarta');
+
 // Mulai sesi aman jika belum aktif
 if (session_status() === PHP_SESSION_NONE) {
     ini_set('session.cookie_httponly', 1);
@@ -92,6 +95,7 @@ try {
         PDO::ATTR_EMULATE_PREPARES   => false,
     ];
     $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+    $pdo->exec("SET time_zone = '+07:00'");
 } catch (PDOException $e) {
     // Jika di localhost dan database belum ada, coba buat otomatis
     if ($isLocalhost) {
