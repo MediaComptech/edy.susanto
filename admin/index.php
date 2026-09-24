@@ -727,9 +727,9 @@ document.addEventListener('DOMContentLoaded', function() {
       scrollWheelZoom: false
     }).setView([-7.5020, 110.2740], 9);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://carto.com/">CARTO</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
-      maxZoom: 18
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> kontributor',
+      maxZoom: 19
     }).addTo(visitorMap);
 
     mapLayerGroup = L.layerGroup().addTo(visitorMap);
